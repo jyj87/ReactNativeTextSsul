@@ -100,7 +100,6 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   iosDropDownMenu: {
-    
     paddingTop: 10,
     flexDirection: 'row',
     justifyContent: 'center',
