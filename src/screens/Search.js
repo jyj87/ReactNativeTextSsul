@@ -8,7 +8,7 @@ import {
   ImageBackground,
   FlatList,
   Dimensions,
-  RefreshControl,
+  Alert,
 } from 'react-native';
 import React, {useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
@@ -16,20 +16,23 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {useSelector, useDispatch} from 'react-redux';
-import {getRefreshData} from '../reducers/search_reducer';
+import {getRefreshData, getSortData} from '../reducers/search_reducer';
+import {setPostData} from '../reducers/board_reducer';
 
-const Search = () => {
+const Search = ({route, navigation}) => {
   const dispatch = useDispatch();
   const searchPostList = useSelector(state => state.search.searchPostList);
   const [isLoading, setIsLoading] = useState(false);
+  // 추가 게시물 취득
   const refreshData = () => {
     setIsLoading(true);
     setTimeout(() => {
       dispatch(getRefreshData());
-      setIsLoading(false);
-    }, 10000);
+    }, 3000);
+    setIsLoading(false);
   };
 
+  // 추가 게시물 취득시 Loading View 작성
   const renderFooter = () => {
     if (isLoading) {
       return <Text>Loading...</Text>;
@@ -40,6 +43,18 @@ const Search = () => {
         </View>
       );
     }
+  };
+
+  //Sort Button (sort처리가된 게시물을 취득)
+  const sortData = flag => {
+    dispatch(getSortData(flag));
+  };
+
+  //게시물 클릭
+  const selectPost = postIndex => {
+    navigation.navigate('Board', {
+      postIndex: postIndex, requestView:"Search"
+    })
   };
 
   return (
@@ -71,40 +86,35 @@ const Search = () => {
           }}
         />
       </View>
-      <View
-        name="sortArea"
-        style={[
-          styles.sortView,
-          {justifyContent: 'space-between', marginBottom: 10, height: 20},
-        ]}>
-        <View name="sort1" style={[styles.sortView]}>
+      <View name="sortArea" style={[styles.sortView]}>
+        <TouchableOpacity
+          onPress={() => sortData(1)}
+          style={styles.sortTouchableArea}>
           <Ionicons name="heart" size={20} style={[styles.sortIcons]} />
-          <TouchableOpacity>
-            <Text>좋아요순</Text>
-          </TouchableOpacity>
-        </View>
-        <View name="sort2" style={[styles.sortView]}>
+          <Text>좋아요순</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => sortData(2)}
+          style={styles.sortTouchableArea}>
           <Ionicons name="eye" size={20} style={[styles.sortIcons]} />
-          <TouchableOpacity>
-            <Text>조회수순</Text>
-          </TouchableOpacity>
-        </View>
-        <View name="sort3" style={[styles.sortView]}>
+          <Text>조회수순</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => sortData(3)}
+          style={styles.sortTouchableArea}>
           <MaterialIcons
             name="fiber-new"
             size={20}
             style={[styles.sortIcons]}
           />
-          <TouchableOpacity>
-            <Text>최신글순</Text>
-          </TouchableOpacity>
-        </View>
-        <View name="sort4" style={[styles.sortView]}>
+          <Text>최신글순</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => sortData(4)}
+          style={styles.sortTouchableArea}>
           <MaterialIcons name="comment" size={20} style={[styles.sortIcons]} />
-          <TouchableOpacity>
-            <Text>댓글수순</Text>
-          </TouchableOpacity>
-        </View>
+          <Text>댓글수순</Text>
+        </TouchableOpacity>
       </View>
       <View name="contentArea" style={{flex: 1}}>
         <FlatList
@@ -119,39 +129,51 @@ const Search = () => {
           onEndReachedThreshold={0.1}
           renderItem={({item}) => (
             <View style={{flexDirection: 'row'}}>
-              <View style={[styles.subView, styles.subPostSize]}>
+              <TouchableOpacity
+                onPress={() => selectPost(item.post1.postIndex)}
+                style={[styles.postView, styles.postPostSize]}>
                 <ImageBackground
-                  source={item.postCoverImage1}
+                  source={item.post1.postCoverImage}
                   imageStyle={{borderRadius: 10}}
                   resizeMode="cover"
-                  style={styles.subAreaBackgroundImage}>
-                  <View style={styles.subAreaContent}>
-                    <Text style={styles.subAreaText}>{item.postTitle1}</Text>
+                  style={styles.postViewAreaBackgroundImage}>
+                  <View style={styles.postAreaContent}>
+                    <Text style={styles.postAreaText}>
+                      {item.post1.postTitle}
+                    </Text>
                   </View>
                 </ImageBackground>
-              </View>
-              <View style={[styles.subView, styles.subPostSize]}>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => selectPost(item.post2.postIndex)}
+                style={[styles.postView, styles.postPostSize]}>
                 <ImageBackground
-                  source={item.postCoverImage2}
+                  source={item.post2.postCoverImage}
                   imageStyle={{borderRadius: 10}}
                   resizeMode="cover"
-                  style={styles.subAreaBackgroundImage}>
-                  <View style={styles.subAreaContent}>
-                    <Text style={styles.subAreaText}>{item.postTitle2}</Text>
+                  style={styles.postViewAreaBackgroundImage}>
+                  <View style={styles.postAreaContent}>
+                    <Text style={styles.postAreaText}>
+                      {item.post2.postTitle}
+                    </Text>
                   </View>
                 </ImageBackground>
-              </View>
-              <View style={[styles.subView, styles.subPostSize]}>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => selectPost(item.post3.postIndex)}
+                style={[styles.postView, styles.postPostSize]}>
                 <ImageBackground
-                  source={item.postCoverImage3}
+                  source={item.post3.postCoverImage}
                   imageStyle={{borderRadius: 10}}
                   resizeMode="cover"
-                  style={styles.subAreaBackgroundImage}>
-                  <View style={styles.subAreaContent}>
-                    <Text style={styles.subAreaText}>{item.postTitle3}</Text>
+                  style={styles.postViewAreaBackgroundImage}>
+                  <View style={styles.postAreaContent}>
+                    <Text style={styles.postAreaText}>
+                      {item.post3.postTitle}
+                    </Text>
                   </View>
                 </ImageBackground>
-              </View>
+              </TouchableOpacity>
             </View>
           )}
         />
@@ -168,34 +190,41 @@ const postHeight =
   (screenHeight - bottomNavigatorHeight - searchBarHeight - sortBarHeight) / 3;
 const postWidth = (screenWidth - 15) / 3;
 const styles = StyleSheet.create({
-  subPostSize: {
-    width: postWidth,
-    height: postHeight,
-  },
   sortView: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 10,
+    height: 20,
+  },
+  sortTouchableArea: {
     flexDirection: 'row',
     alignItems: 'center',
   },
   sortIcons: {
     marginHorizontal: 3,
   },
-  subView: {
+  postPostSize: {
+    width: postWidth,
+    height: postHeight,
+  },
+  postView: {
     flex: 1,
     paddingHorizontal: 2,
     paddingVertical: 2,
   },
-  subAreaBackgroundImage: {
+  postViewAreaBackgroundImage: {
     flex: 1,
     width: '100%',
     height: '100%',
   },
-  subAreaText: {
+  postAreaText: {
     fontSize: 15,
     color: 'white',
     fontWeight: 'bold',
     textAlign: 'center',
   },
-  subAreaContent: {
+  postAreaContent: {
     marginBottom: 3,
     marginHorizontal: 0.5,
     flex: 1,

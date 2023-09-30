@@ -47,7 +47,7 @@ const Home = () => {
                   style={styles.text}
                   onPress={() =>
                     navigation.navigate('Board', {
-                      postData: item,
+                      postData: item, requestView:"Home"
                     })
                   }>
                   {item.postTitle}

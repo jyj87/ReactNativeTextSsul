@@ -27,11 +27,15 @@ import {
 } from 'react-native-gesture-handler';
 const Board = ({route, navigation}) => {
   const dispatch = useDispatch();
+  const requestViewName = route.params.requestView
   // 1.setPostData = Home화면접속시DB부터DATA취득
   // 2.state.board.port -> postData
-  useEffect(() => {
+  if("Home" === requestViewName ){
     dispatch(setPostData(route.params));
-  }, []);
+  } else if("Search" === requestViewName){
+    dispatch(setPostData(route.params));
+  }
+
   const postData = useSelector(state => state.board.post);
   const comments = postData.comments;
   // 좋아요 클릭 Count +1

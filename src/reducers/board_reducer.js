@@ -1,5 +1,8 @@
 import {createSlice} from '@reduxjs/toolkit';
-import {log} from '../log/log_c';
+import {log, logInfoReducer} from '../log/log_c';
+import {
+  selectPost
+} from '../data/tempSearchData';
 
 /**
  * initPost: Post 기본 틀 Entity
@@ -29,17 +32,38 @@ const boardSlice = createSlice({
   initialState: {post: initPost},
   reducers: {
     setPostData: (state, action) => {
-      log.info('boardSlice : setPostData\n', action.payload.postData);
-      state.post = action.payload.postData;
+      const requestViewName = action.payload.requestView
+      const postIndex = action.payload.postIndex
+      if("Home" === requestViewName ){
+        state.post = action.payload.postData;
+      } else if("Search" === requestViewName){
+        //DB에서 취득후 셋팅 필요 (게시물 인덱스 postIndex)
+        state.post = selectPost;
+      }
+ 
+      //react logs 에러  (라이브러리 변경 추천 검색해서 확인)
+      // logInfoReducer('boardSlice', 'setPostData', 'requestViewName', requestViewName);
+      // logInfoReducer('boardSlice', 'setPostData', 'post', state.post);
+    },
+     // ★ DB에 +1 insert , 화면에 +1
+    setSearchPostData: (state, action) => {
+      state.post = selectPost;
+      console.log(state.post);
+      logInfoReducer('boardSlice', 'setSearchPostData', 'postIndex', action.payload);
+      // logInfoReducer('boardSlice', 'setSearchPostData', 'post', state.post);
     },
     // ★ DB에 +1 insert , 화면에 +1
     incrementLikeCount: (state, action) => {
-      log.info('boardSlice : incrementLikeCount\n', ' + Like');
       state.post.postLikeCount = state.post.postLikeCount + 1;
+      logInfoReducer(
+        'boardSlice',
+        'incrementLikeCount',
+        'postLikeCount',
+        state.post.postLikeCount,
+      );
     },
     // ★ DB에 +text insert, 화면에+text
     insertCommentText: (state, action) => {
-      log.info('boardSlice : insertCommentText\n', action.payload);
       state.post.comments.push({
         postIndex: 8,
         commentIndex: 8,
@@ -47,12 +71,23 @@ const boardSlice = createSlice({
         commentContext: action.payload,
         commentLikeCount: 10,
       });
+      logInfoReducer(
+        'boardSlice',
+        'insertCommentText',
+        'insertCommentTextParam',
+        action.payload,
+      );
     },
     // ★ DB에 +1 insert , 화면에 +1
     incrementCommentLikeCount: (state, action) => {
-      log.info('boardSlice : incrementCommentLikeCount\n', ' + Like');
       state.post.comments[action.payload].commentLikeCount =
         state.post.comments[action.payload].commentLikeCount + 1;
+      logInfoReducer(
+        'boardSlice',
+        'incrementCommentLikeCount',
+        'commentLikeCount',
+        state.post.comments[action.payload].commentLikeCount,
+      );
     },
   },
 });
@@ -63,4 +98,5 @@ export const {
   incrementLikeCount,
   insertCommentText,
   incrementCommentLikeCount,
+  setSearchPostData,
 } = boardSlice.actions;
