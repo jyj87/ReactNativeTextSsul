@@ -129,7 +129,7 @@ const Write = () => {
               style={{
                 backgroundColor: '#DCD8D8',
                 borderRadius: 15,
-                height: 500,
+                height: 300,
               }}></TextInput>
           </View>
           <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>

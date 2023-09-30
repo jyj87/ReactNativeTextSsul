@@ -1,0 +1,53 @@
+export const searchPostList = [
+  {
+    postSetIndex: 1,
+    postIndex1: 1,
+    postTitle1: 'Post1',
+    postCoverImage1: require('../../assets/images/post1.jpeg'),
+    postIndex2: 2,
+    postTitle2: 'Post2',
+    postCoverImage2: require('../../assets/images/post2.jpeg'),
+    postIndex3: 3,
+    postTitle3: 'Post3',
+    postCoverImage3: require('../../assets/images/post3.jpeg'),
+  },
+  {
+    postSetIndex: 2,
+    postIndex1: 4,
+    postTitle1: 'Post4',
+    postCoverImage1: require('../../assets/images/post4.jpeg'),
+    postIndex2: 5,
+    postTitle2: 'Post5',
+    postCoverImage2: require('../../assets/images/post5.jpeg'),
+    postIndex3: 6,
+    postTitle3: 'Post6',
+    postCoverImage3: require('../../assets/images/post6.jpeg'),
+  },
+  {
+    postSetIndex: 3,
+    postIndex1: 7,
+    postTitle1: 'Post7',
+    postCoverImage1: require('../../assets/images/post7.jpeg'),
+    postIndex2: 8,
+    postTitle2: 'Post8',
+    postCoverImage2: require('../../assets/images/post8.jpeg'),
+    postIndex3: 9,
+    postTitle3: 'Post9',
+    postCoverImage3: require('../../assets/images/post9.jpeg'),
+  },
+];
+
+export const refreshTampSub3PostSet = [
+  {
+    postSetIndex: 4,
+    postIndex1: 7,
+    postTitle1: 'AddPost7',
+    postCoverImage1: require('../../assets/images/post7.jpeg'),
+    postIndex2: 8,
+    postTitle2: 'AddPost8',
+    postCoverImage2: require('../../assets/images/post8.jpeg'),
+    postIndex3: 9,
+    postTitle3: 'AddPost9',
+    postCoverImage3: require('../../assets/images/post9.jpeg'),
+  },
+];

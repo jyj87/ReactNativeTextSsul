@@ -6,20 +6,44 @@ import {
   TouchableOpacity,
   StyleSheet,
   ImageBackground,
+  FlatList,
+  Dimensions,
+  RefreshControl,
 } from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Entypo from 'react-native-vector-icons/Entypo';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {useSelector, useDispatch} from 'react-redux';
+import {getRefreshData} from '../reducers/search_reducer';
 
 const Search = () => {
-  const searchDataList = useSelector(state => state.search.searchData);
+  const dispatch = useDispatch();
+  const searchPostList = useSelector(state => state.search.searchPostList);
+  const [isLoading, setIsLoading] = useState(false);
+  const refreshData = () => {
+    setIsLoading(true);
+    setTimeout(() => {
+      dispatch(getRefreshData());
+      setIsLoading(false);
+    }, 10000);
+  };
+
+  const renderFooter = () => {
+    if (isLoading) {
+      return <Text>Loading...</Text>;
+    } else {
+      return (
+        <View style={{padding: 16, alignItems: 'center'}}>
+          <Text>Load More</Text>
+        </View>
+      );
+    }
+  };
+
   return (
-    <SafeAreaView 
-      edges={['top']} 
-      style={{marginHorizontal: 8, flex: 1,}}>
+    <SafeAreaView edges={['top']} style={{marginHorizontal: 8, flex: 1}}>
       <StatusBar backgroundColor="white" barStyle="dark-content" />
       <View
         name="searchBarArea"
@@ -51,7 +75,7 @@ const Search = () => {
         name="sortArea"
         style={[
           styles.sortView,
-          {justifyContent: 'space-between', marginBottom: 10},
+          {justifyContent: 'space-between', marginBottom: 10, height: 20},
         ]}>
         <View name="sort1" style={[styles.sortView]}>
           <Ionicons name="heart" size={20} style={[styles.sortIcons]} />
@@ -83,109 +107,71 @@ const Search = () => {
         </View>
       </View>
       <View name="contentArea" style={{flex: 1}}>
-        <View name="mainContent" style={{flex: 1}}>
-          <View style={styles.mainView}>
-            <ImageBackground
-              source={searchDataList[0].boardCoverImage}
-              imageStyle={{borderRadius: 10}}
-              resizeMode="cover"
-              style={styles.mainAreaBackgroundImage}>
-              <View style={styles.mainAreaContent}>
-                <Text style={styles.mainAreaText}>
-                  {searchDataList[0].boardTitle}
-                </Text>
+        <FlatList
+          // 옵션: 가로 배치
+          horizontal={false}
+          // 옵션: 스크롤바를 숨김
+          showsVerticalScrollIndicator={false}
+          data={searchPostList}
+          keyExtractor={item => item.postSetIndex}
+          ListFooterComponent={renderFooter}
+          onEndReached={refreshData}
+          onEndReachedThreshold={0.1}
+          renderItem={({item}) => (
+            <View style={{flexDirection: 'row'}}>
+              <View style={[styles.subView, styles.subPostSize]}>
+                <ImageBackground
+                  source={item.postCoverImage1}
+                  imageStyle={{borderRadius: 10}}
+                  resizeMode="cover"
+                  style={styles.subAreaBackgroundImage}>
+                  <View style={styles.subAreaContent}>
+                    <Text style={styles.subAreaText}>{item.postTitle1}</Text>
+                  </View>
+                </ImageBackground>
               </View>
-            </ImageBackground>
-          </View>
-        </View>
-        <View name="subContent1" style={{flex: 1, flexDirection: 'row'}}>
-          <View style={styles.subView}>
-            <ImageBackground
-              source={searchDataList[1].boardCoverImage}
-              imageStyle={{borderRadius: 10}}
-              resizeMode="cover"
-              style={styles.subAreaBackgroundImage}>
-              <View style={styles.subAreaContent}>
-                <Text style={styles.subAreaText}>
-                  {searchDataList[1].boardTitle}
-                </Text>
+              <View style={[styles.subView, styles.subPostSize]}>
+                <ImageBackground
+                  source={item.postCoverImage2}
+                  imageStyle={{borderRadius: 10}}
+                  resizeMode="cover"
+                  style={styles.subAreaBackgroundImage}>
+                  <View style={styles.subAreaContent}>
+                    <Text style={styles.subAreaText}>{item.postTitle2}</Text>
+                  </View>
+                </ImageBackground>
               </View>
-            </ImageBackground>
-          </View>
-          <View style={styles.subView}>
-            <ImageBackground
-              source={searchDataList[2].boardCoverImage}
-              imageStyle={{borderRadius: 10}}
-              resizeMode="cover"
-              style={styles.subAreaBackgroundImage}>
-              <View style={styles.subAreaContent}>
-                <Text style={styles.subAreaText}>
-                  {searchDataList[2].boardTitle}
-                </Text>
+              <View style={[styles.subView, styles.subPostSize]}>
+                <ImageBackground
+                  source={item.postCoverImage3}
+                  imageStyle={{borderRadius: 10}}
+                  resizeMode="cover"
+                  style={styles.subAreaBackgroundImage}>
+                  <View style={styles.subAreaContent}>
+                    <Text style={styles.subAreaText}>{item.postTitle3}</Text>
+                  </View>
+                </ImageBackground>
               </View>
-            </ImageBackground>
-          </View>
-          <View style={styles.subView}>
-            <ImageBackground
-              source={searchDataList[3].boardCoverImage}
-              imageStyle={{borderRadius: 10}}
-              resizeMode="cover"
-              style={styles.subAreaBackgroundImage}>
-              <View style={styles.subAreaContent}>
-                <Text style={styles.subAreaText}>
-                  {searchDataList[3].boardTitle}
-                </Text>
-              </View>
-            </ImageBackground>
-          </View>
-        </View>
-        <View name="subContent2" style={{flex: 1, flexDirection: 'row'}}>
-          <View style={styles.subView}>
-            <ImageBackground
-              source={searchDataList[4].boardCoverImage}
-              imageStyle={{borderRadius: 10}}
-              resizeMode="cover"
-              style={styles.subAreaBackgroundImage}>
-              <View style={styles.subAreaContent}>
-                <Text style={styles.subAreaText}>
-                  {searchDataList[4].boardTitle}
-                </Text>
-              </View>
-            </ImageBackground>
-          </View>
-          <View style={styles.subView}>
-            <ImageBackground
-              source={searchDataList[5].boardCoverImage}
-              imageStyle={{borderRadius: 10}}
-              resizeMode="cover"
-              style={styles.subAreaBackgroundImage}>
-              <View style={styles.subAreaContent}>
-                <Text style={styles.subAreaText}>
-                  {searchDataList[5].boardTitle}
-                </Text>
-              </View>
-            </ImageBackground>
-          </View>
-          <View style={styles.subView}>
-            <ImageBackground
-              source={searchDataList[5].boardCoverImage}
-              imageStyle={{borderRadius: 10}}
-              resizeMode="cover"
-              style={styles.subAreaBackgroundImage}>
-              <View style={styles.subAreaContent}>
-                <Text style={styles.subAreaText}>
-                  {searchDataList[5].boardTitle}
-                </Text>
-              </View>
-            </ImageBackground>
-          </View>
-        </View>
+            </View>
+          )}
+        />
       </View>
     </SafeAreaView>
   );
 };
-
+const screenWidth = Dimensions.get('window').width;
+const screenHeight = Dimensions.get('window').height;
+const bottomNavigatorHeight = 80;
+const searchBarHeight = 40;
+const sortBarHeight = 40;
+const postHeight =
+  (screenHeight - bottomNavigatorHeight - searchBarHeight - sortBarHeight) / 3;
+const postWidth = (screenWidth - 15) / 3;
 const styles = StyleSheet.create({
+  subPostSize: {
+    width: postWidth,
+    height: postHeight,
+  },
   sortView: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -210,28 +196,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   subAreaContent: {
-    marginBottom: 3,
-    marginHorizontal: 0.5,
-    flex: 1,
-    justifyContent: 'flex-end',
-  },
-  mainView: {
-    flex: 1,
-    paddingHorizontal: 2,
-    paddingVertical: 2,
-  },
-  mainAreaBackgroundImage: {
-    flex: 1,
-    width: '100%',
-    height: '100%',
-  },
-  mainAreaText: {
-    fontSize: 15,
-    color: 'white',
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
-  mainAreaContent: {
     marginBottom: 3,
     marginHorizontal: 0.5,
     flex: 1,

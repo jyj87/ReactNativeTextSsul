@@ -1,204 +1,364 @@
 export const tempData = [
   {
-    id: 1,
-    boardIndex: 1,
-    boardTitle: '선물이 갑니다 사랑하는 존재로 부터',
-    boardUserName: '변비엔당근',
-    boardName: '유머',
-    boardViewCount: 120,
-    boardLikeCount: 30,
-    boardImageList: null,
-    boardContext:
-      '내용입니다-------------------------------1\n' +
-      '내용입니다-------------------------------1\n' +
-      '내용입니다-------------------------------1\n' +
-      '내용입니다-------------------------------1\n' +
-      '내용입니다-------------------------------1\n' +
-      '내용입니다-------------------------------1\n' +
-      '내용입니다-------------------------------1\n' +
+    postIndex: 1,
+    postTitle: '선물이 갑니다 사랑하는 존재로 부터1',
+    postWriter: '변비엔당근',
+    postType: '유머',
+    postViewCount: 120,
+    postLikeCount: 30,
+    postCommentCount: 2,
+    postImageList: null,
+    postCoverImage: require('../../assets/images/post1.jpeg'),
+    postContext:
       '내용입니다-------------------------------1\n' +
       '내용입니다-------------------------------1\n' +
       '내용입니다-------------------------------1\n' +
       '내용입니다-------------------------------1\n',
-    boardCoverImage: require('../../assets/images/userProfile.jpeg'),
     comments: [
       {
-        id: 1,
-        index: 1,
-        writer: '새벽별1',
-        context:
-          '댓글입니다-------------------------------1\n' +
-          '댓글입니다-------------------------------1\n' +
-          '댓글입니다-------------------------------1\n',
-        likeCount: 10,
+        postIndex: 1,
+        commentIndex: 1,
+        commentWriter: '댓글작성자1',
+        commentContext:
+          '댓글입니다1-------------------------------1\n' +
+          '댓글입니다1-------------------------------1\n',
+        commentLikeCount: 10,
       },
       {
-        id: 2,
-        index: 2,
-        writer: '새벽별2',
-        context: '댓글입니다2',
-        likeCount: 10,
-      },
-      {
-        id: 3,
-        index: 3,
-        writer: '새벽별2',
-        context: '댓글입니다2',
-        likeCount: 10,
-      },
-      {
-        id: 4,
-        index: 4,
-        writer: '새벽별2',
-        context: '댓글입니다2',
-        likeCount: 10,
-      },
-      {
-        id: 5,
-        index: 5,
-        writer: '새벽별2',
-        context: '댓글입니다2',
-        likeCount: 10,
+        postIndex: 1,
+        commentIndex: 2,
+        commentWriter: '댓글작성자1',
+        commentContext:
+          '댓글입니다1-------------------------------1\n' +
+          '댓글입니다1-------------------------------1\n',
+        commentLikeCount: 10,
       },
     ],
   },
   {
-    id: 2,
-    boardIndex: 2,
-    boardTitle: '선물이 갑니다 사랑하는 존재로 부터',
-    boardUserName: '변비엔당근',
-    boardName: '유머',
-    boardViewCount: 120,
-    boardLikeCount: 30,
-    boardImageList: null,
-    boardContext: '내용입니다',
-    boardCoverImage: require('../../assets/images/profile1.jpeg'),
+    postIndex: 2,
+    postTitle: '선물이 갑니다 사랑하는 존재로 부터2',
+    postWriter: '변비엔당근',
+    postType: '유머',
+    postViewCount: 120,
+    postLikeCount: 30,
+    postCommentCount: 2,
+    postImageList: null,
+    postCoverImage: require('../../assets/images/post2.jpeg'),
+    postContext:
+      '내용입니다-------------------------------1\n' +
+      '내용입니다-------------------------------1\n' +
+      '내용입니다-------------------------------1\n' +
+      '내용입니다-------------------------------1\n',
     comments: [
       {
-        id: 1,
-        index: 1,
-        writer: '새벽별1',
-        context: '댓글입니다1',
-        likeCount: 10,
+        postIndex: 2,
+        commentIndex: 1,
+        commentWriter: '댓글작성자1',
+        commentContext:
+          '댓글입니다1-------------------------------1\n' +
+          '댓글입니다1-------------------------------1\n',
+        commentLikeCount: 10,
       },
       {
-        id: 2,
-        index: 2,
-        writer: '새벽별2',
-        context: '댓글입니다2',
-        likeCount: 10,
+        postIndex: 2,
+        commentIndex: 2,
+        commentWriter: '댓글작성자1',
+        commentContext:
+          '댓글입니다1-------------------------------1\n' +
+          '댓글입니다1-------------------------------1\n',
+        commentLikeCount: 10,
       },
     ],
   },
   {
-    id: 3,
-    boardIndex: 3,
-    boardTitle: '선물이 갑니다 사랑하는 존재로 부터',
-    boardUserName: '변비엔당근',
-    boardName: '유머',
-    boardViewCount: 120,
-    boardLikeCount: 30,
-    boardImageList: null,
-    boardContext: '내용입니다',
-    boardCoverImage: require('../../assets/images/profile2.jpeg'),
+    postIndex: 3,
+    postTitle: '선물이 갑니다 사랑하는 존재로 부터3',
+    postWriter: '변비엔당근',
+    postType: '유머',
+    postViewCount: 120,
+    postLikeCount: 30,
+    postCommentCount: 2,
+    postImageList: null,
+    postCoverImage: require('../../assets/images/post3.jpeg'),
+    postContext:
+      '내용입니다-------------------------------1\n' +
+      '내용입니다-------------------------------1\n' +
+      '내용입니다-------------------------------1\n' +
+      '내용입니다-------------------------------1\n',
     comments: [
       {
-        id: 1,
-        index: 1,
-        writer: '새벽별1',
-        context: '댓글입니다1',
-        likeCount: 10,
+        postIndex: 3,
+        commentIndex: 1,
+        commentWriter: '댓글작성자1',
+        commentContext:
+          '댓글입니다1-------------------------------1\n' +
+          '댓글입니다1-------------------------------1\n',
+        commentLikeCount: 10,
       },
       {
-        id: 2,
-        index: 2,
-        writer: '새벽별2',
-        context: '댓글입니다2',
-        likeCount: 10,
+        postIndex: 3,
+        commentIndex: 2,
+        commentWriter: '댓글작성자1',
+        commentContext:
+          '댓글입니다1-------------------------------1\n' +
+          '댓글입니다1-------------------------------1\n',
+        commentLikeCount: 10,
       },
     ],
   },
   {
-    id: 4,
-    boardIndex: 4,
-    boardTitle: '선물이 갑니다 사랑하는 존재로 부터',
-    boardUserName: '변비엔당근',
-    boardName: '유머',
-    boardViewCount: 120,
-    boardLikeCount: 30,
-    boardImageList: null,
-    boardContext: '내용입니다',
-    boardCoverImage: require('../../assets/images/profile3.jpeg'),
+    postIndex: 4,
+    postTitle: '선물이 갑니다 사랑하는 존재로 부터4',
+    postWriter: '변비엔당근',
+    postType: '유머',
+    postViewCount: 120,
+    postLikeCount: 30,
+    postCommentCount: 2,
+    postImageList: null,
+    postCoverImage: require('../../assets/images/post4.jpeg'),
+    postContext:
+      '내용입니다-------------------------------1\n' +
+      '내용입니다-------------------------------1\n' +
+      '내용입니다-------------------------------1\n' +
+      '내용입니다-------------------------------1\n',
     comments: [
       {
-        id: 1,
-        index: 1,
-        writer: '새벽별1',
-        context: '댓글입니다1',
-        likeCount: 10,
+        postIndex: 4,
+        commentIndex: 1,
+        commentWriter: '댓글작성자1',
+        commentContext:
+          '댓글입니다1-------------------------------1\n' +
+          '댓글입니다1-------------------------------1\n',
+        commentLikeCount: 10,
       },
       {
-        id: 2,
-        index: 2,
-        writer: '새벽별2',
-        context: '댓글입니다2',
-        likeCount: 10,
+        postIndex: 4,
+        commentIndex: 2,
+        commentWriter: '댓글작성자1',
+        commentContext:
+          '댓글입니다1-------------------------------1\n' +
+          '댓글입니다1-------------------------------1\n',
+        commentLikeCount: 10,
       },
     ],
   },
   {
-    id: 5,
-    boardIndex: 5,
-    boardTitle: '선물이 갑니다 사랑하는 존재로 부터',
-    boardUserName: '변비엔당근',
-    boardName: '유머',
-    boardViewCount: 120,
-    boardLikeCount: 30,
-    boardImageList: null,
-    boardContext: '내용입니다',
-    boardCoverImage: require('../../assets/images/profile4.jpeg'),
+    postIndex: 5,
+    postTitle: '선물이 갑니다 사랑하는 존재로 부터5',
+    postWriter: '변비엔당근',
+    postType: '유머',
+    postViewCount: 120,
+    postLikeCount: 30,
+    postCommentCount: 2,
+    postImageList: null,
+    postCoverImage: require('../../assets/images/post5.jpeg'),
+    postContext:
+      '내용입니다-------------------------------1\n' +
+      '내용입니다-------------------------------1\n' +
+      '내용입니다-------------------------------1\n' +
+      '내용입니다-------------------------------1\n',
     comments: [
       {
-        id: 1,
-        index: 1,
-        writer: '새벽별1',
-        context: '댓글입니다1',
-        likeCount: 10,
+        postIndex: 5,
+        commentIndex: 1,
+        commentWriter: '댓글작성자1',
+        commentContext:
+          '댓글입니다1-------------------------------1\n' +
+          '댓글입니다1-------------------------------1\n',
+        commentLikeCount: 10,
       },
       {
-        id: 2,
-        index: 2,
-        writer: '새벽별2',
-        context: '댓글입니다2',
-        likeCount: 10,
+        postIndex: 5,
+        commentIndex: 2,
+        commentWriter: '댓글작성자1',
+        commentContext:
+          '댓글입니다1-------------------------------1\n' +
+          '댓글입니다1-------------------------------1\n',
+        commentLikeCount: 10,
       },
     ],
   },
   {
-    id: 6,
-    boardIndex: 6,
-    boardTitle: '선물이 갑니다 사랑하는 존재로 부터',
-    boardUserName: '변비엔당근',
-    boardName: '유머',
-    boardViewCount: 120,
-    boardLikeCount: 30,
-    boardImageList: null,
-    boardContext: '내용입니다',
-    boardCoverImage: require('../../assets/images/post1.jpeg'),
+    postIndex: 6,
+    postTitle: '선물이 갑니다 사랑하는 존재로 부터6',
+    postWriter: '변비엔당근',
+    postType: '유머',
+    postViewCount: 120,
+    postLikeCount: 30,
+    postCommentCount: 2,
+    postImageList: null,
+    postCoverImage: require('../../assets/images/post6.jpeg'),
+    postContext:
+      '내용입니다-------------------------------1\n' +
+      '내용입니다-------------------------------1\n' +
+      '내용입니다-------------------------------1\n' +
+      '내용입니다-------------------------------1\n',
     comments: [
       {
-        id: 1,
-        index: 1,
-        writer: '새벽별1',
-        context: '댓글입니다1',
-        likeCount: 10,
+        postIndex: 6,
+        commentIndex: 1,
+        commentWriter: '댓글작성자1',
+        commentContext:
+          '댓글입니다1-------------------------------1\n' +
+          '댓글입니다1-------------------------------1\n',
+        commentLikeCount: 10,
       },
       {
-        id: 2,
-        index: 2,
-        writer: '새벽별2',
-        context: '댓글입니다2',
-        likeCount: 10,
+        postIndex: 6,
+        commentIndex: 2,
+        commentWriter: '댓글작성자1',
+        commentContext:
+          '댓글입니다1-------------------------------1\n' +
+          '댓글입니다1-------------------------------1\n',
+        commentLikeCount: 10,
+      },
+    ],
+  },
+  {
+    postIndex: 7,
+    postTitle: '선물이 갑니다 사랑하는 존재로 부터7',
+    postWriter: '변비엔당근',
+    postType: '유머',
+    postViewCount: 120,
+    postLikeCount: 30,
+    postCommentCount: 2,
+    postImageList: null,
+    postCoverImage: require('../../assets/images/post7.jpeg'),
+    postContext:
+      '내용입니다-------------------------------1\n' +
+      '내용입니다-------------------------------1\n' +
+      '내용입니다-------------------------------1\n' +
+      '내용입니다-------------------------------1\n',
+    comments: [
+      {
+        postIndex: 7,
+        commentIndex: 1,
+        commentWriter: '댓글작성자1',
+        commentContext:
+          '댓글입니다1-------------------------------1\n' +
+          '댓글입니다1-------------------------------1\n',
+        commentLikeCount: 10,
+      },
+      {
+        postIndex: 7,
+        commentIndex: 2,
+        commentWriter: '댓글작성자1',
+        commentContext:
+          '댓글입니다1-------------------------------1\n' +
+          '댓글입니다1-------------------------------1\n',
+        commentLikeCount: 10,
+      },
+    ],
+  },
+
+  {
+    postIndex: 8,
+    postTitle: '선물이 갑니다 사랑하는 존재로 부터8',
+    postWriter: '변비엔당근',
+    postType: '유머',
+    postViewCount: 120,
+    postLikeCount: 30,
+    postCommentCount: 2,
+    postImageList: null,
+    postCoverImage: require('../../assets/images/post8.jpeg'),
+    postContext:
+      '내용입니다-------------------------------1\n' +
+      '내용입니다-------------------------------1\n' +
+      '내용입니다-------------------------------1\n' +
+      '내용입니다-------------------------------1\n',
+    comments: [
+      {
+        postIndex: 8,
+        commentIndex: 1,
+        commentWriter: '댓글작성자1',
+        commentContext:
+          '댓글입니다1-------------------------------1\n' +
+          '댓글입니다1-------------------------------1\n',
+        commentLikeCount: 10,
+      },
+      {
+        postIndex: 8,
+        commentIndex: 2,
+        commentWriter: '댓글작성자1',
+        commentContext:
+          '댓글입니다1-------------------------------1\n' +
+          '댓글입니다1-------------------------------1\n',
+        commentLikeCount: 10,
+      },
+    ],
+  },
+
+  {
+    postIndex: 9,
+    postTitle: '선물이 갑니다 사랑하는 존재로 부터9',
+    postWriter: '변비엔당근',
+    postType: '유머',
+    postViewCount: 120,
+    postLikeCount: 30,
+    postCommentCount: 2,
+    postImageList: null,
+    postCoverImage: require('../../assets/images/post9.jpeg'),
+    postContext:
+      '내용입니다-------------------------------1\n' +
+      '내용입니다-------------------------------1\n' +
+      '내용입니다-------------------------------1\n' +
+      '내용입니다-------------------------------1\n',
+    comments: [
+      {
+        postIndex: 9,
+        commentIndex: 1,
+        commentWriter: '댓글작성자1',
+        commentContext:
+          '댓글입니다1-------------------------------1\n' +
+          '댓글입니다1-------------------------------1\n',
+        commentLikeCount: 10,
+      },
+      {
+        postIndex: 9,
+        commentIndex: 2,
+        commentWriter: '댓글작성자1',
+        commentContext:
+          '댓글입니다1-------------------------------1\n' +
+          '댓글입니다1-------------------------------1\n',
+        commentLikeCount: 10,
+      },
+    ],
+  },
+
+  {
+    postIndex: 10,
+    postTitle: '선물이 갑니다 사랑하는 존재로 부터10',
+    postWriter: '변비엔당근',
+    postType: '유머',
+    postViewCount: 120,
+    postLikeCount: 30,
+    postCommentCount: 2,
+    postImageList: null,
+    postCoverImage: require('../../assets/images/post10.jpeg'),
+    postContext:
+      '내용입니다-------------------------------1\n' +
+      '내용입니다-------------------------------1\n' +
+      '내용입니다-------------------------------1\n' +
+      '내용입니다-------------------------------1\n',
+    comments: [
+      {
+        postIndex: 10,
+        commentIndex: 1,
+        commentWriter: '댓글작성자1',
+        commentContext:
+          '댓글입니다1-------------------------------1\n' +
+          '댓글입니다1-------------------------------1\n',
+        commentLikeCount: 10,
+      },
+      {
+        postIndex: 10,
+        commentIndex: 2,
+        commentWriter: '댓글작성자1',
+        commentContext:
+          '댓글입니다1-------------------------------1\n' +
+          '댓글입니다1-------------------------------1\n',
+        commentLikeCount: 10,
       },
     ],
   },
