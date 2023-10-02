@@ -16,7 +16,6 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import {useDispatch, useSelector} from 'react-redux';
 import {
   incrementLikeCount,
-  setPostData,
   insertCommentText,
   incrementCommentLikeCount,
 } from '../reducers/board_reducer';

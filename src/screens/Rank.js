@@ -13,6 +13,7 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import {useSelector, useDispatch} from 'react-redux';
 import RankSubPostList from '../components/subRank/RanksubPostList';
 import Feather from 'react-native-vector-icons/Feather';
+import MainPost from '../components/subRank/MainPost';
 
 const Rank = () => {
   const rankPostList = useSelector(state => state.rank.rankPostList);
@@ -27,27 +28,7 @@ const Rank = () => {
       style={[styles.baseFlex, {paddingHorizontal: 8}]}>
       <StatusBar backgroundColor="white" barStyle="dark-content" />
       <ScrollView>
-        <View name="mainArea" style={styles.baseFlex}>
-          <View
-            style={[
-              styles.baseFlex,
-              {paddingVertical: 5, paddingHorizontal: 5},
-            ]}>
-            <TouchableOpacity style={styles.baseFlex}>
-              <ImageBackground
-                source={mainPost[0].postCoverImage}
-                imageStyle={{borderRadius: 10}}
-                resizeMode="cover"
-                style={styles.mainBackgroundImage}>
-                <View style={styles.mainImageTextView}>
-                  <Text style={styles.mainImageText}>
-                    {mainPost[0].postTitle}
-                  </Text>
-                </View>
-              </ImageBackground>
-            </TouchableOpacity>
-          </View>
-        </View>
+        <MainPost mainPost={mainPost}/>
         <View style={styles.subPostListLabelView}>
           <Feather name="hash" size={20} color="black" />
           <Text style={{fontSize:15}}>유머</Text>
@@ -72,23 +53,6 @@ const screenHeight = Dimensions.get('window').height;
 const styles = StyleSheet.create({
   baseFlex: {
     flex: 1,
-  },
-  mainBackgroundImage: {
-    flex: 1,
-    width: '100%',
-    height: screenHeight/3,
-  },
-  mainImageTextView: {
-    marginBottom: 3,
-    marginHorizontal: 0.5,
-    flex: 1,
-    justifyContent: 'flex-end',
-  },
-  mainImageText: {
-    fontSize: 20,
-    color: 'white',
-    fontWeight: 'bold',
-    textAlign: 'center',
   },
   subPostListLabelView: {
     flexDirection: 'row', alignItems: 'center',paddingVertical:5

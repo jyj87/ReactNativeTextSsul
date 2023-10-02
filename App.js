@@ -1,5 +1,7 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {NavigationContainer} from '@react-navigation/native';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import React from 'react';
 import Home from './src/screens/Home';
 import Profile from './src/screens/Profile';
@@ -7,8 +9,7 @@ import Rank from './src/screens/Rank';
 import Search from './src/screens/Search';
 import Write from './src/screens/Write';
 import Board from './src/screens/Board';
-import {NavigationContainer} from '@react-navigation/native';
-import TempScreen1 from './src/screens/TempScreen1';
+import Login from './src/screens/Login';
 import TempScreen2 from './src/screens/TempScreen2';
 import TempScreen3 from './src/screens/TempScreen3';
 import TempScreen4 from './src/screens/TempScreen4';
@@ -16,7 +17,6 @@ import TempScreen5 from './src/screens/TempScreen5';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {GestureHandlerRootView} from 'react-native-gesture-handler';
 
 const App = () => {
   const Stack = createNativeStackNavigator();
@@ -67,6 +67,11 @@ const App = () => {
           component={Board}
           options={{tabBarButton: () => null}}
         />
+        <Tab.Screen
+          name="Login"
+          component={Login}
+          options={{tabBarButton: () => null}}
+        />
       </Tab.Navigator>
     );
   };
@@ -76,7 +81,6 @@ const App = () => {
       <NavigationContainer>
         <Stack.Navigator screenOptions={{headerShown: false}}>
           <Stack.Screen name="Bottom" component={BottomTabScreen} />
-          <Stack.Screen name="TempScreen1" component={TempScreen1} />
           <Stack.Screen name="TempScreen2" component={TempScreen2} />
           <Stack.Screen name="TempScreen3" component={TempScreen3} />
           <Stack.Screen name="TempScreen4" component={TempScreen4} />
