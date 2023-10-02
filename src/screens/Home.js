@@ -13,16 +13,29 @@ import {useNavigation} from '@react-navigation/native';
 import {useSelector, useDispatch} from 'react-redux';
 import {getInitPostList} from '../reducers/home_reducer';
 import {getInitSearchPostList} from '../reducers/search_reducer';
+import {setPostData} from '../reducers/board_reducer';
+import {getInitRankPostList} from '../reducers/rank_reducer';
 
 const Home = () => {
-  //초기화면이 Home 기본 데이터 취득 
+  const navigation = useNavigation();
+  const dispatch = useDispatch();
+  //초기화면이 Home 기본 데이터 취득
   useEffect(() => {
     dispatch(getInitPostList());
     dispatch(getInitSearchPostList());
+    dispatch(getInitRankPostList());
   }, []);
-  const navigation = useNavigation();
-  const dispatch = useDispatch();
+  //Home Data 취득
   const homePostList = useSelector(state => state.home.homePostList);
+
+  // Board view 이동 -> postData 셋팅
+  const moveBoard = postData => {
+    console.log('moveBoard');
+    dispatch(setPostData(postData));
+    navigation.navigate('Board', {
+      requestView: 'Home',
+    });
+  };
 
   return (
     <SafeAreaView edges={['top']} style={styles.baseFlex}>
@@ -45,11 +58,9 @@ const Home = () => {
               <View style={styles.content}>
                 <Text
                   style={styles.text}
-                  onPress={() =>
-                    navigation.navigate('Board', {
-                      postData: item, requestView:"Home"
-                    })
-                  }>
+                  onPress={() => {
+                    moveBoard({postData: item});
+                  }}>
                   {item.postTitle}
                 </Text>
               </View>
@@ -64,7 +75,7 @@ const Home = () => {
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
 const statusBarHeight = StatusBar.currentHeight;
-const bottomNavigatorHeight = 120; 
+const bottomNavigatorHeight = 120;
 const styles = StyleSheet.create({
   backgroundImage: {
     flex: 1,

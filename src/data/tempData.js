@@ -363,3 +363,18 @@ export const tempData = [
     ],
   },
 ];
+
+
+export const initBoardPost = {
+  postIndex: null,
+  postTitle: null,
+  postWriter: null,
+  postType: null,
+  postViewCount: null,
+  postLikeCount: null,
+  postCommentCount: null,
+  postImageList: null,
+  postCoverImage: null,
+  postContext: null,
+  comments: [],
+};

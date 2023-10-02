@@ -16,13 +16,14 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {useSelector, useDispatch} from 'react-redux';
-import {getRefreshData, getSortData} from '../reducers/search_reducer';
-import {setPostData} from '../reducers/board_reducer';
+import {getRefreshData, getSortData,insertSearchBarText} from '../reducers/search_reducer';
+import {setSelectSearchPostData} from '../reducers/board_reducer';
 
 const Search = ({route, navigation}) => {
   const dispatch = useDispatch();
   const searchPostList = useSelector(state => state.search.searchPostList);
   const [isLoading, setIsLoading] = useState(false);
+  const [searchBarText,setSearchBarText]= useState('');
   // 추가 게시물 취득
   const refreshData = () => {
     setIsLoading(true);
@@ -46,30 +47,30 @@ const Search = ({route, navigation}) => {
   };
 
   //Sort Button (sort처리가된 게시물을 취득)
-  const sortData = flag => {
-    dispatch(getSortData(flag));
+  const sortData = sortFlag => {
+    dispatch(getSortData({sortFlag: sortFlag}));
   };
 
   //게시물 클릭
   const selectPost = postIndex => {
-    navigation.navigate('Board', {
-      postIndex: postIndex, requestView:"Search"
-    })
+    navigation.navigate('Board', {requestView: 'Search'});
+    dispatch(setSelectSearchPostData({postIndex: postIndex}));
   };
+
+  const searchBarTextInsert =()=>{
+    if (searchBarText.trim() === '') {
+      Alert.alert('경고', '데이터를 입력해주세요');
+    } else {
+      console.log('검색 실행');
+      dispatch(insertSearchBarText({searchBarText:searchBarText}));
+      setSearchBarText('')
+    }
+  }
 
   return (
     <SafeAreaView edges={['top']} style={{marginHorizontal: 8, flex: 1}}>
       <StatusBar backgroundColor="white" barStyle="dark-content" />
-      <View
-        name="searchBarArea"
-        style={{
-          flexDirection: 'row',
-          alignItems: 'center',
-          marginVertical: 10,
-          backgroundColor: '#DCD8D8',
-          height: 30,
-          borderRadius: 10,
-        }}>
+      <View name="searchBarArea" style={styles.searchBar}>
         <Entypo
           name="magnifying-glass"
           size={20}
@@ -81,6 +82,9 @@ const Search = ({route, navigation}) => {
         <TextInput
           placeholder="검색어를 입력해주세요"
           keyboardType="web-search"
+          onChangeText={text => setSearchBarText(text)}
+          value={searchBarText}
+          onSubmitEditing={() => searchBarTextInsert()}
           style={{
             color: '#808080',
           }}
@@ -190,6 +194,14 @@ const postHeight =
   (screenHeight - bottomNavigatorHeight - searchBarHeight - sortBarHeight) / 3;
 const postWidth = (screenWidth - 15) / 3;
 const styles = StyleSheet.create({
+  searchBar: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginVertical: 10,
+    backgroundColor: '#DCD8D8',
+    height: 30,
+    borderRadius: 10,
+  },
   sortView: {
     flexDirection: 'row',
     alignItems: 'center',

@@ -23,21 +23,11 @@ import {
 import {
   PanGestureHandler,
   TouchableOpacity,
-  State,
 } from 'react-native-gesture-handler';
 const Board = ({route, navigation}) => {
   const dispatch = useDispatch();
-  const requestViewName = route.params.requestView
-  // 1.setPostData = Home화면접속시DB부터DATA취득
-  // 2.state.board.port -> postData
-  if("Home" === requestViewName ){
-    dispatch(setPostData(route.params));
-  } else if("Search" === requestViewName){
-    dispatch(setPostData(route.params));
-  }
-
   const postData = useSelector(state => state.board.post);
-  const comments = postData.comments;
+
   // 좋아요 클릭 Count +1
   const contentLikeClick = () => {
     dispatch(incrementLikeCount());
@@ -50,7 +40,7 @@ const Board = ({route, navigation}) => {
       Alert.alert('경고', '데이터를 입력해주세요');
     } else {
       console.log('등륵 실행');
-      dispatch(insertCommentText(commentText));
+      dispatch(insertCommentText({commentText:commentText}));
       setCommentText('')
     }
   };
@@ -62,8 +52,9 @@ const Board = ({route, navigation}) => {
   // 뒤로 가기
   const goBack = (event) => {
       if (event.nativeEvent.translationX > 50 ) {
-        // navigation.goBack();
-        navigation.navigate('Home');
+        // Before View로 이동 
+        const requestViewName = route.params.requestView
+        navigation.navigate(requestViewName);
       }
   };
 
@@ -178,7 +169,7 @@ const Board = ({route, navigation}) => {
                 }}>
                 <View style={{marginHorizontal: 10, marginTop: 10}}>
                   {/* id 순으로 오름차순 정렬 */}
-                  {comments.map((item, index) => (
+                  {postData.comments.map((item, index) => (
                     <View key={index}>
                       <View>
                         <Text>{item.commentWriter}</Text>
@@ -226,6 +217,7 @@ const Board = ({route, navigation}) => {
                         keyboardType="web-search"
                         onChangeText={text => setCommentText(text)}
                         value={commentText}
+                        onSubmitEditing={() => commentTextInsert()}
                       />
                     </View>
                     <TouchableOpacity onPress={() => commentTextInsert()}>

@@ -3,7 +3,7 @@ import {tempData} from '../data/tempData';
 import {log, logInfoReducer} from '../log/log_c';
 
 /**
- * getInitPostList: Home화면 진입시 Post데이터 취득
+ * getInitPostList: 어플 실행시 초기 셋팅 데이터
  * 주의:코멘트는 등록일 기준으로 가져온다
  */
 const homeSlice = createSlice({

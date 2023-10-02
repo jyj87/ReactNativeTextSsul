@@ -6,6 +6,13 @@ import {
   sortFlag,
 } from '../data/tempSearchData';
 
+
+/**
+ * getInitSearchPostList: 어플 실행시 초기 셋팅 데이터
+ * getRefreshData : 스크롤바를 아래를 내렸을 때 추가 데이터 취득
+ * getSortData: 상단 4개의 SortButton클릭시, Sort처리
+ * insertSearchBarText: SearchBar에 Text입력시 처리
+ */
 const searchSlice = createSlice({
   name: 'search',
   initialState: {searchPostList: [], sortFlag},
@@ -42,13 +49,20 @@ const searchSlice = createSlice({
         state.searchPostList,
       );
     },
+      // ★ backEnd sort? frontEnd sort?
     getSortData: (state, action) => {
-      state.sortFlag = action.payload;
+      state.sortFlag = action.payload.sortFlag;
       logInfoReducer('searchSlice', 'getSortData', 'sortFlag', state.sortFlag);
+    },
+      // ★ DB에서 검색어를 통해 데이터를 취득
+    insertSearchBarText: (state, action) => {
+      // action.payload.searchBarText;
+      state.searchPostList = refreshTampSub3PostSet;
+      logInfoReducer('searchSlice', 'insertSearchBarText', 'insertSearchBarTextParam', action.payload.searchBarText);
     },
   },
 });
 
 export default searchSlice.reducer;
-export const {getInitSearchPostList, getRefreshData, getSortData} =
+export const {getInitSearchPostList, getRefreshData, getSortData,insertSearchBarText} =
   searchSlice.actions;
