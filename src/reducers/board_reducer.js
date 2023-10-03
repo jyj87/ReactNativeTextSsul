@@ -20,12 +20,15 @@ const boardSlice = createSlice({
   reducers: {
     setPostData: (state, action) => {
       state.post = action.payload.postData;
-      logInfoReducer(
-        'boardSlice',
-        'setPostData',
-        'postData',
-        state.post,
-      );
+      
+      //★ log 사용 시 proxy null　발생 조사 필요  
+      // log.info(state.post)
+      // logInfoReducer(
+      //   'boardSlice',
+      //   'setPostData',
+      //   'postData',
+      //   log_state_post,
+      // );
     },
     // ★ DB에서 postIndex를 가지고 post 취득
     setSelectSearchPostData: (state, action) => {

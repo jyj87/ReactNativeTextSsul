@@ -19,11 +19,20 @@ import DropDownBoardTypeMenu from '../components/subWrite/DropDownBoardTypeMenu'
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import {Button, Image} from 'react-native-elements';
 import {CameraRoll} from '@react-native-camera-roll/camera-roll';
+import {useNavigation} from '@react-navigation/native';
+import {useDispatch} from 'react-redux';
+import {insertPost} from '../reducers/write_reducer';
 
 const Write = () => {
   const [count, setCount] = useState('테스트입니다');
   const [photoList, setPhotoList] = useState([]);
   const [selectedPhoto, setSelectedPhoto] = useState(null);
+  const [title, setTitle] = useState('');
+  const [context, setContext] = useState('');
+  const [selectedBoardTypeValue, setSelectedBoardTypeValue] = useState('item1');
+  const [selectedHashTypeValue, setSelectedHashTypeValue] = useState('item1');
+  const navigation = useNavigation();
+  const dispatch = useDispatch();
 
   // 렌더링 시 한번만 실행
   useEffect(() => {
@@ -42,7 +51,7 @@ const Write = () => {
       console.log('앨범 데이터 가져오기 실패: '.err);
     }
   };
-  
+
   const getUserSelectPhoto = () => {
     const options = {
       title: '이미지 선택',
@@ -50,7 +59,7 @@ const Write = () => {
       takePhotoButtonTitle: '카메라로 사진 찍기',
       chooseFromLibraryButtonTitle: '앨범에서 사진 선택',
     };
-    launchImageLibrary(options, (response) => {
+    launchImageLibrary(options, response => {
       if (response.didCancel) {
         console.log('사용자가 취소했습니다.');
       } else if (response.error) {
@@ -58,16 +67,40 @@ const Write = () => {
       } else {
         const selectedImageUri = response.assets[0].uri;
         setSelectedPhoto(selectedImageUri);
-        console.log('선택한 사진 데이터 취득 성공')
+        console.log('선택한 사진 데이터 취득 성공');
       }
     });
+  };
 
+  // 게시글 등록
+  const setPost = () => {
+    //validation Check 추가 필요 
+    dispatch(
+      insertPost({
+        insertData: [
+          title,
+          context,
+          selectedBoardTypeValue,
+          selectedHashTypeValue,
+          selectedPhoto,
+        ],
+      }),
+    );
+    moveHome()
+  };
+
+  // cancel button -> home 이동
+  const moveHome = () => {
+    navigation.navigate('Home', {
+      requestView: 'Write',
+    });
   };
 
   return (
     <SafeAreaView edges={['top']} style={{marginHorizontal: 8, flex: 1}}>
       <StatusBar backgroundColor="white" barStyle="dark-content" />
-      <View>
+      <View style={{flex: 1}}>
+        {/* ================== insertDeleteArea ================== */}
         <View
           name="insertDeleteArea"
           style={{
@@ -76,10 +109,16 @@ const Write = () => {
             justifyContent: 'space-between',
             paddingBottom: 10,
           }}>
-          <View>
+          <TouchableOpacity
+            onPress={() => {
+              moveHome();
+            }}>
             <Octicons name="x" size={25} color="black" />
-          </View>
-          <View
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              setPost();
+            }}
             style={{
               flexDirection: 'row',
               alignItems: 'center',
@@ -90,12 +129,15 @@ const Write = () => {
             }}>
             <FontAwesome name="send" size={13} color="black" />
             <Text style={{marginHorizontal: 8}}>등록</Text>
-          </View>
+          </TouchableOpacity>
         </View>
+        {/* ================== insertDeleteArea ================== */}
+        {/* ================== inputTitleArea ================== */}
         <View name="inputTitleArea" style={{alignItems: 'center'}}>
           <View>
             <TextInput
               placeholder="제목을 입력하세요"
+              onChangeText={text => setTitle(text)}
               style={{
                 backgroundColor: '#DCD8D8',
                 borderRadius: 15,
@@ -105,6 +147,8 @@ const Write = () => {
             />
           </View>
         </View>
+        {/* ================== inputTitleArea ================== */}
+        {/* ================== dropDownMenuArea ================== */}
         <View
           name="dropDownMenuArea"
           style={[
@@ -113,61 +157,95 @@ const Write = () => {
               : androidDropDownMenu,
           ]}>
           <View>
-            <DropDownHashTypeMenu />
+            <DropDownHashTypeMenu
+              selectedHashTypeValue={selectedHashTypeValue}
+              setSelectedHashTypeValue={setSelectedHashTypeValue}
+            />
           </View>
           <View style={{paddingLeft: 3}}>
-            <DropDownBoardTypeMenu />
+            <DropDownBoardTypeMenu
+              selectedBoardTypeValue={selectedBoardTypeValue}
+              setSelectedBoardTypeValue={setSelectedBoardTypeValue}
+            />
           </View>
         </View>
+        {/* ================== dropDownMenuArea ================== */}
+        {/* ================== Line ================== */}
         <View style={{alignItems: 'center'}}>
           <View style={styles.textLine} />
         </View>
-        <View name="inputBodyArea">
-          <View name="inputTextBody">
+        {/* ================== Line ================== */}
+        {/* ================== inputTextBody ================== */}
+        <View
+          name="inputTextBody"
+          style={{
+            backgroundColor: '#DCD8D8',
+            borderRadius: 15,
+            height: 500,
+            alignItems: 'center',
+          }}>
+          {selectedPhoto && (
+            <View>
+              <Image
+                source={{uri: selectedPhoto}}
+                style={{
+                  width: (500 / 10) * 5,
+                  height: (500 / 10) * 5,
+                  borderRadius: 15,
+                  marginVertical: 10,
+                }}
+              />
+            </View>
+          )}
+          <ScrollView horizontal={false}>
             <TextInput
               placeholder="내용을 입력하세요"
+              multiline={true}
+              onChangeText={text => setContext(text)}
               style={{
-                backgroundColor: '#DCD8D8',
-                borderRadius: 15,
-                height: 300,
-              }}></TextInput>
-          </View>
+                paddingTop: 10,
+                width: (500 / 10) * 5,
+                height: (500 / 10) * 4,
+              }}
+            />
+          </ScrollView>
+        </View>
+        {/* ================== inputTextBody ================== */}
+        {/* ================== inputImageSelect ================== */}
+        <View name="inputImageSelect" style={{}}>
           <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-            <View name="inputImageSelect">
-              <View style={{flexDirection: 'row'}}>
-                <View style={{paddingHorizontal: 2, paddingVertical: 6}}>
-                  <TouchableOpacity
+            <View style={{flexDirection: 'row'}}>
+              <View style={{paddingHorizontal: 2, paddingVertical: 6}}>
+                <TouchableOpacity
                   onPress={getUserSelectPhoto}
-                    style={{
-                      width: 70,
-                      height: 70,
-                      borderRadius: 15,
-                      backgroundColor: '#DCD8D8',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                    }}>
-                    <MaterialIcons
-                      name="photo-camera"
-                      size={35}
-                      color="black"
-                    />
-                  </TouchableOpacity>
-                </View>
-                {photoList.map((photo, index) => (
-                  <View
-                    key={index}
-                    style={{paddingHorizontal: 2, paddingVertical: 6}}>
-                    <Image
-                      source={{uri: photo.node.image.uri}}
-                      style={{width: 70, height: 70, borderRadius: 15}}
-                    />
-                  </View>
-                ))}
+                  style={{
+                    width: 70,
+                    height: 70,
+                    borderRadius: 15,
+                    backgroundColor: '#DCD8D8',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}>
+                  <MaterialIcons name="photo-camera" size={35} color="black" />
+                </TouchableOpacity>
               </View>
-              {selectedPhoto && <Image source={{ uri: selectedPhoto }} style={styles.image} />}
+              {photoList.map((photo, index) => (
+                <TouchableOpacity
+                  key={index}
+                  onPress={() => {
+                    setSelectedPhoto(photo.node.image.uri);
+                  }}
+                  style={{paddingHorizontal: 2, paddingVertical: 6}}>
+                  <Image
+                    source={{uri: photo.node.image.uri}}
+                    style={{width: 70, height: 70, borderRadius: 15}}
+                  />
+                </TouchableOpacity>
+              ))}
             </View>
           </ScrollView>
         </View>
+        {/* ================== inputImageSelect ================== */}
       </View>
     </SafeAreaView>
   );

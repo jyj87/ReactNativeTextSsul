@@ -4,8 +4,7 @@ import DropDownPicker from 'react-native-dropdown-picker';
 import Feather from 'react-native-vector-icons/Feather';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-const DropDownHashTypeMenu = () => {
-  const [selectedValue, setSelectedValue] = useState('item1');
+const DropDownHashTypeMenu = ({selectedHashTypeValue,setSelectedHashTypeValue}) => {
   const [open, setOpen] = useState(false);
   const items = [
     {
@@ -45,10 +44,10 @@ const DropDownHashTypeMenu = () => {
   return (
     <DropDownPicker
       open={open}
-      value={selectedValue}
+      value={selectedHashTypeValue}
       items={items}
       setOpen={setOpen}
-      setValue={setSelectedValue}
+      setValue={setSelectedHashTypeValue}
       style={styles.baseStyle}
       containerStyle={styles.containerStyle}
       labelStyle={styles.labelStyle}

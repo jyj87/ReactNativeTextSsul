@@ -8,8 +8,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
 
 
-const DropDownBoardTypeMenu = () => {
-  const [selectedValue, setSelectedValue] = useState('item1');
+const DropDownBoardTypeMenu = ({selectedBoardTypeValue,setSelectedBoardTypeValue}) => {
   const [open, setOpen] = useState(false);
   const items = [
     {
@@ -49,10 +48,10 @@ const DropDownBoardTypeMenu = () => {
   return (
     <DropDownPicker
       open={open}
-      value={selectedValue}
+      value={selectedBoardTypeValue}
       items={items}
       setOpen={setOpen}
-      setValue={setSelectedValue}
+      setValue={setSelectedBoardTypeValue}
       style={styles.baseStyle}
       containerStyle={styles.containerStyle}
       labelStyle={styles.labelStyle}

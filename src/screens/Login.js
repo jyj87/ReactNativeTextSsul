@@ -2,7 +2,10 @@ import {View, Text, StatusBar, StyleSheet, TouchableOpacity} from 'react-native'
 import React, { useState } from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import { TextInput } from 'react-native-gesture-handler';
+import { ThemeProvider, Text as RNEText } from 'react-native-elements';
 
+
+// TODO 폰트 적용은 나중에
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -12,6 +15,12 @@ const Login = () => {
     console.log('로그인 버튼이 클릭되었습니다.');
     console.log('이메일:', email);
     console.log('비밀번호:', password);
+  };
+
+  const theme = {
+    fonts: {
+      regular: 'Caveat-Bold', // 폰트 이름
+    },
   };
 
   return (
@@ -33,7 +42,9 @@ const Login = () => {
           value={password}
         />
         <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
-          <Text style={styles.loginButtonText}>로그인</Text>
+          <ThemeProvider theme={theme}>
+            <RNEText>login</RNEText>
+          </ThemeProvider>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
