@@ -2,9 +2,9 @@ import {StatusBar, StyleSheet} from 'react-native';
 import React, {useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useSelector} from 'react-redux';
-import SearchBarArea from '../components/\bsubSearch/SearchBarArea';
-import SortArea from '../components/\bsubSearch/SortArea';
-import ContentArea from '../components/\bsubSearch/ContentArea';
+import SearchBarArea from '../components/subSearch/SearchBarArea';
+import SortArea from '../components/subSearch/SortArea';
+import ContentArea from '../components/subSearch/ContentArea';
 
 const Search = ({route, navigation}) => {
   const searchPostList = useSelector(state => state.search.searchPostList);
