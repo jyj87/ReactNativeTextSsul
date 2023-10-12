@@ -1,12 +1,21 @@
-import {View, Text, StatusBar, StyleSheet, Dimensions} from 'react-native';
+import {
+  View,
+  Text,
+  StatusBar,
+  StyleSheet,
+  Dimensions,
+  TouchableOpacity,
+} from 'react-native';
 import React, {useRef, useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useNavigation} from '@react-navigation/native';
 import {FlatList, ScrollView} from 'react-native-gesture-handler';
 import {userInfo} from '../data/tempProfileData';
+import {Image} from 'react-native-elements';
 import Entypo from 'react-native-vector-icons/Entypo';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 const testData = userInfo;
 
@@ -52,21 +61,27 @@ const Profile = () => {
             {flexDirection: 'row', marginBottom: 20},
           ]}>
           <View style={{alignItems: 'center'}}>
-            <Text style={{fontWeight: 'bold'}}>{testData.user.postCount}</Text>
+            <Text style={{fontWeight: 'bold', marginBottom: 5}}>
+              {testData.user.postCount}
+            </Text>
             <Text>게시물</Text>
           </View>
 
           <View style={styles.horizontalLine} />
 
           <View style={{alignItems: 'center'}}>
-            <Text style={{fontWeight: 'bold'}}>{testData.user.postCount}</Text>
+            <Text style={{fontWeight: 'bold', marginBottom: 5}}>
+              {testData.user.postCount}
+            </Text>
             <Text>구독자</Text>
           </View>
 
           <View style={styles.horizontalLine} />
 
           <View style={{alignItems: 'center'}}>
-            <Text style={{fontWeight: 'bold'}}>{testData.user.postCount}</Text>
+            <Text style={{fontWeight: 'bold', marginBottom: 5}}>
+              {testData.user.postCount}
+            </Text>
             <Text>잉여력</Text>
           </View>
         </View>
@@ -74,18 +89,19 @@ const Profile = () => {
         <View
           name-="optionButtonArea"
           style={[styles.textBaseView, {flexDirection: 'row'}]}>
-          <View style={styles.baseIconView}>
+          <TouchableOpacity style={styles.baseIconView}>
             <Entypo name="shop" size={35} color="black" />
-            <Text>shop</Text>
-          </View>
-          <View style={[styles.baseIconView, {marginHorizontal: 30}]}>
+            <Text style={{marginTop: 5}}>shop</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.baseIconView, {marginHorizontal: 30}]}>
             <AntDesign name="setting" size={35} color="black" />
-            <Text>설정</Text>
-          </View>
-          <View style={styles.baseIconView}>
+            <Text style={{marginTop: 5}}>설정</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.baseIconView}>
             <Ionicons name="notifications" size={35} color="black" />
-            <Text>알림</Text>
-          </View>
+            <Text style={{marginTop: 5}}>알림</Text>
+          </TouchableOpacity>
         </View>
       </View>
 
@@ -140,10 +156,42 @@ const Profile = () => {
                 return (
                   <ScrollView style={styles.postAndCommentView}>
                     {item.postAndComment.map((i, index) => (
-                      <View key={index}>
-                        <Text>test</Text>
-                        <Text>{i.name}</Text>
-                      </View>
+                      <TouchableOpacity key={index}>
+                        <View style={{flexDirection: 'row', marginBottom: 5}}>
+                          <Image
+                            source={i.postCoverImage}
+                            style={styles.postListImage}
+                          />
+                          <View style={styles.postListTextView}>
+                            <Text style={{fontWeight:'bold'}}>{i.postTitle}</Text>
+                            <View
+                              style={{
+                                flexDirection: 'row',
+                                alignItems: 'center',
+                              }}>
+                              <Ionicons name="heart" size={15} color="black" />
+                              <Text style={{marginRight: 5}}>
+                                {i.postLikeCount}
+                              </Text>
+                              <Ionicons name="eye" size={15} color="black" />
+                              <Text style={{marginRight: 5}}>
+                                {i.postViewCount}
+                              </Text>
+                              <MaterialIcons
+                                name="comment"
+                                size={15}
+                                color="black"
+                              />
+                              <Text style={{marginRight: 5}}>
+                                {i.postViewCount}
+                              </Text>
+                              <Text style={{marginRight: 5}}>
+                                {i.createdDate}
+                              </Text>
+                            </View>
+                          </View>
+                        </View>
+                      </TouchableOpacity>
                     ))}
                   </ScrollView>
                 );
@@ -151,10 +199,25 @@ const Profile = () => {
                 return (
                   <ScrollView style={styles.postAndCommentView}>
                     {item.postAndComment.map((i, index) => (
-                      <View key={index}>
-                        <Text>test</Text>
-                        <Text>{i.name}</Text>
-                      </View>
+                      <TouchableOpacity key={index}>
+                        <View style={{flexDirection: 'row', marginBottom: 5}}>
+                          <Image
+                            source={i.postCoverImage}
+                            style={styles.postListImage}
+                          />
+                          <View style={styles.postListTextView}>
+                            <Text style={{fontWeight: 'bold'}}>
+                              {i.postTitle}
+                            </Text>
+                            <Text>{i.commentContext}</Text>
+                            <View style={{flexDirection: 'row'}}>
+                              <Ionicons name="heart" size={15} color="black" />
+                              <Text style={{marginRight: 5}} value>{i.commentLikeCount}</Text>
+                              <Text style={{marginRight: 5}}>{i.createdDate}</Text>
+                            </View>
+                          </View>
+                        </View>
+                      </TouchableOpacity>
                     ))}
                   </ScrollView>
                 );
@@ -175,9 +238,24 @@ const Profile = () => {
 
 const screenWidth = Dimensions.get('window').width;
 const styles = StyleSheet.create({
+  postListImage: {
+    width: screenWidth * (1 / 5),
+    height: screenWidth * (1 / 5),
+    borderRadius: 15,
+    marginLeft: 10,
+  },
+  postListTextView: {
+    marginHorizontal: 15,
+    width: screenWidth * (4 / 5),
+    justifyContent: 'center',
+    paddingBottom:5,
+    borderBottomWidth: 1, // 라인 두께
+    borderBottomColor: '#DCD8D8', // 라인 색상
+  },
   customScrollbar: {
     height: 3,
     backgroundColor: '#DCD8D8',
+    marginBottom: 10,
   },
   baseIconView: {
     width: 100,
