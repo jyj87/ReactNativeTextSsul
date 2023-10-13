@@ -12,15 +12,19 @@ import {useNavigation} from '@react-navigation/native';
 import {FlatList, ScrollView} from 'react-native-gesture-handler';
 import {userInfo} from '../data/tempProfileData';
 import {Image} from 'react-native-elements';
+import {useDispatch} from 'react-redux';
+import {setSelectSearchPostData} from '../reducers/board_reducer';
 import Entypo from 'react-native-vector-icons/Entypo';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
 
 const testData = userInfo;
 
 const Profile = () => {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
   // 스크롤바 x축
   const [scrollPosition, setScrollPosition] = useState(0);
   // 스크롤바 x축 취득
@@ -35,8 +39,21 @@ const Profile = () => {
   const scrollbarPosition =
     scrollbarWidth * (scrollPosition / Dimensions.get('window').width);
 
-  const goLogin = () => {
+  const moveLogin = () => {
     navigation.navigate('Login');
+  };
+  const moveShop = () => {
+    navigation.navigate('Shop');
+  };
+  const moveSetting = () => {
+    navigation.navigate('Setting');
+  };
+  const moveNotice = () => {
+    navigation.navigate('Notice');
+  };
+  const moveBoard = postIndex => {
+    navigation.navigate('Board', {requestView: 'Profile'});
+    dispatch(setSelectSearchPostData({postIndex: postIndex}));
   };
 
   return (
@@ -44,10 +61,16 @@ const Profile = () => {
       <StatusBar backgroundColor="white" barStyle="dark-content" />
 
       <View name="profileArea" style={styles.profileArea}>
+
         <View
           name="userNameView"
-          style={[styles.textBaseView, {marginTop: 10}]}>
-          <Text style={{fontSize: 35}}>{testData.user.userName}</Text>
+          style={[styles.textBaseView]}>
+             <View style={{flexDirection:'row'}}>
+             <FontAwesome6 name="ranking-star" size={15} color="black" />
+             <Text style={{marginLeft:3}}>{testData.user.userLv}</Text>
+             </View>
+             
+          <Text style={{fontSize: 30}}>{testData.user.userName}</Text>
         </View>
 
         <View name="userEmailView" style={styles.textBaseView}>
@@ -89,16 +112,21 @@ const Profile = () => {
         <View
           name-="optionButtonArea"
           style={[styles.textBaseView, {flexDirection: 'row'}]}>
-          <TouchableOpacity style={styles.baseIconView}>
+          <TouchableOpacity
+            onPress={() => moveShop()}
+            style={styles.baseIconView}>
             <Entypo name="shop" size={35} color="black" />
             <Text style={{marginTop: 5}}>shop</Text>
           </TouchableOpacity>
           <TouchableOpacity
+            onPress={() => moveSetting()}
             style={[styles.baseIconView, {marginHorizontal: 30}]}>
             <AntDesign name="setting" size={35} color="black" />
             <Text style={{marginTop: 5}}>설정</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.baseIconView}>
+          <TouchableOpacity
+            onPress={() => moveNotice()}
+            style={styles.baseIconView}>
             <Ionicons name="notifications" size={35} color="black" />
             <Text style={{marginTop: 5}}>알림</Text>
           </TouchableOpacity>
@@ -156,14 +184,18 @@ const Profile = () => {
                 return (
                   <ScrollView style={styles.postAndCommentView}>
                     {item.postAndComment.map((i, index) => (
-                      <TouchableOpacity key={index}>
+                      <TouchableOpacity
+                        onPress={() => moveBoard(i.postIndex)}
+                        key={index}>
                         <View style={{flexDirection: 'row', marginBottom: 5}}>
                           <Image
                             source={i.postCoverImage}
                             style={styles.postListImage}
                           />
                           <View style={styles.postListTextView}>
-                            <Text style={{fontWeight:'bold'}}>{i.postTitle}</Text>
+                            <Text style={{fontWeight: 'bold'}}>
+                              {i.postTitle}
+                            </Text>
                             <View
                               style={{
                                 flexDirection: 'row',
@@ -199,7 +231,9 @@ const Profile = () => {
                 return (
                   <ScrollView style={styles.postAndCommentView}>
                     {item.postAndComment.map((i, index) => (
-                      <TouchableOpacity key={index}>
+                      <TouchableOpacity
+                        onPress={() => moveBoard(i.postIndex)}
+                        key={index}>
                         <View style={{flexDirection: 'row', marginBottom: 5}}>
                           <Image
                             source={i.postCoverImage}
@@ -212,8 +246,12 @@ const Profile = () => {
                             <Text>{i.commentContext}</Text>
                             <View style={{flexDirection: 'row'}}>
                               <Ionicons name="heart" size={15} color="black" />
-                              <Text style={{marginRight: 5}} value>{i.commentLikeCount}</Text>
-                              <Text style={{marginRight: 5}}>{i.createdDate}</Text>
+                              <Text style={{marginRight: 5}} value>
+                                {i.commentLikeCount}
+                              </Text>
+                              <Text style={{marginRight: 5}}>
+                                {i.createdDate}
+                              </Text>
                             </View>
                           </View>
                         </View>
@@ -229,7 +267,7 @@ const Profile = () => {
         </View>
       </View>
 
-      {/* <TouchableOpacity style={styles.roundedView} onPress={() => goLogin()}>
+      {/* <TouchableOpacity style={styles.roundedView} onPress={() => moveLogin()}>
           <Text style={{color: 'black', fontSize: 15}}>Login 하기</Text>
         </TouchableOpacity> */}
     </SafeAreaView>
@@ -248,7 +286,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 15,
     width: screenWidth * (4 / 5),
     justifyContent: 'center',
-    paddingBottom:5,
+    paddingBottom: 5,
     borderBottomWidth: 1, // 라인 두께
     borderBottomColor: '#DCD8D8', // 라인 색상
   },

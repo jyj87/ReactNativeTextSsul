@@ -10,10 +10,9 @@ import Search from './src/screens/Search';
 import Write from './src/screens/Write';
 import Board from './src/screens/Board';
 import Login from './src/screens/Login';
-import TempScreen2 from './src/screens/TempScreen2';
-import TempScreen3 from './src/screens/TempScreen3';
-import TempScreen4 from './src/screens/TempScreen4';
-import TempScreen5 from './src/screens/TempScreen5';
+import Shop from './src/screens/Shop';
+import Setting from './src/screens/Setting';
+import Notice from './src/screens/Notice';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -81,10 +80,9 @@ const App = () => {
       <NavigationContainer>
         <Stack.Navigator screenOptions={{headerShown: false}}>
           <Stack.Screen name="Bottom" component={BottomTabScreen} />
-          <Stack.Screen name="TempScreen2" component={TempScreen2} />
-          <Stack.Screen name="TempScreen3" component={TempScreen3} />
-          <Stack.Screen name="TempScreen4" component={TempScreen4} />
-          <Stack.Screen name="TempScreen5" component={TempScreen5} />
+          <Stack.Screen name="Shop" component={Shop} />
+          <Stack.Screen name="Setting" component={Setting} />
+          <Stack.Screen name="Notice" component={Notice} />
         </Stack.Navigator>
       </NavigationContainer>
     </GestureHandlerRootView>

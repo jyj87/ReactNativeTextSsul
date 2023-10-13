@@ -2,6 +2,7 @@ export const userInfo = {
   user: {
     userName: 'Jeong youngjun',
     userEmail: 'xxxxxx@gmail.com',
+    userLv:32,
     postCount: 5,
     subscriberCount: 300,
     point: 10000,
