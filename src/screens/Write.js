@@ -1,29 +1,14 @@
-import {
-  View,
-  Text,
-  StyleSheet,
-  StatusBar,
-  TextInput,
-  ImageBackground,
-  Alert,
-  ScrollView,
-  TouchableOpacity,
-} from 'react-native';
+import {View, StyleSheet, StatusBar} from 'react-native';
 import React, {useState, useEffect} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import {CameraRoll} from '@react-native-camera-roll/camera-roll';
 import DropDownHashTypeMenu from '../components/subWrite/DropDownHashTypeMenu';
 import DropDownBoardTypeMenu from '../components/subWrite/DropDownBoardTypeMenu';
-import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
-import {Button, Image} from 'react-native-elements';
-import {CameraRoll} from '@react-native-camera-roll/camera-roll';
-import {useNavigation} from '@react-navigation/native';
-import {useDispatch} from 'react-redux';
-import {insertPost} from '../reducers/write_reducer';
 import InsertDeleteArea from '../components/subWrite/InsertDeleteArea';
 import InputTitleArea from '../components/subWrite/InputTitleArea';
 import InputTextBody from '../components/subWrite/InputTextBody';
 import InputImageSelect from '../components/subWrite/InputImageSelect';
+import LineWrite from '../components/subWrite/LineWrite';
 
 const Write = () => {
   const [photoList, setPhotoList] = useState([]);
@@ -81,11 +66,7 @@ const Write = () => {
           />
         </View>
       </View>
-      {/* ================== Line ================== */}
-      <View style={{alignItems: 'center'}}>
-        <View style={styles.textLine} />
-      </View>
-      {/* ================== Line ================== */}
+      <LineWrite />
       <InputTextBody selectedPhoto={selectedPhoto} setContext={setContext} />
       <InputImageSelect
         photoList={photoList}
@@ -97,12 +78,6 @@ const Write = () => {
 };
 
 const styles = StyleSheet.create({
-  textLine: {
-    borderTopWidth: 1,
-    borderTopColor: 'gray',
-    width: '95%',
-    marginVertical: 10,
-  },
   iosDropDownMenu: {
     paddingTop: 10,
     flexDirection: 'row',

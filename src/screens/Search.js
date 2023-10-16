@@ -14,14 +14,11 @@ const Search = ({route, navigation}) => {
   return (
     <SafeAreaView edges={['top']} style={{marginHorizontal: 8, flex: 1}}>
       <StatusBar backgroundColor="white" barStyle="dark-content" />
-
       <SearchBarArea
         searchBarText={searchBarText}
         setSearchBarText={setSearchBarText}
       />
-
       <SortArea />
-
       <ContentArea
         isLoading={isLoading}
         setIsLoading={setIsLoading}
