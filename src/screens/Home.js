@@ -75,13 +75,12 @@ const Home = () => {
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
 const statusBarHeight = StatusBar.currentHeight;
-const bottomNavigatorHeight = 120;
+const bottomNavigatorHeight = 106.5;
 const styles = StyleSheet.create({
   backgroundImage: {
     flex: 1,
     width: screenWidth,
-    height: screenHeight - statusBarHeight - bottomNavigatorHeight,
-    // height: '100%',
+    height: screenHeight- statusBarHeight- bottomNavigatorHeight,
   },
   baseFlex: {
     flex: 1,
