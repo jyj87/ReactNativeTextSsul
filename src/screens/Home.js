@@ -7,24 +7,15 @@ import {
   Dimensions,
   FlatList,
 } from 'react-native';
-import React, {useEffect} from 'react';
+import React from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useNavigation} from '@react-navigation/native';
 import {useSelector, useDispatch} from 'react-redux';
-import {getInitPostList} from '../reducers/home_reducer';
-import {getInitSearchPostList} from '../reducers/search_reducer';
 import {setPostData} from '../reducers/board_reducer';
-import {getInitRankPostList} from '../reducers/rank_reducer';
-
 const Home = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  //초기화면이 Home 기본 데이터 취득
-  useEffect(() => {
-    dispatch(getInitPostList());
-    dispatch(getInitSearchPostList());
-    dispatch(getInitRankPostList());
-  }, []);
+
   //Home Data 취득
   const homePostList = useSelector(state => state.home.homePostList);
 
@@ -80,7 +71,7 @@ const styles = StyleSheet.create({
   backgroundImage: {
     flex: 1,
     width: screenWidth,
-    height: screenHeight- statusBarHeight- bottomNavigatorHeight,
+    height: screenHeight - statusBarHeight - bottomNavigatorHeight,
   },
   baseFlex: {
     flex: 1,

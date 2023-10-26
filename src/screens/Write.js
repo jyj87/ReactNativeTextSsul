@@ -33,7 +33,7 @@ const Write = () => {
       });
       setPhotoList(edges);
     } catch (err) {
-      console.log('앨범 데이터 가져오기 실패: '.err);
+      console.log('앨범 데이터 가져오기 실패: ', err);
     }
   };
 

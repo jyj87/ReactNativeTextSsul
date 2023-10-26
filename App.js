@@ -2,7 +2,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {NavigationContainer} from '@react-navigation/native';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
-import React from 'react';
+import React, { useEffect } from 'react';
 import Home from './src/screens/Home';
 import Profile from './src/screens/Profile';
 import Rank from './src/screens/Rank';
@@ -16,10 +16,23 @@ import Notice from './src/screens/Notice';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { useDispatch } from 'react-redux';
+import {getInitPostList} from './src/reducers/home_reducer';
+import {getInitSearchPostList} from './src/reducers/search_reducer';
+import {getInitRankPostList} from './src/reducers/rank_reducer';
+import {homeActions} from './src/actions/homeActions';
 
 const App = () => {
   const Stack = createNativeStackNavigator();
   const Tab = createBottomTabNavigator();
+  const dispatch = useDispatch();
+   //초기 데이터 취득
+   useEffect(() => {
+    dispatch(getInitPostList());
+    dispatch(getInitSearchPostList());
+    dispatch(getInitRankPostList());
+    homeActions('InitPostList');
+  }, []);
   const BottomTabScreen = () => {
     return (
       <Tab.Navigator
