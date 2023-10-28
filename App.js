@@ -20,7 +20,7 @@ import { useDispatch } from 'react-redux';
 import {getInitPostList} from './src/reducers/home_reducer';
 import {getInitSearchPostList} from './src/reducers/search_reducer';
 import {getInitRankPostList} from './src/reducers/rank_reducer';
-import {homeActions} from './src/actions/homeActions';
+import {homeRequests} from './src/api/homeRequests'
 
 const App = () => {
   const Stack = createNativeStackNavigator();
@@ -31,7 +31,7 @@ const App = () => {
     dispatch(getInitPostList());
     dispatch(getInitSearchPostList());
     dispatch(getInitRankPostList());
-    homeActions('InitPostList');
+    homeRequests("initData")
   }, []);
   const BottomTabScreen = () => {
     return (
