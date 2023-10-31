@@ -21,6 +21,7 @@ import {getInitPostList} from './src/reducers/home_reducer';
 import {getInitSearchPostList} from './src/reducers/search_reducer';
 import {getInitRankPostList} from './src/reducers/rank_reducer';
 import {homeRequests} from './src/api/homeRequests'
+import {HomeEnum} from './src/enum/requestConst';
 
 const App = () => {
   const Stack = createNativeStackNavigator();
@@ -31,7 +32,7 @@ const App = () => {
     dispatch(getInitPostList());
     dispatch(getInitSearchPostList());
     dispatch(getInitRankPostList());
-    homeRequests("initData")
+    homeRequests(HomeEnum.INIT_DATA)
   }, []);
   const BottomTabScreen = () => {
     return (
