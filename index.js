@@ -11,11 +11,11 @@ import {name as appName} from './app.json';
 
 const ReduxApp = () => (
   // StrictMode 개발환경에서 로그 및 관리를 하기위해서 useEffect 두번 실행함 조사가 필요
-  <StrictMode>
+  // <StrictMode>
     <Provider store={store}>
       <App />
     </Provider>
-  </StrictMode>
+  // </StrictMode>
 );
 
 
