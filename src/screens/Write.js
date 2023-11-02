@@ -15,8 +15,8 @@ const Write = () => {
   const [selectedPhoto, setSelectedPhoto] = useState(null);
   const [title, setTitle] = useState('');
   const [context, setContext] = useState('');
-  const [selectedBoardTypeValue, setSelectedBoardTypeValue] = useState('item1');
-  const [selectedHashTypeValue, setSelectedHashTypeValue] = useState('item1');
+  const [selectedBoardTypeValue, setSelectedBoardTypeValue] = useState('1');
+  const [selectedHashTypeValue, setSelectedHashTypeValue] = useState('1');
 
   // 렌더링 시 한번만 실행
   useEffect(() => {

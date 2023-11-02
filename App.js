@@ -20,8 +20,6 @@ import { useDispatch } from 'react-redux';
 import {getInitPostList} from './src/reducers/home_reducer';
 import {getInitSearchPostList} from './src/reducers/search_reducer';
 import {getInitRankPostList} from './src/reducers/rank_reducer';
-import {homeRequests} from './src/api/homeRequests'
-import {HomeEnum} from './src/enum/requestConst';
 import { loginRequests } from './src/api/loginRequests';
 import {LoginEnum} from './src/enum/requestConst';
 

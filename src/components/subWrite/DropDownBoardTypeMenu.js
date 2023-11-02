@@ -8,12 +8,13 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
 
 
+//ArticleType
 const DropDownBoardTypeMenu = ({selectedBoardTypeValue,setSelectedBoardTypeValue}) => {
   const [open, setOpen] = useState(false);
   const items = [
     {
       label: '게시글',
-      value: 'item1',
+      value: '1',
       icon: () => (
         <Foundation
           name="clipboard-pencil"
@@ -24,7 +25,7 @@ const DropDownBoardTypeMenu = ({selectedBoardTypeValue,setSelectedBoardTypeValue
     },
     {
       label: '인기투표',
-      value: 'item2',
+      value: '2',
       icon: () => (
         <MaterialCommunityIcons
           name="vote"
@@ -35,7 +36,7 @@ const DropDownBoardTypeMenu = ({selectedBoardTypeValue,setSelectedBoardTypeValue
     },
     {
       label: '찬반결정',
-      value: 'item3',
+      value: '3',
       icon: () => (
         <FontAwesome6
           name="circle-half-stroke"

@@ -29,6 +29,13 @@ const WriteEnum = Object.freeze({
   CREATE_POST: 'createPost',
 });
 
+const ReadEnum = Object.freeze({
+  //post登録
+  ARTICLE_READ: 'articleRead',
+
+  COMMENT_READ: 'commentRead',
+});
+
 const RankEnum = Object.freeze({
   //初期postデータ取得
   INIT_DATA: 'intiData',
@@ -63,4 +70,5 @@ export {
   ProfileEnum,
   BoardEnum,
   LoginEnum,
+  ReadEnum,
 };

@@ -7,6 +7,8 @@ import {useDispatch} from 'react-redux';
 import {insertPost} from '../../reducers/write_reducer';
 import Octicons from 'react-native-vector-icons/Octicons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import {writeRequests} from '../../api/writeRequests';
+import { WriteEnum } from '../../enum/requestConst';
 
 const InsertDeleteArea = ({
   title,
@@ -27,18 +29,25 @@ const InsertDeleteArea = ({
 
   // 게시글 등록
   const setPost = () => {
+    writeRequests(WriteEnum.CREATE_POST, [
+      title,
+      null,
+      selectedHashTypeValue,
+      selectedBoardTypeValue,
+      context,
+    ]);
     //validation Check 추가 필요
-    dispatch(
-      insertPost({
-        insertData: [
-          title,
-          context,
-          selectedBoardTypeValue,
-          selectedHashTypeValue,
-          selectedPhoto,
-        ],
-      }),
-    );
+    // dispatch(
+    //   insertPost({
+    //     insertData: [
+    //       title,
+    //       context,
+    //       selectedBoardTypeValue,
+    //       selectedHashTypeValue,
+    //       selectedPhoto,
+    //     ],
+    //   }),
+    // );
     moveHome();
   };
   return (

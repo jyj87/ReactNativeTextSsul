@@ -4,12 +4,13 @@ import DropDownPicker from 'react-native-dropdown-picker';
 import Feather from 'react-native-vector-icons/Feather';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
+//ArticleCategory
 const DropDownHashTypeMenu = ({selectedHashTypeValue,setSelectedHashTypeValue}) => {
   const [open, setOpen] = useState(false);
   const items = [
     {
       label: '유머',
-      value: 'item1',
+      value: '1',
       icon: () => (
         <Feather
           name="hash"
@@ -20,7 +21,7 @@ const DropDownHashTypeMenu = ({selectedHashTypeValue,setSelectedHashTypeValue}) 
     },
     {
       label: '사랑',
-      value: 'item2',
+      value: '2',
       icon: () => (
         <Feather
           name="hash"
@@ -31,7 +32,7 @@ const DropDownHashTypeMenu = ({selectedHashTypeValue,setSelectedHashTypeValue}) 
     },
     {
       label: '취업',
-      value: 'item3',
+      value: '3',
       icon: () => (
         <Feather
           name="hash"
