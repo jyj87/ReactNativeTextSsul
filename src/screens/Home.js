@@ -11,7 +11,9 @@ import React from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useNavigation} from '@react-navigation/native';
 import {useSelector, useDispatch} from 'react-redux';
-import {setPostData} from '../reducers/board_reducer';
+import {setArticleData} from '../reducers/board_reducer';
+import {readRequests} from '../api/readRequests';
+import {ReadEnum} from '../enum/requestConst';
 const Home = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
@@ -19,10 +21,17 @@ const Home = () => {
   //Home Data 취득
   const homeArticleList = useSelector(state => state.home.homeArticleList);
 
-  // Board view 이동 -> postData 셋팅
-  const moveBoard = postData => {
+  //選択したArticleデータ取得
+  const getArticle = async articleId => {
+    const article = await readRequests(ReadEnum.ARTICLE_READ, articleId);
+    const articleCommentList = await readRequests(ReadEnum.COMMENT_READ, articleId);
+    
+    dispatch(setArticleData({article,articleCommentList}));
+  };
+  // Board view 이동 -> article 셋팅
+  const moveBoard = articleId => {
     console.log('moveBoard');
-    dispatch(setPostData(postData));
+    getArticle(articleId);
     navigation.navigate('Board', {
       requestView: 'Home',
     });
@@ -50,7 +59,7 @@ const Home = () => {
                 <Text
                   style={styles.text}
                   onPress={() => {
-                    moveBoard({postData: item.articleId});
+                    moveBoard(item.articleId);
                   }}>
                   {item.articleTitle}
                 </Text>

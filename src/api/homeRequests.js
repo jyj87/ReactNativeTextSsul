@@ -15,7 +15,7 @@ export const homeRequests = async type => {
     case HomeEnum.INIT_DATA:
       log.info('HOME画面のINIT処理 START');
       try {
-        const url = setUrl(GeneralEnum.BACK_END_POST_SELECT, ['1', '10', '1']);
+        const url = setUrl(GeneralEnum.BACK_END_GET_ARTICLES, ['1', '10', '1']);
         const response = await axios.get(url);
         const articleList = [];
         response.data.responseData.articleList.forEach(element => {

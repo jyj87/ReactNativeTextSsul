@@ -42,8 +42,3 @@ export const loginRequests = async (type, requestData) => {
       break;
   }
 };
-
-const getLoginInfo = async member => {
-  const response = await axios.post(GeneralEnum.BACK_END_LOGIN, member);
-  return response;
-};

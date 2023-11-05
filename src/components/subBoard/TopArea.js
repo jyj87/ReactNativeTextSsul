@@ -3,7 +3,7 @@ import React from 'react'
 import Feather from 'react-native-vector-icons/Feather';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-const topArea = ({postData}) => {
+const topArea = ({articleData}) => {
   return (
     <View name="topArea">
     <View
@@ -13,9 +13,9 @@ const topArea = ({postData}) => {
         alignItems: 'center',
       }}>
       <Text style={{fontSize: 22, marginTop: 30}}>
-        {postData.postTitle}
+        {articleData.articleTitle}
       </Text>
-      <Text style={{marginTop: 10}}>{postData.postWriter}</Text>
+      <Text style={{marginTop: 10}}>{articleData.authorNick}</Text>
     </View>
     <View
       name="postHashViewLikeCountArea"
@@ -31,21 +31,21 @@ const topArea = ({postData}) => {
         color="black"
         style={{marginHorizontal: 3}}
       />
-      <Text>{postData.postType}</Text>
+      <Text>{articleData.categoryNm}</Text>
       <Ionicons
         name="eye"
         size={15}
         color="black"
         style={{marginHorizontal: 3}}
       />
-      <Text>{postData.postViewCount}</Text>
+      <Text>{articleData.viewCnt}</Text>
       <Ionicons
         name="heart"
         size={15}
         color="black"
         style={{marginHorizontal: 3}}
       />
-      <Text>{postData.postLikeCount}</Text>
+      <Text>{articleData.likeCnt}</Text>
     </View>
   </View>
   )

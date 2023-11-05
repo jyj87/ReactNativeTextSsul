@@ -5,7 +5,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import {useDispatch} from 'react-redux';
 import {incrementLikeCount} from '../../reducers/board_reducer';
 
-const MiddleArea = ({postData}) => {
+const MiddleArea = ({articleData}) => {
   const dispatch = useDispatch();
   // 좋아요 클릭 Count +1
   const contentLikeClick = () => {
@@ -15,7 +15,7 @@ const MiddleArea = ({postData}) => {
   return (
     <View name="middleArea" style={{marginHorizontal: 20}}>
       <View name="postContentArea">
-        <Text>{postData.postContext}</Text>
+        <Text>{articleData.content}</Text>
       </View>
       <View name="postLikeCountArea">
         <View
@@ -23,7 +23,7 @@ const MiddleArea = ({postData}) => {
             justifyContent: 'center',
             alignItems: 'center',
           }}>
-          <Text>{postData.postLikeCount}</Text>
+          <Text>{articleData.likeCnt}</Text>
           <Ionicons
             name="heart"
             size={55}

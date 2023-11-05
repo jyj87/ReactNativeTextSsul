@@ -1,13 +1,4 @@
-import {
-  View,
-  Text,
-  StatusBar,
-  TextInput,
-  ScrollView,
-  Platform,
-  StyleSheet,
-  Alert,
-} from 'react-native';
+import {View, StatusBar, ScrollView, Platform, StyleSheet} from 'react-native';
 import React from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useSelector} from 'react-redux';
@@ -17,7 +8,11 @@ import MiddleArea from '../components/subBoard/MiddleArea';
 import BottomArea from '../components/subBoard/BottomArea';
 import {PanGestureHandler} from 'react-native-gesture-handler';
 const Board = ({route, navigation}) => {
-  const postData = useSelector(state => state.board.post);
+  const articleData = useSelector(state => state.board.article);
+  const articleCommentList = useSelector(
+    state => state.board.articleCommentList,
+  );
+
   // 뒤로 가기
   const goBack = event => {
     if (event.nativeEvent.translationX > 50) {
@@ -35,15 +30,15 @@ const Board = ({route, navigation}) => {
       <StatusBar backgroundColor="white" barStyle="dark-content" />
       <PanGestureHandler onGestureEvent={goBack}>
         <View style={{flex: 1}}>
-          <TopArea postData={postData} />
+          <TopArea articleData={articleData} />
           <LineBoard />
           <ScrollView
             showsVerticalScrollIndicator={false}
             style={[
               Platform.OS === 'ios' ? styles.iosScrollView : androidScrollView,
             ]}>
-            <MiddleArea postData={postData} />
-            <BottomArea postData={postData} />
+            <MiddleArea articleData={articleData} />
+            <BottomArea articleCommentList={articleCommentList} />
           </ScrollView>
         </View>
       </PanGestureHandler>

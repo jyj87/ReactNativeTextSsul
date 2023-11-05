@@ -1,38 +1,48 @@
 import axios from 'axios';
 import {ReadEnum} from '../enum/requestConst';
 import {GeneralEnum} from '../enum/generalConst';
-import RequestArtWrite from '../models/RequestArtWrite';
 import {getToken} from '../util/accessToken';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import {setUrlComment} from '../util/urlQueryString';
 import {log} from '../log/log_a';
-
 
 /**
  * Read API
- * 
+ *
  * @param {ReadEnum} type - 処理区分
  * @param {any} requestData - 転送データ
  */
 export const readRequests = async (type, requestData) => {
   // headers設定
   const headers = {
-    Authorization: `Bearer ${await getToken()}`, 
+    Authorization: `Bearer ${await getToken()}`,
     'Content-Type': 'application/json',
   };
 
   switch (type) {
-    case ReadEnum.COMMENT_READ:
-      log.info('コメント取得処理 START');
+    case ReadEnum.ARTICLE_READ:
+      log.info('Article単一取得処理 START');
       try {
-        const data = new RequestArtWrite(requestData);
-        const response = await axios.post(GeneralEnum.BACK_END_WRITE, data, {
-          headers: headers,
-        });
-        log.debug('コメント取得', response.data);
+        const response = await axios.get(
+          GeneralEnum.BACK_END_GET_ARTICLE + requestData,
+        );
+        log.debug('Article単一取得', response.data);
+        log.info('Article単一取得処理 END');
+        return response.data.responseData;
       } catch (error) {
         throw error;
       }
-      log.info('コメント取得処理 END');
+      break;
+    case ReadEnum.COMMENT_READ:
+      log.info('Comment取得処理 START');
+      try {
+        const url = setUrlComment(requestData);
+        const response = await axios.get(url);
+        log.debug('Comment取得', response.data);
+        log.info('Comment取得処理 END');
+        return response.data.responseData;
+      } catch (error) {
+        throw error;
+      }
       break;
     default:
       break;

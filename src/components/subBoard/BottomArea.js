@@ -9,7 +9,7 @@ import {
   incrementCommentLikeCount,
 } from '../../reducers/board_reducer';
 
-const BottomArea = ({postData}) => {
+const BottomArea = ({articleCommentList}) => {
   const dispatch = useDispatch();
   //댓글 입력창
   const [commentText, setCommentText] = useState('');
@@ -40,11 +40,11 @@ const BottomArea = ({postData}) => {
         }}>
         <View style={{marginHorizontal: 10, marginTop: 10}}>
           {/* id 순으로 오름차순 정렬 */}
-          {postData.comments.map((item, index) => (
+          {articleCommentList.commentList.map((item, index) => (
             <View key={index}>
               <View>
-                <Text>{item.commentWriter}</Text>
-                <Text>{item.commentContext}</Text>
+                <Text>{item.authorNick}</Text>
+                <Text>{item.comment}</Text>
               </View>
               <View
                 style={{
@@ -58,7 +58,9 @@ const BottomArea = ({postData}) => {
                   style={{marginHorizontal: 3}}
                   onPress={() => commentLikeClick(index)}
                 />
-                <Text>{item.commentLikeCount}</Text>
+                {/* ★항목 추가 요청 필요 */}
+                {/* <Text>{item.commentLikeCount}</Text> */}
+                <Text>11</Text>
                 <MaterialCommunityIcons
                   name="google-translate"
                   size={15}
