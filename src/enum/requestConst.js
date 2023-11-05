@@ -60,6 +60,8 @@ const BoardEnum = Object.freeze({
 const LoginEnum = Object.freeze({
   //loginのボタンクリック
   LOGIN_PROCESS: 'loginProcess',
+  //loginのボタンクリック
+  LOGIN_CHECK: 'loginCheck',
 });
 
 export {

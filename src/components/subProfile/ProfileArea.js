@@ -5,11 +5,18 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
+import {loginOut} from '../../reducers/login_reducer';
+import { useDispatch } from 'react-redux';
+import {clearToken} from '../../util/accessToken'
 
 const ProfileArea = ({userInfo}) => {
+  const dispatch = useDispatch();
   const navigation = useNavigation();
-  const moveLogin = () => {
-    navigation.navigate('Login');
+
+  const moveLoginOut = () => {
+    // AsyncStorage(Tokenクリア) -> ログインフラグ変更　-> ログイン画面表示
+    clearToken();
+    dispatch(loginOut());
   };
   const moveShop = () => {
     navigation.navigate('Shop');
@@ -29,7 +36,9 @@ const ProfileArea = ({userInfo}) => {
           <Text style={{marginLeft: 3}}>{userInfo.userLv}</Text>
         </View>
 
-        <Text style={{fontSize: 30}}>{userInfo.userName}</Text>
+        <View>
+          <Text style={{fontSize: 30}}>{userInfo.userName}</Text>
+        </View>
       </View>
 
       <View name="userEmailView" style={styles.textBaseView}>
@@ -76,7 +85,7 @@ const ProfileArea = ({userInfo}) => {
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => moveSetting()}
-          style={[styles.baseIconView, {marginHorizontal: 30}]}>
+          style={styles.baseIconView}>
           <AntDesign name="setting" size={35} color="black" />
           <Text style={{marginTop: 5}}>설정</Text>
         </TouchableOpacity>
@@ -86,6 +95,12 @@ const ProfileArea = ({userInfo}) => {
           <Ionicons name="notifications" size={35} color="black" />
           <Text style={{marginTop: 5}}>알림</Text>
         </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => moveLoginOut()}
+          style={styles.baseIconView}>
+          <Entypo name="log-out" size={32} color="black" />
+          <Text style={{marginTop: 5}}>로그아웃</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -93,8 +108,9 @@ const ProfileArea = ({userInfo}) => {
 
 const styles = StyleSheet.create({
   baseIconView: {
-    width: 100,
-    height: 100,
+    marginHorizontal:2,
+    width: 90,
+    height: 90,
     borderWidth: 2,
     borderColor: '#DCD8D8',
     borderRadius: 15,

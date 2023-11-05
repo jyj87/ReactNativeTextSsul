@@ -1,20 +1,31 @@
-import {View, Text, StatusBar, StyleSheet, TouchableOpacity} from 'react-native';
-import React, { useState } from 'react';
+import {
+  View,
+  Text,
+  StatusBar,
+  StyleSheet,
+  TouchableOpacity,
+} from 'react-native';
+import React, {useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import { TextInput } from 'react-native-gesture-handler';
-import { ThemeProvider, Text as RNEText } from 'react-native-elements';
-
+import {TextInput} from 'react-native-gesture-handler';
+import {ThemeProvider, Text as RNEText} from 'react-native-elements';
+import {loginRequests} from '../api/loginRequests';
+import {LoginEnum} from '../enum/requestConst';
+import {useDispatch} from 'react-redux';
+import {login} from '../reducers/login_reducer';
 
 // TODO 폰트 적용은 나중에
 const Login = () => {
+  const dispatch = useDispatch();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleLogin = () => {
-    // 로그인 로직을 구현할 수 있습니다.
-    console.log('로그인 버튼이 클릭되었습니다.');
-    console.log('이메일:', email);
-    console.log('비밀번호:', password);
+  //ログインフラグ更新
+  const handleLogin = async () => {
+    //★ 로그인 성공시 프로필 파일 가져와야함 , 실패시도 처리 필요 함
+    await loginRequests(LoginEnum.LOGIN_PROCESS, [email, password]);
+    const loginFlag = await loginRequests(LoginEnum.LOGIN_CHECK);
+    dispatch(login(loginFlag));
   };
 
   const theme = {

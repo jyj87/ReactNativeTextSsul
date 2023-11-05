@@ -23,7 +23,7 @@ export const getToken = async () => {
       return token;
     } else {
       log.debug('토큰이 저장되어 있지 않습니다.');
-      return token;
+      return null;
     }
   } catch (error) {
     log.debug('토큰 검색 실패: ', error);

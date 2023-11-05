@@ -3,8 +3,12 @@ import {log} from '../log/log_a';
 
 // URL + PARAMS
 export const setUrl = (apiUrl, params) => {
-  // parameterをURLに追加
-  const url = new URL(apiUrl);
-  Object.keys(params).forEach(key => url.searchParams.append(key, params[key]));
-  return url.toString();
+  const addQuery = {page: params[0], limit: params[1], categoryId: params[2]};
+
+  const url = queryString.stringifyUrl({
+    url: apiUrl,
+    query: addQuery,
+  });
+  log.debug('SET URL : ', url)
+  return url;
 };

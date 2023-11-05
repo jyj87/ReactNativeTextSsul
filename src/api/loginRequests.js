@@ -4,6 +4,7 @@ import {GeneralEnum} from '../enum/generalConst';
 import Member from '../models/Member';
 import {log} from '../log/log_a';
 import {setToken, getToken} from '../util/accessToken';
+import {isNullOrEmpty} from '../util/commonUtil';
 
 /**
  * Login API
@@ -26,7 +27,23 @@ export const loginRequests = async (type, requestData) => {
       }
       log.info('ログイン処理 END');
       break;
+    case LoginEnum.LOGIN_CHECK:
+      log.info('ログインチェック処理 START');
+      try {
+        //★ 로컬에 저장되어있는 토큰 여부 확인 -> 백엔드에서 정말 있는 토큰인가 확인 필요??
+        const token = await getToken();
+        return token === null ? false : true;
+      } catch (error) {
+        throw error;
+      }
+      log.info('ログインチェック処理 END');
+      break;
     default:
       break;
   }
+};
+
+const getLoginInfo = async member => {
+  const response = await axios.post(GeneralEnum.BACK_END_LOGIN, member);
+  return response;
 };

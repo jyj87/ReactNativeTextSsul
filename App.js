@@ -2,7 +2,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {NavigationContainer} from '@react-navigation/native';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
-import React, { useEffect } from 'react';
+import React, {useEffect} from 'react';
 import Home from './src/screens/Home';
 import Profile from './src/screens/Profile';
 import Rank from './src/screens/Rank';
@@ -16,25 +16,39 @@ import Notice from './src/screens/Notice';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { useDispatch } from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {getInitPostList} from './src/reducers/home_reducer';
 import {getInitSearchPostList} from './src/reducers/search_reducer';
 import {getInitRankPostList} from './src/reducers/rank_reducer';
-import { loginRequests } from './src/api/loginRequests';
-import {LoginEnum} from './src/enum/requestConst';
+import {loginCheck} from './src/reducers/login_reducer';
+import {loginRequests} from './src/api/loginRequests';
+import {LoginEnum,HomeEnum} from './src/enum/requestConst';
+import {homeRequests} from './src/api/homeRequests'
 
 const App = () => {
   const Stack = createNativeStackNavigator();
   const Tab = createBottomTabNavigator();
   const dispatch = useDispatch();
-   //초기 데이터 취득
-   useEffect(() => {
-    dispatch(getInitPostList());
+  //ログインフラグ更新
+  const tokenCheck = async () => {
+    const loginFlag = await loginRequests(LoginEnum.LOGIN_CHECK)
+    dispatch(loginCheck(loginFlag));
+  };
+  //Home画面データ設定
+  const initHomeArticleData = async()=>{
+    const articleList = await homeRequests(HomeEnum.INIT_DATA)
+    dispatch(getInitPostList(articleList));
+  }
+  //초기 데이터 취득
+  useEffect(() => {
     dispatch(getInitSearchPostList());
     dispatch(getInitRankPostList());
-    // homeRequests(HomeEnum.INIT_DATA)
-    loginRequests(LoginEnum.LOGIN_PROCESS,["001@gmail.com","1111"]);
+    tokenCheck();
+    initHomeArticleData();
   }, []);
+
+  const loginFlag = useSelector(state => state.login.loginFlag);
+
   const BottomTabScreen = () => {
     return (
       <Tab.Navigator
@@ -91,7 +105,7 @@ const App = () => {
   };
   return (
     // 재스처를 사용하기 위해 RootView 감싸줘야 한다.
-    <GestureHandlerRootView style={{flex:1}}>
+    <GestureHandlerRootView style={{flex: 1}}>
       <NavigationContainer>
         <Stack.Navigator screenOptions={{headerShown: false}}>
           <Stack.Screen name="Bottom" component={BottomTabScreen} />

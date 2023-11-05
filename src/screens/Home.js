@@ -17,7 +17,7 @@ const Home = () => {
   const dispatch = useDispatch();
 
   //Home Data 취득
-  const homePostList = useSelector(state => state.home.homePostList);
+  const homeArticleList = useSelector(state => state.home.homeArticleList);
 
   // Board view 이동 -> postData 셋팅
   const moveBoard = postData => {
@@ -38,21 +38,21 @@ const Home = () => {
         pagingEnabled={true}
         // 옵션: 스크롤바를 숨김
         showsVerticalScrollIndicator={false}
-        data={homePostList}
-        keyExtractor={item => item.postIndex}
+        data={homeArticleList}
+        keyExtractor={item => item.articleId}
         renderItem={({item}) => (
           <View>
             <ImageBackground
-              source={item.postCoverImage}
+              source={item.thumbnailImagePath}
               style={styles.backgroundImage}
               resizeMode="cover">
               <View style={styles.content}>
                 <Text
                   style={styles.text}
                   onPress={() => {
-                    moveBoard({postData: item});
+                    moveBoard({postData: item.articleId});
                   }}>
-                  {item.postTitle}
+                  {item.articleTitle}
                 </Text>
               </View>
             </ImageBackground>
