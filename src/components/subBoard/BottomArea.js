@@ -40,7 +40,7 @@ const BottomArea = ({articleCommentList}) => {
         }}>
         <View style={{marginHorizontal: 10, marginTop: 10}}>
           {/* id 순으로 오름차순 정렬 */}
-          {articleCommentList.commentList.map((item, index) => (
+          {articleCommentList.map((item, index) => (
             <View key={index}>
               <View>
                 <Text>{item.authorNick}</Text>

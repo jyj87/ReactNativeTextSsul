@@ -10,20 +10,22 @@ import {Text} from 'react-native-elements';
 import {FlatList} from 'react-native-gesture-handler';
 import {useDispatch} from 'react-redux';
 import {getRefreshData} from '../../reducers/search_reducer';
-import {setSelectSearchPostData} from '../../reducers/board_reducer';
-import { useNavigation } from '@react-navigation/native';
+import {setArticleData} from '../../reducers/board_reducer';
+import {useNavigation} from '@react-navigation/native';
+import { readRequests } from '../../api/readRequests';
+import { ReadEnum } from '../../enum/requestConst';
 
-const ContentArea = ({isLoading, setIsLoading, searchPostList}) => {
+const ContentArea = ({isLoading, setIsLoading, articlesList}) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
 
   // 추가 게시물 취득
   const refreshData = () => {
-    setIsLoading(true);
-    setTimeout(() => {
-      dispatch(getRefreshData());
-    }, 3000);
-    setIsLoading(false);
+    // setIsLoading(true);
+    // setTimeout(() => {
+    //   dispatch(getRefreshData());
+    // }, 3000);
+    // setIsLoading(false);
   };
   // 추가 게시물 취득시 Loading View 작성
   const renderFooter = () => {
@@ -37,12 +39,23 @@ const ContentArea = ({isLoading, setIsLoading, searchPostList}) => {
       );
     }
   };
-  //게시물 클릭
-  const selectPost = postIndex => {
-    navigation.navigate('Board', {requestView: 'Search'});
-    dispatch(setSelectSearchPostData({postIndex: postIndex}));
+
+  //選択したArticleデータ取得
+  const getArticle = async articleId => {
+    const article = await readRequests(ReadEnum.ARTICLE_READ, articleId);
+    const articleCommentList = await readRequests(
+      ReadEnum.COMMENT_READ,
+      articleId,
+    );
+    dispatch(setArticleData({article, articleCommentList}));
   };
-  
+
+  //Article クリック
+  const selectPost = articleId => {
+    getArticle(articleId);
+    navigation.navigate('Board', {requestView: 'Search'});
+  };
+
   return (
     <View name="contentArea" style={{flex: 1}}>
       <FlatList
@@ -50,54 +63,54 @@ const ContentArea = ({isLoading, setIsLoading, searchPostList}) => {
         horizontal={false}
         // 옵션: 스크롤바를 숨김
         showsVerticalScrollIndicator={false}
-        data={searchPostList}
-        keyExtractor={item => item.postSetIndex}
+        data={articlesList}
+        // keyExtractor={item => item.postSetIndex}
         ListFooterComponent={renderFooter}
         onEndReached={refreshData}
         onEndReachedThreshold={0.1}
         renderItem={({item}) => (
           <View style={{flexDirection: 'row'}}>
             <TouchableOpacity
-              onPress={() => selectPost(item.post1.postIndex)}
+              onPress={() => selectPost(item[0].articleId)}
               style={[styles.postView, styles.postPostSize]}>
               <ImageBackground
-                source={item.post1.postCoverImage}
+                source={item[0].thumbnailImagePath}
                 imageStyle={{borderRadius: 10}}
                 resizeMode="cover"
                 style={styles.postViewAreaBackgroundImage}>
                 <View style={styles.postAreaContent}>
                   <Text style={styles.postAreaText}>
-                    {item.post1.postTitle}
+                    {item[0].articleTitle}
                   </Text>
                 </View>
               </ImageBackground>
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={() => selectPost(item.post2.postIndex)}
+              onPress={() => selectPost(item[1].articleId)}
               style={[styles.postView, styles.postPostSize]}>
               <ImageBackground
-                source={item.post2.postCoverImage}
+                source={item[1].thumbnailImagePath}
                 imageStyle={{borderRadius: 10}}
                 resizeMode="cover"
                 style={styles.postViewAreaBackgroundImage}>
                 <View style={styles.postAreaContent}>
                   <Text style={styles.postAreaText}>
-                    {item.post2.postTitle}
+                    {item[1].articleTitle}
                   </Text>
                 </View>
               </ImageBackground>
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={() => selectPost(item.post3.postIndex)}
+              onPress={() => selectPost(item[2].articleId)}
               style={[styles.postView, styles.postPostSize]}>
               <ImageBackground
-                source={item.post3.postCoverImage}
+                source={item[2].thumbnailImagePath}
                 imageStyle={{borderRadius: 10}}
                 resizeMode="cover"
                 style={styles.postViewAreaBackgroundImage}>
                 <View style={styles.postAreaContent}>
                   <Text style={styles.postAreaText}>
-                    {item.post3.postTitle}
+                    {item[2].articleTitle}
                   </Text>
                 </View>
               </ImageBackground>

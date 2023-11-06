@@ -22,8 +22,9 @@ import {getInitSearchPostList} from './src/reducers/search_reducer';
 import {getInitRankPostList} from './src/reducers/rank_reducer';
 import {loginCheck} from './src/reducers/login_reducer';
 import {loginRequests} from './src/api/loginRequests';
-import {LoginEnum,HomeEnum} from './src/enum/requestConst';
-import {homeRequests} from './src/api/homeRequests'
+import {LoginEnum, HomeEnum, SearchEnum} from './src/enum/requestConst';
+import {homeRequests} from './src/api/homeRequests';
+import {searchRequests} from './src/api/searchRequests';
 
 const App = () => {
   const Stack = createNativeStackNavigator();
@@ -31,20 +32,26 @@ const App = () => {
   const dispatch = useDispatch();
   //ログインフラグ更新
   const tokenCheck = async () => {
-    const loginFlag = await loginRequests(LoginEnum.LOGIN_CHECK)
+    const loginFlag = await loginRequests(LoginEnum.LOGIN_CHECK);
     dispatch(loginCheck(loginFlag));
   };
   //Home画面データ設定
-  const initHomeArticleData = async()=>{
-    const articleList = await homeRequests(HomeEnum.INIT_DATA)
+  const initHomeArticleData = async () => {
+    const articleList = await homeRequests(HomeEnum.INIT_DATA);
     dispatch(getInitPostList(articleList));
-  }
+  };
+
+  const initSearchArticleData = async () => {
+    const articlesList = await searchRequests(SearchEnum.INIT_DATA);
+    dispatch(getInitSearchPostList(articlesList));
+  };
   //초기 데이터 취득
   useEffect(() => {
-    dispatch(getInitSearchPostList());
+    
     dispatch(getInitRankPostList());
     tokenCheck();
     initHomeArticleData();
+    initSearchArticleData();
   }, []);
 
   const loginFlag = useSelector(state => state.login.loginFlag);

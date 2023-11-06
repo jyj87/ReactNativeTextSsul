@@ -1,11 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit';
-import {log, logInfoReducer} from '../log/log_c';
-import {
-  searchPostList,
-  refreshTampSub3PostSet,
-  sortFlag,
-} from '../data/tempSearchData';
-
+import {refreshTampSub3PostSet, sortFlag} from '../data/tempSearchData';
 
 /**
  * getInitSearchPostList: 어플 실행시 초기 셋팅 데이터
@@ -15,54 +9,38 @@ import {
  */
 const searchSlice = createSlice({
   name: 'search',
-  initialState: {searchPostList: [], sortFlag},
+  initialState: {articlesList: [],searchPostList: [], sortFlag: 3},
   reducers: {
     getInitSearchPostList: (state, action) => {
-      state.searchPostList = searchPostList;
+      state.articlesList = action.payload;
       // 1 : 좋아요
       // 2 : 조회수
       // 3 : 최신글
       // 4 : 댓글순
       state.sortFlag = 3;
-      logInfoReducer(
-        'searchSlice',
-        'getInitSearchPostList',
-        'searchPostList',
-        state.searchPostList,
-      );
-      logInfoReducer(
-        'searchSlice',
-        'getInitSearchPostList',
-        'sortFlag',
-        state.sortFlag,
-      );
     },
     getRefreshData: (state, action) => {
       state.searchPostList = [
         ...state.searchPostList,
         ...refreshTampSub3PostSet,
       ];
-      logInfoReducer(
-        'searchSlice',
-        'getRefreshData',
-        'searchPostList',
-        state.searchPostList,
-      );
     },
-      // ★ backEnd sort? frontEnd sort?
+    // ★ backEnd sort? frontEnd sort?
     getSortData: (state, action) => {
       state.sortFlag = action.payload.sortFlag;
-      logInfoReducer('searchSlice', 'getSortData', 'sortFlag', state.sortFlag);
     },
-      // ★ DB에서 검색어를 통해 데이터를 취득
+    // ★ DB에서 검색어를 통해 데이터를 취득
     insertSearchBarText: (state, action) => {
       // action.payload.searchBarText;
       state.searchPostList = refreshTampSub3PostSet;
-      logInfoReducer('searchSlice', 'insertSearchBarText', 'insertSearchBarTextParam', action.payload.searchBarText);
     },
   },
 });
 
 export default searchSlice.reducer;
-export const {getInitSearchPostList, getRefreshData, getSortData,insertSearchBarText} =
-  searchSlice.actions;
+export const {
+  getInitSearchPostList,
+  getRefreshData,
+  getSortData,
+  insertSearchBarText,
+} = searchSlice.actions;

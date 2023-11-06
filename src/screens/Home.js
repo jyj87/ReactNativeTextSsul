@@ -30,7 +30,6 @@ const Home = () => {
   };
   // Board view 이동 -> article 셋팅
   const moveBoard = articleId => {
-    console.log('moveBoard');
     getArticle(articleId);
     navigation.navigate('Board', {
       requestView: 'Home',

@@ -8,8 +8,7 @@ import {log} from '../log/log_a';
 const initPost = initBoardPost;
 
 /**
- * setPostData: 선택한 Post를 화면에 출력하기 위해 세팅
- * setSelectSearchPostData : Search View에서 선택한 Post 화면에 출력하기 위해 세팅
+ * setArticleData: 선택한 Post를 화면에 출력하기 위해 세팅
  * incrementLikeCount: 좋아요 + 1 증가
  * insertCommentText: 코맨트 등록
  * incrementCommentLikeCount: 코맨트 좋아요 + 1 증가
@@ -21,10 +20,10 @@ const boardSlice = createSlice({
     setArticleData: (state, action) => {
       log.info('boardSlice.setPostData START');
       state.article = action.payload.article;
-      state.articleCommentList = action.payload.articleCommentList;
+      state.articleCommentList = action.payload.articleCommentList.commentList;
       log.debug('article 設定データ', state.article)
       log.debug('articleCommentList 設定データ',  state.articleCommentList)
-      log.info('boardSlice.setPostData START');
+      log.info('boardSlice.setPostData END');
     },
     // ★ DB에서 postIndex를 가지고 post 취득
     setSelectSearchPostData: (state, action) => {

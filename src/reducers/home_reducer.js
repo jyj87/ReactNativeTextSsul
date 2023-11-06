@@ -12,7 +12,7 @@ const homeSlice = createSlice({
       log.info('homeSlice.getInitPostList START');
       state.homeArticleList = action.payload;
       log.debug('homeArticleList 設定データ', state.homeArticleList)
-      log.info('homeSlice.getInitPostList START');
+      log.info('homeSlice.getInitPostList END');
     },
   },
 });

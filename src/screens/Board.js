@@ -9,9 +9,7 @@ import BottomArea from '../components/subBoard/BottomArea';
 import {PanGestureHandler} from 'react-native-gesture-handler';
 const Board = ({route, navigation}) => {
   const articleData = useSelector(state => state.board.article);
-  const articleCommentList = useSelector(
-    state => state.board.articleCommentList,
-  );
+  const articleCommentList = useSelector(state => state.board.articleCommentList);
 
   // 뒤로 가기
   const goBack = event => {
