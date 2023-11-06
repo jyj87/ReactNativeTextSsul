@@ -25,7 +25,6 @@ export const readRequests = async (type, requestData) => {
         const response = await axios.get(
           GeneralEnum.BACK_END_GET_ARTICLE + requestData,
         );
-        
         log.debug('Article単一取得', response.data);
         log.info('Article単一取得処理 END');
         return response.data.responseData;
