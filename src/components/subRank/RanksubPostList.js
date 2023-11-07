@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
   subImageBottomIconView: {
     width: 40,
     height: 20,
-    backgroundColor: 'black',
+    backgroundColor: '',
     borderRadius: 3,
     justifyContent: 'center',
     flexDirection: 'row',

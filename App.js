@@ -2,7 +2,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {NavigationContainer} from '@react-navigation/native';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import Home from './src/screens/Home';
 import Profile from './src/screens/Profile';
 import Rank from './src/screens/Rank';
@@ -30,6 +30,7 @@ const App = () => {
   const Stack = createNativeStackNavigator();
   const Tab = createBottomTabNavigator();
   const dispatch = useDispatch();
+
   //ログインフラグ更新
   const tokenCheck = async () => {
     const loginFlag = await loginRequests(LoginEnum.LOGIN_CHECK);
@@ -40,14 +41,13 @@ const App = () => {
     const articleList = await homeRequests(HomeEnum.INIT_DATA);
     dispatch(getInitPostList(articleList));
   };
-
+  //Search画面データ設定
   const initSearchArticleData = async () => {
     const articlesList = await searchRequests(SearchEnum.INIT_DATA);
     dispatch(getInitSearchPostList(articlesList));
   };
   //초기 데이터 취득
   useEffect(() => {
-    
     dispatch(getInitRankPostList());
     tokenCheck();
     initHomeArticleData();

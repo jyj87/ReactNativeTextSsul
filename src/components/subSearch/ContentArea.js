@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   View,
   StyleSheet,
@@ -8,24 +8,45 @@ import {
 } from 'react-native';
 import {Text} from 'react-native-elements';
 import {FlatList} from 'react-native-gesture-handler';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {getRefreshData} from '../../reducers/search_reducer';
 import {setArticleData} from '../../reducers/board_reducer';
 import {useNavigation} from '@react-navigation/native';
-import { readRequests } from '../../api/readRequests';
-import { ReadEnum } from '../../enum/requestConst';
+import {readRequests} from '../../api/readRequests';
+import {ReadEnum, SearchEnum} from '../../enum/requestConst';
+import {searchRequests} from '../../api/searchRequests';
 
 const ContentArea = ({isLoading, setIsLoading, articlesList}) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
+  //現在Page
+  const [searchPage, setSearchPage] = useState(0);
+  //最後Page確認
+  const [endPageFlg, setEndPageFlg] = useState(false);
+  //選択したソート（좋아요순,조회수순,최신글순,댓글순）
+  const sortFlag = useSelector(state => state.search.sortFlag);
+
+  // add Search
+  const addSearchArticleData = async () => {
+    const articlesList = await searchRequests(SearchEnum.ADD_POST, searchPage);
+    if (articlesList.length !== 0) {
+      setEndPageFlg(false);
+      setSearchPage(searchPage + 1);
+      dispatch(getRefreshData(articlesList));
+    } else {
+      setEndPageFlg(true);
+    }
+  };
 
   // 추가 게시물 취득
   const refreshData = () => {
-    // setIsLoading(true);
-    // setTimeout(() => {
-    //   dispatch(getRefreshData());
-    // }, 3000);
-    // setIsLoading(false);
+    setIsLoading(true);
+    if (!endPageFlg) {
+      setTimeout(() => {
+        addSearchArticleData();
+      }, 500);
+    }
+    setIsLoading(false);
   };
   // 추가 게시물 취득시 Loading View 작성
   const renderFooter = () => {
@@ -52,8 +73,11 @@ const ContentArea = ({isLoading, setIsLoading, articlesList}) => {
 
   //Article クリック
   const selectPost = articleId => {
-    getArticle(articleId);
-    navigation.navigate('Board', {requestView: 'Search'});
+    // 빈 아티클인 경우 (마지막 페이지에 경우 없는 아티클은 아티클 아이디가 공백 혹은 널로 옮)
+    if (articleId !== null && articleId !== '') {
+      getArticle(articleId);
+      navigation.navigate('Board', {requestView: 'Search'});
+    }
   };
 
   return (
@@ -67,7 +91,7 @@ const ContentArea = ({isLoading, setIsLoading, articlesList}) => {
         // keyExtractor={item => item.postSetIndex}
         ListFooterComponent={renderFooter}
         onEndReached={refreshData}
-        onEndReachedThreshold={0.1}
+        onEndReachedThreshold={0.01}
         renderItem={({item}) => (
           <View style={{flexDirection: 'row'}}>
             <TouchableOpacity

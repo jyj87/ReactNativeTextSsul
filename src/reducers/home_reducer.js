@@ -6,12 +6,12 @@ import {log} from '../log/log_a';
  */
 const homeSlice = createSlice({
   name: 'home',
-  initialState: {homeArticleList: []},
+  initialState: {homeArticleList: [], homePage: 0},
   reducers: {
     getInitPostList: (state, action) => {
       log.info('homeSlice.getInitPostList START');
       state.homeArticleList = action.payload;
-      log.debug('homeArticleList 設定データ', state.homeArticleList)
+      log.debug('homeArticleList 設定データ', state.homeArticleList);
       log.info('homeSlice.getInitPostList END');
     },
   },

@@ -9,7 +9,11 @@ import {refreshTampSub3PostSet, sortFlag} from '../data/tempSearchData';
  */
 const searchSlice = createSlice({
   name: 'search',
-  initialState: {articlesList: [],searchPostList: [], sortFlag: 3},
+  initialState: {
+    articlesList: [],
+    searchPostList: [],
+    sortFlag: 3,
+  },
   reducers: {
     getInitSearchPostList: (state, action) => {
       state.articlesList = action.payload;
@@ -20,10 +24,7 @@ const searchSlice = createSlice({
       state.sortFlag = 3;
     },
     getRefreshData: (state, action) => {
-      state.searchPostList = [
-        ...state.searchPostList,
-        ...refreshTampSub3PostSet,
-      ];
+      state.articlesList = [...state.articlesList, ...action.payload];
     },
     // ★ backEnd sort? frontEnd sort?
     getSortData: (state, action) => {
