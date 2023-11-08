@@ -22,9 +22,10 @@ import {getInitSearchPostList} from './src/reducers/search_reducer';
 import {getInitRankPostList} from './src/reducers/rank_reducer';
 import {loginCheck} from './src/reducers/login_reducer';
 import {loginRequests} from './src/api/loginRequests';
-import {LoginEnum, HomeEnum, SearchEnum} from './src/enum/requestConst';
+import {LoginEnum, HomeEnum, SearchEnum, RankEnum} from './src/enum/requestConst';
 import {homeRequests} from './src/api/homeRequests';
 import {searchRequests} from './src/api/searchRequests';
+import {rankRequests} from './src/api/rankRequests';
 
 const App = () => {
   const Stack = createNativeStackNavigator();
@@ -46,12 +47,17 @@ const App = () => {
     const articlesList = await searchRequests(SearchEnum.INIT_DATA);
     dispatch(getInitSearchPostList(articlesList));
   };
+   //Rank画面データ設定
+   const initRankArticleData = async () => {
+    const articlesList = await rankRequests(RankEnum.INIT_DATA);
+    dispatch(getInitRankPostList(articlesList));
+  };
   //초기 데이터 취득
   useEffect(() => {
-    dispatch(getInitRankPostList());
     tokenCheck();
     initHomeArticleData();
     initSearchArticleData();
+    initRankArticleData();
   }, []);
 
   const loginFlag = useSelector(state => state.login.loginFlag);

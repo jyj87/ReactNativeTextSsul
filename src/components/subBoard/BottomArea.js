@@ -1,4 +1,4 @@
-import {View, Text, TouchableOpacity} from 'react-native';
+import {View, Text, TouchableOpacity, Alert} from 'react-native';
 import React, {useState} from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -9,12 +9,12 @@ import {
   incrementCommentLikeCount,
 } from '../../reducers/board_reducer';
 
-const BottomArea = ({articleCommentList}) => {
+const BottomArea = ({articleCommentList,articleData}) => {
   const dispatch = useDispatch();
   //댓글 입력창
   const [commentText, setCommentText] = useState('');
   //댓글 등록
-  const commentTextInsert = () => {
+  const commentTextInsert = (articleId) => {
     if (commentText.trim() === '') {
       Alert.alert('경고', '데이터를 입력해주세요');
     } else {
@@ -58,9 +58,7 @@ const BottomArea = ({articleCommentList}) => {
                   style={{marginHorizontal: 3}}
                   onPress={() => commentLikeClick(index)}
                 />
-                {/* ★항목 추가 요청 필요 */}
-                {/* <Text>{item.commentLikeCount}</Text> */}
-                <Text>11</Text>
+                <Text>{item.likeCnt}</Text>
                 <MaterialCommunityIcons
                   name="google-translate"
                   size={15}
@@ -90,10 +88,10 @@ const BottomArea = ({articleCommentList}) => {
                 keyboardType="web-search"
                 onChangeText={text => setCommentText(text)}
                 value={commentText}
-                onSubmitEditing={() => commentTextInsert()}
+                onSubmitEditing={() => commentTextInsert(articleData.articleId)}
               />
             </View>
-            <TouchableOpacity onPress={() => commentTextInsert()}>
+            <TouchableOpacity onPress={() => commentTextInsert(articleData.articleId)}>
               <View style={{marginHorizontal: 3}}>
                 <Ionicons name="arrow-up-circle" size={20} color="black" />
               </View>

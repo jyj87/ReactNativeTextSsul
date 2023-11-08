@@ -15,7 +15,7 @@ export const homeRequests = async type => {
     case HomeEnum.INIT_DATA:
       log.info('HOME画面のINIT処理 START');
       try {
-        const url = setUrl(GeneralEnum.BACK_END_HOME_GET_ARTICLES, [
+        const url = setUrl(GeneralEnum.BACK_END_GET_HOME_ARTICLES, [
           '0',
           '10',
           '1',

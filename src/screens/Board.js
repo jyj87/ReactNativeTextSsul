@@ -36,7 +36,7 @@ const Board = ({route, navigation}) => {
               Platform.OS === 'ios' ? styles.iosScrollView : androidScrollView,
             ]}>
             <MiddleArea articleData={articleData} />
-            <BottomArea articleCommentList={articleCommentList} />
+            <BottomArea articleCommentList={articleCommentList} articleData={articleData} />
           </ScrollView>
         </View>
       </PanGestureHandler>

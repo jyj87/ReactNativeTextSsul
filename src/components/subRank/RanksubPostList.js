@@ -10,15 +10,28 @@ import {Text} from 'react-native-elements';
 import {FlatList} from 'react-native-gesture-handler';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {useDispatch} from 'react-redux';
-import {setSelectSearchPostData} from '../../reducers/board_reducer';
+import {setArticleData, setSelectSearchPostData} from '../../reducers/board_reducer';
+import { ReadEnum } from '../../enum/requestConst';
+import { readRequests } from '../../api/readRequests';
 
 const RankSubPostList = props => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
+
+  //選択したArticleデータ取得
+  const getArticle = async articleId => {
+    const article = await readRequests(ReadEnum.ARTICLE_READ, articleId);
+    const articleCommentList = await readRequests(
+      ReadEnum.COMMENT_READ,
+      articleId,
+    );
+    dispatch(setArticleData({article, articleCommentList}));
+  };
+
   //게시물 클릭
-  const selectPost = postIndex => {
+  const selectPost = articleId => {
+    getArticle(articleId);
     navigation.navigate('Board', {requestView: 'Rank'});
-    dispatch(setSelectSearchPostData({postIndex: postIndex}));
   };
   return (
     <FlatList
@@ -26,15 +39,15 @@ const RankSubPostList = props => {
       horizontal={true}
       // 옵션: 스크롤바를 숨김
       showsVerticalScrollIndicator={false}
-      data={props.subPostList}
+      data={props.subArticleList}
       style={styles.baseFlex}
-      keyExtractor={item => item.postIndex}
+      keyExtractor={item => item.articleId}
       renderItem={({item, index}) => (
         <TouchableOpacity
-          onPress={() => selectPost(item.postIndex)}
+          onPress={() => selectPost(item.articleId)}
           style={{paddingLeft: 5, paddingBottom: 5}}>
           <ImageBackground
-            source={item.postCoverImage}
+            source={item.thumbnailImagePath}
             imageStyle={{borderRadius: 10}}
             style={[styles.snbBackgroundImage]}
             resizeMode="cover">
@@ -44,11 +57,11 @@ const RankSubPostList = props => {
             <View
               name="subPostBottomArea"
               style={styles.subImageBottomTextView}>
-              <Text style={styles.subImageBottomText}>{item.postTitle}</Text>
+              <Text style={styles.subImageBottomText}>{item.articleTitle}</Text>
               <View style={styles.subImageBottomIconView}>
                 <Ionicons name="eye" size={15} color="white" />
                 <Text style={styles.subImageBottomIconText}>
-                  {item.postCommentCount}
+                  {item.commentCnt}
                 </Text>
               </View>
             </View>
