@@ -1,4 +1,4 @@
-class Member {
+class RequestMember {
     private email: string | null;
     private password: string | null;
 
@@ -12,5 +12,5 @@ class Member {
       }
     }
   }
-  export default Member;
+  export default RequestMember;
   
