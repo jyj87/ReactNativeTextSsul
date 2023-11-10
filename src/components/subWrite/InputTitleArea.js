@@ -2,13 +2,14 @@ import React from 'react';
 import {View, StyleSheet} from 'react-native';
 import {TextInput} from 'react-native-gesture-handler';
 
-const InputTitleArea = ({setTitle}) => {
+const InputTitleArea = ({setTitle, title}) => {
   return (
     <View name="inputTitleArea" style={{alignItems: 'center'}}>
       <View>
         <TextInput
           placeholder="제목을 입력하세요"
           onChangeText={text => setTitle(text)}
+          value={title}
           style={{
             backgroundColor: '#DCD8D8',
             borderRadius: 15,

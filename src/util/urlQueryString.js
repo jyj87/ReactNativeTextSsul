@@ -13,9 +13,23 @@ export const setUrl = (apiUrl, params) => {
   return url;
 };
 
-// BASE Comment Version
-export const setUrlComment = (articleNumber) => {
+// Comment Select
+export const urlCommentSelect = (articleNumber) => {
   const url = `http://localhost:8080/v1/api/articles/${articleNumber}/comments`;
-  log.debug('SET URL COMMENT: ', url);
+  log.debug('Comment Select URL : ', url);
+  return url;
+};
+
+// Comment Insert
+export const urlCommentInsert = (articleNumber) => {
+  const url = `http://localhost:8080/v1/api/articles/${articleNumber}/comments`;
+  log.debug('Comment Insert URL : ', url);
+  return url;
+};
+
+// Article Like
+export const urlArticleLike = (params) => {
+  const url = `http://localhost:8080/v1/api/articles/${params[0]}/${params[1]}`;
+  log.debug('Article Like URL : ', url);
   return url;
 };

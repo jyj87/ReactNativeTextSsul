@@ -5,21 +5,26 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import {TextInput} from 'react-native-gesture-handler';
 import {useDispatch} from 'react-redux';
 import {
-  insertCommentText,
+  insertComment,
   incrementCommentLikeCount,
 } from '../../reducers/board_reducer';
+import {writeRequests} from '../../api/writeRequests';
+import {ReadEnum, WriteEnum} from '../../enum/requestConst';
+import { readRequests } from '../../api/readRequests';
 
-const BottomArea = ({articleCommentList,articleData}) => {
+const BottomArea = ({articleCommentList, articleData}) => {
   const dispatch = useDispatch();
   //댓글 입력창
   const [commentText, setCommentText] = useState('');
+
   //댓글 등록
-  const commentTextInsert = (articleId) => {
+  const insertCommentText = async articleId => {
     if (commentText.trim() === '') {
       Alert.alert('경고', '데이터를 입력해주세요');
     } else {
-      console.log('등륵 실행');
-      dispatch(insertCommentText({commentText: commentText}));
+      await writeRequests(WriteEnum.CREATE_COMMENT, [articleId, commentText]);
+      const articleCommentList = await readRequests(ReadEnum.COMMENT_READ, articleId);
+      dispatch(insertComment({articleCommentList: articleCommentList}));
       setCommentText('');
     }
   };
@@ -88,10 +93,11 @@ const BottomArea = ({articleCommentList,articleData}) => {
                 keyboardType="web-search"
                 onChangeText={text => setCommentText(text)}
                 value={commentText}
-                onSubmitEditing={() => commentTextInsert(articleData.articleId)}
+                onSubmitEditing={() => insertCommentText(articleData.articleId)}
               />
             </View>
-            <TouchableOpacity onPress={() => commentTextInsert(articleData.articleId)}>
+            <TouchableOpacity
+              onPress={() => insertCommentText(articleData.articleId)}>
               <View style={{marginHorizontal: 3}}>
                 <Ionicons name="arrow-up-circle" size={20} color="black" />
               </View>

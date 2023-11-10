@@ -3,7 +3,7 @@ import {View, StyleSheet} from 'react-native';
 import {Image} from 'react-native-elements';
 import {ScrollView, TextInput} from 'react-native-gesture-handler';
 
-const InputTextBody = ({selectedPhoto, setContext}) => {
+const InputTextBody = ({selectedPhoto, context,setContext}) => {
   return (
     <View
       name="inputTextBody"
@@ -30,6 +30,7 @@ const InputTextBody = ({selectedPhoto, setContext}) => {
         <TextInput
           placeholder="내용을 입력하세요"
           multiline={true}
+          value={context}
           onChangeText={text => setContext(text)}
           style={{
             paddingTop: 10,

@@ -3,8 +3,9 @@ import {WriteEnum} from '../enum/requestConst';
 import {GeneralEnum} from '../enum/generalConst';
 import RequestArtWrite from '../models/RequestArtWrite';
 import {getToken} from '../util/accessToken';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {log} from '../log/log_a';
+import RequestCommentWrite from '../models/RequestCommentWrite';
+import {urlCommentInsert,urlArticleLike} from '../util/urlQueryString';
 
 /**
  * Write API
@@ -20,31 +21,45 @@ export const writeRequests = async (type, requestData) => {
   };
 
   switch (type) {
-    case WriteEnum.CREATE_POST:
-      log.info('POST作成処理 START');
+    case WriteEnum.CREATE_ARTICLE:
+      log.info('Article作成処理 START');
       try {
         const data = new RequestArtWrite(requestData);
-        log.debug('POST登録データ', data);
+        log.debug('Article登録データ', data);
         const response = await axios.post(GeneralEnum.BACK_END_WRITE, data, {
           headers: headers,
         });
       } catch (error) {
         throw error;
       }
-      log.info('POST作成処理 END');
+      log.info('Article作成処理 END');
       break;
     case WriteEnum.CREATE_COMMENT:
       log.info('Comment作成処理 START');
       try {
-        const data = new RequestArtWrite(requestData);
+        const url = urlCommentInsert(requestData[0]);
+        const data = new RequestCommentWrite(requestData);
         log.debug('Comment登録データ', data);
-        const response = await axios.post(GeneralEnum.BACK_END_WRITE, data, {
+        const response = await axios.post(url, data, {
           headers: headers,
         });
       } catch (error) {
         throw error;
       }
       log.info('Comment作成処理 END');
+      break;
+    case WriteEnum.ARTICLE_LIKE:
+      log.info('ArticleLike処理 START');
+      try {
+        const url = urlArticleLike(requestData);
+        log.debug('ArticleLike処理成功');
+        const response = await axios.patch(url, {
+          headers: headers,
+        });
+      } catch (error) {
+        throw error;
+      }
+      log.info('ArticleLike処理 END');
       break;
     default:
       break;

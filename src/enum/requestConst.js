@@ -26,9 +26,11 @@ const SearchEnum = Object.freeze({
 
 const WriteEnum = Object.freeze({
   //post登録
-  CREATE_POST: 'createPost',
+  CREATE_ARTICLE: 'createPost',
 
   CREATE_COMMENT: 'createComment',
+
+  ARTICLE_LIKE:'ArticleLike'
 });
 
 const ReadEnum = Object.freeze({

@@ -43,11 +43,13 @@ const Write = () => {
       <InsertDeleteArea
         title={title}
         context={context}
+        setTitle={setTitle}
+        setContext={setContext}
         selectedBoardTypeValue={selectedBoardTypeValue}
         selectedHashTypeValue={selectedHashTypeValue}
         selectedPhoto={selectedPhoto}
       />
-      <InputTitleArea setTitle={setTitle} />
+      <InputTitleArea title={title} setTitle={setTitle} />
       <View
         name="dropDownMenuArea"
         style={[
@@ -67,7 +69,11 @@ const Write = () => {
         </View>
       </View>
       <LineWrite />
-      <InputTextBody selectedPhoto={selectedPhoto} setContext={setContext} />
+      <InputTextBody
+        context={context}
+        selectedPhoto={selectedPhoto}
+        setContext={setContext}
+      />
       <InputImageSelect
         photoList={photoList}
         setPhotoList={setPhotoList}

@@ -18,12 +18,12 @@ const boardSlice = createSlice({
   initialState: {post: initPost,article: {},articleCommentList:[]},
   reducers: {
     setArticleData: (state, action) => {
-      log.info('boardSlice.setPostData START');
+      log.info('boardSlice.setArticleData START');
       state.article = action.payload.article;
       state.articleCommentList = action.payload.articleCommentList.commentList;
       log.debug('article 設定データ', state.article)
       log.debug('articleCommentList 設定データ',  state.articleCommentList)
-      log.info('boardSlice.setPostData END');
+      log.info('boardSlice.setArticleData END');
     },
     // ★ DB에서 postIndex를 가지고 post 취득
     setSelectSearchPostData: (state, action) => {
@@ -36,14 +36,11 @@ const boardSlice = createSlice({
       
     },
     // ★ DB에 +text insert, 화면에+text
-    insertCommentText: (state, action) => {
-      state.post.comments.push({
-        postIndex: 8,
-        commentIndex: 8,
-        commentWriter: '추가한 사람',
-        commentContext: action.payload.commentText,
-        commentLikeCount: 10,
-      });
+    insertComment: (state, action) => {
+      log.info('boardSlice.insertCommentText START');
+      state.articleCommentList = action.payload.articleCommentList.commentList;
+      log.debug('articleCommentList 設定データ',  state.articleCommentList)
+      log.info('boardSlice.insertCommentText END');
       
     },
     // ★ DB에 +1 insert , 화면에 +1
@@ -59,7 +56,7 @@ export default boardSlice.reducer;
 export const {
   setArticleData,
   incrementLikeCount,
-  insertCommentText,
+  insertComment,
   incrementCommentLikeCount,
   setSelectSearchPostData,
 } = boardSlice.actions;
