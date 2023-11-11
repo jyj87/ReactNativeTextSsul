@@ -7,15 +7,20 @@ import {
   Dimensions,
   FlatList,
 } from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useNavigation} from '@react-navigation/native';
 import {useSelector, useDispatch} from 'react-redux';
 import {setArticleData} from '../reducers/board_reducer';
+import {getRefreshData} from '../reducers/home_reducer';
 import {readRequests} from '../api/readRequests';
-import {ReadEnum} from '../enum/requestConst';
+import {ReadEnum,HomeEnum} from '../enum/requestConst';
+import { homeRequests } from '../api/homeRequests';
 const Home = () => {
   const navigation = useNavigation();
+  const [isLoading, setIsLoading] = useState(false);
+  const [endPageFlg, setEndPageFlg] = useState(false);
+  const [homePage, setHomePage] = useState(0);
   const dispatch = useDispatch();
 
   //Home Data 취득
@@ -24,10 +29,49 @@ const Home = () => {
   //選択したArticleデータ取得
   const getArticle = async articleId => {
     const article = await readRequests(ReadEnum.ARTICLE_READ, articleId);
-    const articleCommentList = await readRequests(ReadEnum.COMMENT_READ, articleId);
-    
-    dispatch(setArticleData({article,articleCommentList}));
+    const articleCommentList = await readRequests(
+      ReadEnum.COMMENT_READ,
+      articleId,
+    );
+    dispatch(setArticleData({article, articleCommentList}));
   };
+
+  // add Home
+  const addHomeArticleData = async () => {
+    const articlesList = await homeRequests(HomeEnum.ADD_ARTICLE, homePage);
+    if (articlesList.length !== 0) {
+      setEndPageFlg(false);
+      setHomePage(homePage + 1);
+      dispatch(getRefreshData(articlesList));
+    } else {
+      setEndPageFlg(true);
+    }
+  };
+
+  // 추가 게시물 취득
+  const refreshData = () => {
+    setIsLoading(true);
+    if (!endPageFlg) {
+      setTimeout(() => {
+        addHomeArticleData();
+      }, 500);
+    }
+    setIsLoading(false);
+  };
+
+  // 추가 게시물 취득시 Loading View 작성
+  const renderFooter = () => {
+    if (isLoading) {
+      return <Text>Loading...</Text>;
+    } else {
+      return (
+        <View style={{padding: 16, alignItems: 'center'}}>
+          <Text>Load More</Text>
+        </View>
+      );
+    }
+  };
+
   // Board view 이동 -> article 셋팅
   const moveBoard = articleId => {
     getArticle(articleId);
@@ -48,6 +92,9 @@ const Home = () => {
         showsVerticalScrollIndicator={false}
         data={homeArticleList}
         keyExtractor={item => item.articleId}
+        ListFooterComponent={renderFooter}
+        onEndReached={refreshData}
+        onEndReachedThreshold={0.01}
         renderItem={({item}) => (
           <View>
             <ImageBackground
@@ -74,7 +121,7 @@ const Home = () => {
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
 const statusBarHeight = StatusBar.currentHeight;
-const bottomNavigatorHeight = 106.5;
+const bottomNavigatorHeight = 107;
 const styles = StyleSheet.create({
   backgroundImage: {
     flex: 1,

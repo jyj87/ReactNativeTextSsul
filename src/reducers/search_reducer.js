@@ -32,8 +32,7 @@ const searchSlice = createSlice({
     },
     // ★ DB에서 검색어를 통해 데이터를 취득
     insertSearchBarText: (state, action) => {
-      // action.payload.searchBarText;
-      state.searchPostList = refreshTampSub3PostSet;
+      state.articlesList = action.payload;
     },
   },
 });

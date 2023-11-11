@@ -4,17 +4,27 @@ import {useDispatch} from 'react-redux';
 import Entypo from 'react-native-vector-icons/Entypo';
 import {TextInput} from 'react-native-gesture-handler';
 import {insertSearchBarText} from '../../reducers/search_reducer';
+import {searchRequests} from '../../api/searchRequests';
+import {SearchEnum} from '../../enum/requestConst';
 
-const SearchBarArea = ({searchBarText, setSearchBarText}) => {
+const SearchBarArea = ({
+  searchBarText,
+  setSearchBarText,
+  searchPage,
+  setSearchPage,
+}) => {
   const dispatch = useDispatch();
 
-  const searchBarTextInsert = () => {
+  const searchBarTextInsert = async () => {
     if (searchBarText.trim() === '') {
       Alert.alert('경고', '데이터를 입력해주세요');
     } else {
-      console.log('검색 실행');
-      dispatch(insertSearchBarText({searchBarText: searchBarText}));
-      setSearchBarText('');
+      const articlesList = await searchRequests(SearchEnum.TITLE_SEARCH, [
+        0,
+        searchBarText,
+      ]);
+      dispatch(insertSearchBarText(articlesList));
+      setSearchPage(0);
     }
   };
 
@@ -33,6 +43,9 @@ const SearchBarArea = ({searchBarText, setSearchBarText}) => {
         keyboardType="web-search"
         onChangeText={text => setSearchBarText(text)}
         value={searchBarText}
+        onFocus={() => {
+          setSearchBarText(''), setSearchPage(0);
+        }}
         onSubmitEditing={() => searchBarTextInsert()}
         style={{
           color: '#808080',

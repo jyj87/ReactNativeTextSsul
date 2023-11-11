@@ -2,14 +2,14 @@ const HomeEnum = Object.freeze({
   //初期postデータ取得
   INIT_DATA: 'initData',
   //追加postデータ取得
-  ADD_POST: 'addPost',
+  ADD_ARTICLE: 'addArticle',
 });
 
 const SearchEnum = Object.freeze({
   //初期postデータ取得
   INIT_DATA: 'initData',
   //追加postデータ取得
-  ADD_POST: 'addPost',
+  ADD_ARTICLE: 'addArticle',
   //掲示板ネームで検索
   CATEGORY_SEARCH: 'categorySearch',
   //タイトルで検索

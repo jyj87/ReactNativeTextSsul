@@ -1,4 +1,4 @@
-import {View, Text} from 'react-native';
+import {View, Text, Alert} from 'react-native';
 import React from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -10,6 +10,25 @@ const MiddleArea = ({articleData}) => {
   // 좋아요 클릭 Count +1
   const contentLikeClick = () => {
     dispatch(incrementLikeCount());
+  };
+
+  // Article削除
+  const articleDelete = (articleId) => {
+    Alert.alert(
+      '경고',
+      '게시물을 삭제하시겠습니까?',
+      [
+        {
+          text: '취소',
+          onPress: () => console.log('취소 버튼이 눌렸습니다.'),
+        },
+        {
+          text: '확인',
+          onPress: () => console.log('확인 버튼이 눌렸습니다.'),
+        },
+      ],
+      { cancelable: false }
+    );
   };
 
   return (
@@ -41,6 +60,13 @@ const MiddleArea = ({articleData}) => {
             name="google-translate"
             size={15}
             color="black"
+            style={{marginRight:3}}
+          />
+          <Ionicons
+            name="trash"
+            size={15}
+            color="black"
+            onPress={() => articleDelete(articleData.articleId)}
           />
         </View>
       </View>

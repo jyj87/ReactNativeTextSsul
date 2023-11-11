@@ -10,6 +10,7 @@ const Search = ({route, navigation}) => {
   const articlesList = useSelector(state => state.search.articlesList);
   const [isLoading, setIsLoading] = useState(false);
   const [searchBarText, setSearchBarText] = useState('');
+  const [searchPage, setSearchPage] = useState(0);
 
   return (
     <SafeAreaView edges={['top']} style={{marginHorizontal: 8, flex: 1}}>
@@ -17,12 +18,17 @@ const Search = ({route, navigation}) => {
       <SearchBarArea
         searchBarText={searchBarText}
         setSearchBarText={setSearchBarText}
+        searchPage={searchPage}
+        setSearchPage={setSearchPage}
       />
       <SortArea />
       <ContentArea
         isLoading={isLoading}
         setIsLoading={setIsLoading}
         articlesList={articlesList}
+        searchPage={searchPage}
+        setSearchPage={setSearchPage}
+        searchBarText={searchBarText}
       />
     </SafeAreaView>
   );

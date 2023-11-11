@@ -2,20 +2,23 @@ import {createSlice} from '@reduxjs/toolkit';
 import {log} from '../log/log_a';
 
 /**
- * getInitPostList: 어플 실행시 초기 셋팅 데이터
+ * getInitArticleList: 어플 실행시 초기 셋팅 데이터
  */
 const homeSlice = createSlice({
   name: 'home',
-  initialState: {homeArticleList: [], homePage: 0},
+  initialState: {homeArticleList: []},
   reducers: {
-    getInitPostList: (state, action) => {
-      log.info('homeSlice.getInitPostList START');
+    getInitArticleList: (state, action) => {
+      log.info('homeSlice.getInitArticleList START');
       state.homeArticleList = action.payload;
       log.debug('homeArticleList 設定データ', state.homeArticleList);
-      log.info('homeSlice.getInitPostList END');
+      log.info('homeSlice.getInitArticleList END');
+    },
+    getRefreshData: (state, action) => {
+      state.homeArticleList = [...state.homeArticleList, ...action.payload];
     },
   },
 });
 
 export default homeSlice.reducer;
-export const {getInitPostList} = homeSlice.actions;
+export const {getInitArticleList,getRefreshData} = homeSlice.actions;

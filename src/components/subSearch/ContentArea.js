@@ -16,11 +16,16 @@ import {readRequests} from '../../api/readRequests';
 import {ReadEnum, SearchEnum} from '../../enum/requestConst';
 import {searchRequests} from '../../api/searchRequests';
 
-const ContentArea = ({isLoading, setIsLoading, articlesList}) => {
+const ContentArea = ({
+  isLoading,
+  setIsLoading,
+  articlesList,
+  searchPage,
+  setSearchPage,
+  searchBarText,
+}) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
-  //現在Page
-  const [searchPage, setSearchPage] = useState(0);
   //最後Page確認
   const [endPageFlg, setEndPageFlg] = useState(false);
   //選択したソート（좋아요순,조회수순,최신글순,댓글순）
@@ -28,7 +33,7 @@ const ContentArea = ({isLoading, setIsLoading, articlesList}) => {
 
   // add Search
   const addSearchArticleData = async () => {
-    const articlesList = await searchRequests(SearchEnum.ADD_POST, searchPage);
+  const articlesList = await searchRequests(SearchEnum.ADD_ARTICLE, [searchPage,searchBarText]);
     if (articlesList.length !== 0) {
       setEndPageFlg(false);
       setSearchPage(searchPage + 1);
@@ -88,7 +93,6 @@ const ContentArea = ({isLoading, setIsLoading, articlesList}) => {
         // 옵션: 스크롤바를 숨김
         showsVerticalScrollIndicator={false}
         data={articlesList}
-        // keyExtractor={item => item.postSetIndex}
         ListFooterComponent={renderFooter}
         onEndReached={refreshData}
         onEndReachedThreshold={0.01}

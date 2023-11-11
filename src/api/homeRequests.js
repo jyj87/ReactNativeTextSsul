@@ -10,7 +10,7 @@ import {log} from '../log/log_a';
  *
  *
  */
-export const homeRequests = async type => {
+export const homeRequests = async (type, requestData) => {
   switch (type) {
     case HomeEnum.INIT_DATA:
       log.info('HOME画面のINIT処理 START');
@@ -33,8 +33,23 @@ export const homeRequests = async type => {
         throw error;
       }
       break;
-    case HomeEnum.ADD_POST:
+    case HomeEnum.ADD_ARTICLE:
+      log.info('HOME画面のARTICLE追加処理 START');
       try {
+        const url = setUrl(GeneralEnum.BACK_END_GET_HOME_ARTICLES, [
+          String(requestData + 1),
+          '10',
+          '1',
+        ]);
+        const response = await axios.get(url);
+        const articleList = [];
+        response.data.responseData.articleList.forEach(element => {
+          element.thumbnailImagePath = testRandomImagePath();
+          articleList.push(element);
+        });
+        log.debug('HOME画面のARTICLE追加データ取得', articleList);
+        log.info('HOME画面のARTICLE追加処理 END');
+        return articleList;
       } catch (error) {
         throw error;
       }

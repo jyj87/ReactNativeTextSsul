@@ -33,3 +33,9 @@ export const urlArticleLike = (params) => {
   log.debug('Article Like URL : ', url);
   return url;
 };
+
+export const urlSearchTextExist = (params) => {
+  const url = `http://localhost:8080/v1/api/articles?page=${params[0]}&limit=${params[1]}&articleTitle="${params[2]}"`;
+  log.debug('Search Text URL : ', url);
+  return url;
+};

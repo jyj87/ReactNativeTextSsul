@@ -17,7 +17,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useDispatch, useSelector} from 'react-redux';
-import {getInitPostList} from './src/reducers/home_reducer';
+import {getInitArticleList} from './src/reducers/home_reducer';
 import {getInitSearchPostList} from './src/reducers/search_reducer';
 import {getInitRankPostList} from './src/reducers/rank_reducer';
 import {loginCheck} from './src/reducers/login_reducer';
@@ -40,7 +40,7 @@ const App = () => {
   //Home画面データ設定
   const initHomeArticleData = async () => {
     const articleList = await homeRequests(HomeEnum.INIT_DATA);
-    dispatch(getInitPostList(articleList));
+    dispatch(getInitArticleList(articleList));
   };
   //Search画面データ設定
   const initSearchArticleData = async () => {
