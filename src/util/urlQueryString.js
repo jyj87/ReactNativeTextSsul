@@ -3,7 +3,7 @@ import {log} from '../log/log_a';
 
 // BASE URL + PARAMS
 export const setUrl = (apiUrl, params) => {
-  const addQuery = {page: params[0], limit: params[1], categoryId: params[2]};
+  const addQuery = {page: params[0], limit: params[1], categoryId: params[2],orderType:params[3]};
 
   const url = queryString.stringifyUrl({
     url: apiUrl,

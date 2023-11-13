@@ -23,17 +23,16 @@ const ContentArea = ({
   searchPage,
   setSearchPage,
   searchBarText,
+  selectSortFlag,
 }) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   //最後Page確認
   const [endPageFlg, setEndPageFlg] = useState(false);
-  //選択したソート（좋아요순,조회수순,최신글순,댓글순）
-  const sortFlag = useSelector(state => state.search.sortFlag);
 
   // add Search
   const addSearchArticleData = async () => {
-  const articlesList = await searchRequests(SearchEnum.ADD_ARTICLE, [searchPage,searchBarText]);
+  const articlesList = await searchRequests(SearchEnum.ADD_ARTICLE, [searchPage,searchBarText,selectSortFlag]);
     if (articlesList.length !== 0) {
       setEndPageFlg(false);
       setSearchPage(searchPage + 1);

@@ -14,21 +14,25 @@ export const rankRequests = async (type, requestData) => {
           '0',
           '1',
           '1',
+          'viewCnt',
         ]);
         const sub1url = setUrl(GeneralEnum.BACK_END_GET_RANK_ARTICLES, [
           '0',
           '10',
           '1',
+          'viewCnt',
         ]);
         const sub2url = setUrl(GeneralEnum.BACK_END_GET_RANK_ARTICLES, [
           '0',
           '10',
           '2',
+          'viewCnt',
         ]);
         const sub3url = setUrl(GeneralEnum.BACK_END_GET_RANK_ARTICLES, [
           '0',
           '10',
           '3',
+          'viewCnt',
         ]);
         const mainArticle = await axios.get(main0url);
         const articles1 = await axios.get(sub1url);

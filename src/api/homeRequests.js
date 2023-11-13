@@ -19,6 +19,7 @@ export const homeRequests = async (type, requestData) => {
           '0',
           '10',
           '1',
+          'date',
         ]);
         const response = await axios.get(url);
         const articleList = [];
@@ -40,6 +41,7 @@ export const homeRequests = async (type, requestData) => {
           String(requestData + 1),
           '10',
           '1',
+          'date',
         ]);
         const response = await axios.get(url);
         const articleList = [];

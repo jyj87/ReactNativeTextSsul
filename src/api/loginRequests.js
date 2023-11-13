@@ -21,7 +21,7 @@ export const loginRequests = async (type, requestData) => {
         const member = new RequestMember(requestData);
         const response = await axios.post(GeneralEnum.BACK_END_LOGIN, member);
         log.debug('ログイン取得データ', response.data);
-        setToken(response.data.responseData.accessToken);
+        setToken(response.data.responseData);
       } catch (error) {
         throw error;
       }

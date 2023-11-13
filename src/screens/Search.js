@@ -8,6 +8,7 @@ import ContentArea from '../components/subSearch/ContentArea';
 
 const Search = ({route, navigation}) => {
   const articlesList = useSelector(state => state.search.articlesList);
+  const selectSortFlag = useSelector(state => state.search.sortFlag);
   const [isLoading, setIsLoading] = useState(false);
   const [searchBarText, setSearchBarText] = useState('');
   const [searchPage, setSearchPage] = useState(0);
@@ -21,7 +22,11 @@ const Search = ({route, navigation}) => {
         searchPage={searchPage}
         setSearchPage={setSearchPage}
       />
-      <SortArea />
+      <SortArea
+        searchBarText={searchBarText}
+        setSearchPage={setSearchPage}
+        selectSortFlag={selectSortFlag}
+      />
       <ContentArea
         isLoading={isLoading}
         setIsLoading={setIsLoading}
@@ -29,6 +34,7 @@ const Search = ({route, navigation}) => {
         searchPage={searchPage}
         setSearchPage={setSearchPage}
         searchBarText={searchBarText}
+        selectSortFlag={selectSortFlag}
       />
     </SafeAreaView>
   );

@@ -2,15 +2,33 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {log} from '../log/log_a';
 
 const ACCESS_TOKEN = 'accessToken';
+const UID = 'uid';
+const NICK_NAME = 'nickname';
 
-// Token設定
-export const setToken = async token => {
-  await AsyncStorage.setItem(ACCESS_TOKEN, token)
+// userData設定
+export const setToken = async userData => {
+  await AsyncStorage.setItem(ACCESS_TOKEN, userData.accessToken)
     .then(() => {
-      log.debug('토큰 저장 완료', token);
+      log.debug('토큰 저장 완료', userData.accessToken);
     })
     .catch(error => {
-      log.debug('토큰 저장 실패: ', error);
+      log.debug('토큰 저장 실패: ', userData.accessToken);
+    });
+
+    await AsyncStorage.setItem(UID, String(userData.uid))
+    .then(() => {
+      log.debug('UID 저장 완료', userData.uid);
+    })
+    .catch(error => {
+      log.debug('UID 저장 실패: ', userData.uid);
+    });
+
+    await AsyncStorage.setItem(NICK_NAME, userData.nickname)
+    .then(() => {
+      log.debug('닉네임 저장 완료', userData.nickname);
+    })
+    .catch(error => {
+      log.debug('닉네임 저장 실패: ', userData.nickname);
     });
 };
 

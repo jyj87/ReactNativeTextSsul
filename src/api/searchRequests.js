@@ -4,7 +4,7 @@ import {GeneralEnum} from '../enum/generalConst';
 import {setUrl, urlSearchTextExist} from '../util/urlQueryString';
 import {log} from '../log/log_a';
 import {testRandomImagePath} from '../util/testUtil';
-import {isNullOrEmpty} from '../util/commonUtil';
+import {isNullOrEmpty, changeSortCode} from '../util/commonUtil';
 
 export const searchRequests = async (type, requestData) => {
   switch (type) {
@@ -15,6 +15,7 @@ export const searchRequests = async (type, requestData) => {
           '0',
           '9',
           '1',
+          'date',
         ]);
         const response = await axios.get(url);
         const responseArticlesList = response.data.responseData.articleList;
@@ -45,13 +46,15 @@ export const searchRequests = async (type, requestData) => {
             String(requestData[0] + 1),
             '9',
             '1',
+            changeSortCode(requestData[2])
           ]);
-        // 検索語がある場合
+          // 検索語がある場合
         } else {
           url = urlSearchTextExist([
             String(requestData[0] + 1),
             '9',
             requestData[1],
+            changeSortCode(requestData[2])
           ]);
         }
 
@@ -85,7 +88,7 @@ export const searchRequests = async (type, requestData) => {
       }
       break;
     case SearchEnum.TITLE_SEARCH:
-       log.info('Title Search処理 START');
+      log.info('Title Search処理 START');
       try {
         const url = urlSearchTextExist([
           String(requestData[0]),
@@ -111,6 +114,7 @@ export const searchRequests = async (type, requestData) => {
         throw error;
       }
       break;
+
     default:
       break;
   }

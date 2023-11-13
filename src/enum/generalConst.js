@@ -9,6 +9,7 @@ const GeneralEnum = Object.freeze({
   BACK_END_GET_SEARCH_ARTICLES:'http://localhost:8080/v1/api/articles',
   BACK_END_GET_RANK_ARTICLES:'http://localhost:8080/v1/api/articles',
 
+
   
 });
 
