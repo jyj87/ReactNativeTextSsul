@@ -9,10 +9,16 @@ import {isNullOrEmpty} from '../util/commonUtil';
 /**
  * Login API
  *
- * @param {LoginEnum} type  - 処理区分
+ * @param {LoginEnum} type - 処理区分
  * @param {any} requestData - 転送データ
  */
 export const loginRequests = async (type, requestData) => {
+    // headers設定
+    const headers = {
+      Authorization: `Bearer ${await getToken()}`,
+      'Content-Type': 'application/json',
+    };
+    
   switch (type) {
     //ログイン処理　→ Token取得
     case LoginEnum.LOGIN_PROCESS:

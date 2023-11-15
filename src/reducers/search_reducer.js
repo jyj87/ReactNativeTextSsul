@@ -1,5 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit';
-import {refreshTampSub3PostSet, sortFlag} from '../data/tempSearchData';
+import {log} from '../log/log_a';
 
 /**
  * getInitSearchPostList: 어플 실행시 초기 셋팅 데이터
@@ -16,23 +16,33 @@ const searchSlice = createSlice({
   },
   reducers: {
     getInitSearchPostList: (state, action) => {
+      log.info('searchSlice.getInitSearchPostList START');
       state.articlesList = action.payload;
       // 1 : 좋아요
       // 2 : 조회수
       // 3 : 최신글
       // 4 : 댓글순
       state.sortFlag = 3;
+      log.debug('searchArticleList 設定データ', state.articlesList);
+      log.info('searchSlice.getInitSearchPostList END');
     },
     getRefreshData: (state, action) => {
+      log.info('searchSlice.getRefreshData START');
       state.articlesList = [...state.articlesList, ...action.payload];
+      log.debug('searchArticleList 設定データ', state.articlesList);
+      log.info('searchSlice.getRefreshData END');
     },
-    // ★ backEnd sort? frontEnd sort?
     setSortData: (state, action) => {
+      log.info('searchSlice.setSortData START');
       state.sortFlag = action.payload.sortFlag;
+      log.debug('現在SortFlag 設定データ', state.articlesList);
+      log.info('searchSlice.setSortData END');
     },
-    // ★ DB에서 검색어를 통해 데이터를 취득
     insertSearchBarText: (state, action) => {
+      log.info('searchSlice.insertSearchBarText START');
       state.articlesList = action.payload;
+      log.debug('searchBarのボタンから設定データ', state.articlesList);
+      log.info('searchSlice.insertSearchBarText END');
     },
   },
 });

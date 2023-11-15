@@ -11,22 +11,22 @@ const loginSlice = createSlice({
   reducers: {
     init: (state, action) => {},
     loginCheck: (state, action) => {
-      log.info('ログインフラグ更新処理 START');
+      log.info('loginSlice.loginCheck START');
       state.loginFlag = action.payload;
       log.debug('ログインフラグ', state.loginFlag);
-      log.info('ログインフラグ更新処理 END');
+      log.info('loginSlice.loginCheck END');
     },
     login: (state, action) => {
-      log.info('ログイン処理 START');
+      log.info('loginSlice.login START');
       state.loginFlag = action.payload;
       log.debug('ログインフラグ', state.loginFlag);
-      log.info('ログイン処理 END');
+      log.info('loginSlice.login END');
     },
     loginOut: (state, action) => {
-      log.info('ログインアウト処理 START');
+      log.info('loginSlice.loginOut START');
       state.loginFlag = false;
       log.debug('ログインフラグ', state.loginFlag);
-      log.info('ログインアウト処理 END');
+      log.info('loginSlice.loginOut END');
     },
   },
 });

@@ -39,6 +39,7 @@ const Home = () => {
   // add Home
   const addHomeArticleData = async () => {
     const articlesList = await homeRequests(HomeEnum.ADD_ARTICLE, homePage);
+    //取得したデータがある場合のみ実施
     if (articlesList.length !== 0) {
       setEndPageFlg(false);
       setHomePage(homePage + 1);

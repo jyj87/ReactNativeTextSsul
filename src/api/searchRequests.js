@@ -5,8 +5,21 @@ import {setUrl, urlSearchTextExist} from '../util/urlQueryString';
 import {log} from '../log/log_a';
 import {testRandomImagePath} from '../util/testUtil';
 import {isNullOrEmpty, changeSortCode} from '../util/commonUtil';
+import {getToken} from '../util/accessToken';
 
+/**
+ * Search API
+ *
+ * @param {SearchEnum} type - 処理区分
+ * @param {any} requestData - 転送データ
+ */
 export const searchRequests = async (type, requestData) => {
+  // headers設定
+  const headers = {
+    Authorization: `Bearer ${await getToken()}`,
+    'Content-Type': 'application/json',
+  };
+
   switch (type) {
     case SearchEnum.INIT_DATA:
       log.info('Search画面のINIT処理 START');
@@ -19,16 +32,7 @@ export const searchRequests = async (type, requestData) => {
         ]);
         const response = await axios.get(url);
         const responseArticlesList = response.data.responseData.articleList;
-        const articlesList = [];
-        for (var i = 0; i < 3; i++) {
-          const articles = []; // 내부 배열 생성
-          for (var j = 0; j < 3; j++) {
-            responseArticlesList[i * 3 + j].thumbnailImagePath =
-              testRandomImagePath();
-            articles.push(responseArticlesList[i * 3 + j]); // 각 요소를 채워넣음
-          }
-          articlesList.push(articles); // 외부 배열에 내부 배열 추가
-        }
+        const articlesList =  setSearchScreenArticleList(responseArticlesList)
         log.debug('Search画面のINITデータ取得', articlesList);
         log.info('Search画面のINIT処理 END');
         return articlesList;
@@ -60,26 +64,7 @@ export const searchRequests = async (type, requestData) => {
 
         const response = await axios.get(url);
         const responseArticlesList = response.data.responseData.articleList;
-        const articlesList = [];
-        if (responseArticlesList.length !== 0) {
-          for (var i = 0; i < 3; i++) {
-            const articles = []; // 내부 배열 생성
-            for (var j = 0; j < 3; j++) {
-              if (responseArticlesList[i * 3 + j] === undefined) {
-                articles.push({
-                  thumbnailImagePath: null,
-                  articleId: '',
-                  articleTitle: '',
-                }); // 각 요소를 채워넣음
-              } else {
-                responseArticlesList[i * 3 + j].thumbnailImagePath =
-                  testRandomImagePath();
-                articles.push(responseArticlesList[i * 3 + j]); // 각 요소를 채워넣음
-              }
-            }
-            articlesList.push(articles); // 외부 배열에 내부 배열 추가
-          }
-        }
+        const articlesList = setSearchScreenArticleList(responseArticlesList);
         log.debug('Search画面のADDデータ取得', articlesList);
         log.info('Search画面のADD処理 END');
         return articlesList;
@@ -98,16 +83,7 @@ export const searchRequests = async (type, requestData) => {
         ]);
         const response = await axios.get(url);
         const responseArticlesList = response.data.responseData.articleList;
-        const articlesList = [];
-        for (var i = 0; i < 3; i++) {
-          const articles = []; // 내부 배열 생성
-          for (var j = 0; j < 3; j++) {
-            responseArticlesList[i * 3 + j].thumbnailImagePath =
-              testRandomImagePath();
-            articles.push(responseArticlesList[i * 3 + j]); // 각 요소를 채워넣음
-          }
-          articlesList.push(articles); // 외부 배열에 내부 배열 추가
-        }
+        const articlesList = setSearchScreenArticleList(responseArticlesList);
         log.debug('Title Searchデータ取得', articlesList);
         log.info('Title Search処理 END');
         return articlesList;
@@ -138,16 +114,7 @@ export const searchRequests = async (type, requestData) => {
         }
         const response = await axios.get(url);
         const responseArticlesList = response.data.responseData.articleList;
-        const articlesList = [];
-        for (var i = 0; i < 3; i++) {
-          const articles = []; // 내부 배열 생성
-          for (var j = 0; j < 3; j++) {
-            responseArticlesList[i * 3 + j].thumbnailImagePath =
-              testRandomImagePath();
-            articles.push(responseArticlesList[i * 3 + j]); // 각 요소를 채워넣음
-          }
-          articlesList.push(articles); // 외부 배열에 내부 배열 추가
-        }
+        const articlesList = setSearchScreenArticleList(responseArticlesList);
         log.debug('Sort Searchデータ取得', articlesList);
         log.info('Sort Search処理 END');
         return articlesList;
@@ -159,4 +126,30 @@ export const searchRequests = async (type, requestData) => {
     default:
       break;
   }
+};
+
+// 取得したデータをSearch画面用で編集
+const setSearchScreenArticleList =  responseArticlesList => {
+  const articlesList = [];
+  if (responseArticlesList.length !== 0) {
+    for (var i = 0; i < 3; i++) {
+      const articles = []; // 내부 배열 생성
+      for (var j = 0; j < 3; j++) {
+        if (responseArticlesList[i * 3 + j] === undefined) {
+          articles.push({
+            thumbnailImagePath: null,
+            articleId: '',
+            articleTitle: '',
+          }); // 각 요소를 채워넣음
+        } else {
+          responseArticlesList[i * 3 + j].thumbnailImagePath =
+            testRandomImagePath();
+          articles.push(responseArticlesList[i * 3 + j]); // 각 요소를 채워넣음
+        }
+      }
+      articlesList.push(articles); // 외부 배열에 내부 배열 추가
+    }
+  }
+
+  return articlesList;
 };

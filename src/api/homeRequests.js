@@ -4,13 +4,21 @@ import {GeneralEnum} from '../enum/generalConst';
 import {setUrl} from '../util/urlQueryString';
 import {testRandomImagePath} from '../util/testUtil';
 import {log} from '../log/log_a';
+import { getToken } from '../util/accessToken';
 
 /**
- * HomeEnum.INIT_DATA : 初期HOME画面データ取得
+ * Home API
  *
- *
+ * @param {HomeEnum} type - 処理区分
+ * @param {any} requestData - 転送データ
  */
 export const homeRequests = async (type, requestData) => {
+    // headers設定
+    const headers = {
+      Authorization: `Bearer ${await getToken()}`,
+      'Content-Type': 'application/json',
+    };
+    
   switch (type) {
     case HomeEnum.INIT_DATA:
       log.info('HOME画面のINIT処理 START');

@@ -4,8 +4,21 @@ import {GeneralEnum} from '../enum/generalConst';
 import {setUrl} from '../util/urlQueryString';
 import {log} from '../log/log_a';
 import {testRandomImagePath} from '../util/testUtil';
+import { getToken } from '../util/accessToken';
 
+/**
+ * Rank API
+ *
+ * @param {RankEnum} type - 処理区分
+ * @param {any} requestData - 転送データ
+ */
 export const rankRequests = async (type, requestData) => {
+    // headers設定
+    const headers = {
+      Authorization: `Bearer ${await getToken()}`,
+      'Content-Type': 'application/json',
+    };
+    
   switch (type) {
     case RankEnum.INIT_DATA:
       log.info('Rank画面のINIT処理 START');
