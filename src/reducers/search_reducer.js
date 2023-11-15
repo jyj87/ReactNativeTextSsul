@@ -27,7 +27,7 @@ const searchSlice = createSlice({
       state.articlesList = [...state.articlesList, ...action.payload];
     },
     // ★ backEnd sort? frontEnd sort?
-    getSortData: (state, action) => {
+    setSortData: (state, action) => {
       state.sortFlag = action.payload.sortFlag;
     },
     // ★ DB에서 검색어를 통해 데이터를 취득
@@ -41,6 +41,6 @@ export default searchSlice.reducer;
 export const {
   getInitSearchPostList,
   getRefreshData,
-  getSortData,
+  setSortData,
   insertSearchBarText,
 } = searchSlice.actions;

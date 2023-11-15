@@ -21,6 +21,7 @@ const Search = ({route, navigation}) => {
         setSearchBarText={setSearchBarText}
         searchPage={searchPage}
         setSearchPage={setSearchPage}
+        selectSortFlag={selectSortFlag}
       />
       <SortArea
         searchBarText={searchBarText}

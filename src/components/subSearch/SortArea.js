@@ -3,35 +3,30 @@ import {View, StyleSheet} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import {getSortData} from '../../reducers/search_reducer';
+import {setSortData} from '../../reducers/search_reducer';
 import {useDispatch, useSelector} from 'react-redux';
 import {Text} from 'react-native-elements';
 import {searchRequests} from '../../api/searchRequests';
 import {SearchEnum} from '../../enum/requestConst';
+import {insertSearchBarText} from '../../reducers/search_reducer';
+
 
 const SortArea = ({searchBarText, setSearchPage,selectSortFlag}) => {
   const dispatch = useDispatch();
   
   //Sort Button (sort처리가된 게시물을 취득)
   const sortData = async sortFlag => {
-    let articlesList;
-    if (sortFlag === 1) {
-      articlesList = await searchRequests(SearchEnum.LIKE_SORT, searchBarText);
-    } else if (sortFlag === 2) {
-      articlesList = await searchRequests(SearchEnum.HITS_SORT, searchBarText);
-    } else if (sortFlag === 3) {
-      articlesList = await searchRequests(
-        SearchEnum.LATEST_SORT,
-        searchBarText,
-      );
-    } else {
-      articlesList = await searchRequests(
-        SearchEnum.COMMENT_SORT,
-        searchBarText,
-      );
-    }
-    dispatch(getSortData({sortFlag: sortFlag}));
+    //Sort最近化
+    dispatch(setSortData({sortFlag: sortFlag}));
+    const articlesList = await searchRequests(SearchEnum.SORT_SEARCH, [
+      0,
+      searchBarText,
+      sortFlag,
+    ]);
+    //Page最近化
     setSearchPage(0);
+    dispatch(insertSearchBarText(articlesList));
+
   };
 
   return (

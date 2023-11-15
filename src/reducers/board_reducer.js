@@ -35,12 +35,18 @@ const boardSlice = createSlice({
       state.post.postLikeCount = state.post.postLikeCount + 1;
       
     },
-    // ★ DB에 +text insert, 화면에+text
     insertComment: (state, action) => {
-      log.info('boardSlice.insertCommentText START');
+      log.info('boardSlice.insertComment START');
       state.articleCommentList = action.payload.articleCommentList.commentList;
       log.debug('articleCommentList 設定データ',  state.articleCommentList)
-      log.info('boardSlice.insertCommentText END');
+      log.info('boardSlice.insertComment END');
+      
+    },
+    insertContents: (state, action) => {
+      log.info('boardSlice.insertContents START');
+      state.article = action.payload.article;
+      log.debug('Contents 設定データ',  state.articleCommentList)
+      log.info('boardSlice.insertContents END');
       
     },
     // ★ DB에 +1 insert , 화면에 +1
@@ -59,4 +65,5 @@ export const {
   insertComment,
   incrementCommentLikeCount,
   setSelectSearchPostData,
+  insertContents,
 } = boardSlice.actions;

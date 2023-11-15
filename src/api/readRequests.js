@@ -2,7 +2,7 @@ import axios from 'axios';
 import {ReadEnum} from '../enum/requestConst';
 import {GeneralEnum} from '../enum/generalConst';
 import {getToken} from '../util/accessToken';
-import {urlCommentSelect} from '../util/urlQueryString';
+import {urlCommentSelect,urlArticleLike} from '../util/urlQueryString';
 import {log} from '../log/log_a';
 
 /**

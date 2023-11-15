@@ -12,6 +12,7 @@ const SearchBarArea = ({
   setSearchBarText,
   searchPage,
   setSearchPage,
+  selectSortFlag,
 }) => {
   const dispatch = useDispatch();
 
@@ -22,6 +23,7 @@ const SearchBarArea = ({
       const articlesList = await searchRequests(SearchEnum.TITLE_SEARCH, [
         0,
         searchBarText,
+        selectSortFlag,
       ]);
       dispatch(insertSearchBarText(articlesList));
       setSearchPage(0);

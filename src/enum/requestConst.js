@@ -14,14 +14,9 @@ const SearchEnum = Object.freeze({
   CATEGORY_SEARCH: 'categorySearch',
   //タイトルで検索
   TITLE_SEARCH: 'titleSearch',
-  //いいよ順で検索
-  LIKE_SORT: 'likeSort',
-  //再生数順で検検索
-  HITS_SORT: 'hitSort',
-  //最新順で検索
-  LATEST_SORT: 'latestSort',
-  //コメント数順で検索
-  COMMENT_SORT: 'commentSort',
+  //ソートで検索
+  SORT_SEARCH: 'sortSearch',
+
 });
 
 const WriteEnum = Object.freeze({
@@ -29,8 +24,7 @@ const WriteEnum = Object.freeze({
   CREATE_ARTICLE: 'createPost',
 
   CREATE_COMMENT: 'createComment',
-
-  ARTICLE_LIKE:'ArticleLike'
+  
 });
 
 const ReadEnum = Object.freeze({
@@ -54,7 +48,7 @@ const ProfileEnum = Object.freeze({
 
 const BoardEnum = Object.freeze({
   //postのいいよクリック
-  POST_LIKE: 'postLike',
+  ARTICLE_LIKE: 'articleLike',
   //commentのいいよクリック
   COMMENT_LIKE: 'commentLike',
   //comment作成

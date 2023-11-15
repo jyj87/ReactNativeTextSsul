@@ -48,19 +48,6 @@ export const writeRequests = async (type, requestData) => {
       }
       log.info('Comment作成処理 END');
       break;
-    case WriteEnum.ARTICLE_LIKE:
-      log.info('ArticleLike処理 START');
-      try {
-        const url = urlArticleLike(requestData);
-        log.debug('ArticleLike処理成功');
-        const response = await axios.patch(url, {
-          headers: headers,
-        });
-      } catch (error) {
-        throw error;
-      }
-      log.info('ArticleLike処理 END');
-      break;
     default:
       break;
   }

@@ -40,13 +40,13 @@ export const searchRequests = async (type, requestData) => {
       log.info('Search画面のADD処理 START');
       try {
         let url;
-        // base
+        // 検索語がない場合
         if (isNullOrEmpty(requestData[1])) {
           url = setUrl(GeneralEnum.BACK_END_GET_SEARCH_ARTICLES, [
             String(requestData[0] + 1),
             '9',
             '1',
-            changeSortCode(requestData[2])
+            changeSortCode(requestData[2]),
           ]);
           // 検索語がある場合
         } else {
@@ -54,7 +54,7 @@ export const searchRequests = async (type, requestData) => {
             String(requestData[0] + 1),
             '9',
             requestData[1],
-            changeSortCode(requestData[2])
+            changeSortCode(requestData[2]),
           ]);
         }
 
@@ -94,6 +94,7 @@ export const searchRequests = async (type, requestData) => {
           String(requestData[0]),
           '9',
           requestData[1],
+          changeSortCode(requestData[2]),
         ]);
         const response = await axios.get(url);
         const responseArticlesList = response.data.responseData.articleList;
@@ -109,6 +110,46 @@ export const searchRequests = async (type, requestData) => {
         }
         log.debug('Title Searchデータ取得', articlesList);
         log.info('Title Search処理 END');
+        return articlesList;
+      } catch (error) {
+        throw error;
+      }
+      break;
+    case SearchEnum.SORT_SEARCH:
+      log.info('Sort Search処理 START');
+      try {
+        let url;
+        // 検索語がない場合
+        if (isNullOrEmpty(requestData[1])) {
+          url = setUrl(GeneralEnum.BACK_END_GET_SEARCH_ARTICLES, [
+            '0',
+            '9',
+            '1',
+            changeSortCode(requestData[2]),
+          ]);
+          // 検索語がある場合
+        } else {
+          url = urlSearchTextExist([
+            String(requestData[0]),
+            '9',
+            requestData[1],
+            changeSortCode(requestData[2]),
+          ]);
+        }
+        const response = await axios.get(url);
+        const responseArticlesList = response.data.responseData.articleList;
+        const articlesList = [];
+        for (var i = 0; i < 3; i++) {
+          const articles = []; // 내부 배열 생성
+          for (var j = 0; j < 3; j++) {
+            responseArticlesList[i * 3 + j].thumbnailImagePath =
+              testRandomImagePath();
+            articles.push(responseArticlesList[i * 3 + j]); // 각 요소를 채워넣음
+          }
+          articlesList.push(articles); // 외부 배열에 내부 배열 추가
+        }
+        log.debug('Sort Searchデータ取得', articlesList);
+        log.info('Sort Search処理 END');
         return articlesList;
       } catch (error) {
         throw error;
