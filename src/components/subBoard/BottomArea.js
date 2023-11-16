@@ -4,34 +4,48 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {TextInput} from 'react-native-gesture-handler';
 import {useDispatch} from 'react-redux';
-import {
-  insertComment,
-  incrementCommentLikeCount,
-} from '../../reducers/board_reducer';
+import {insertComment} from '../../reducers/board_reducer';
 import {writeRequests} from '../../api/writeRequests';
-import {ReadEnum, WriteEnum} from '../../enum/requestConst';
-import { readRequests } from '../../api/readRequests';
+import {ReadEnum, WriteEnum, BoardEnum} from '../../enum/requestConst';
+import {readRequests} from '../../api/readRequests';
+import {boardRequests} from '../../api/boardRequests';
 
 const BottomArea = ({articleCommentList, articleData}) => {
   const dispatch = useDispatch();
+  const [isLikeToggled, setIsLikeToggled] = useState(false);
   //댓글 입력창
   const [commentText, setCommentText] = useState('');
 
   //댓글 등록
-  const insertCommentText = async articleId => {
+  const insertCommentText = async () => {
     if (commentText.trim() === '') {
       Alert.alert('경고', '데이터를 입력해주세요');
     } else {
-      await writeRequests(WriteEnum.CREATE_COMMENT, [articleId, commentText]);
-      const articleCommentList = await readRequests(ReadEnum.COMMENT_READ, articleId);
+      await writeRequests(WriteEnum.CREATE_COMMENT, [
+        articleData.articleId,
+        commentText,
+      ]);
+      const articleCommentList = await readRequests(
+        ReadEnum.COMMENT_READ,
+        articleData.articleId,
+      );
       dispatch(insertComment({articleCommentList: articleCommentList}));
       setCommentText('');
     }
   };
   // 코맨트 좋아요 클릭 Count +1
-  const commentLikeClick = index => {
-    console.log('좋아요 클릭', index);
-    dispatch(incrementCommentLikeCount(index));
+  const commentLikeClick = async commentId => {
+    setIsLikeToggled(!isLikeToggled);
+    await boardRequests(BoardEnum.COMMENT_LIKE, [
+      articleData.articleId,
+      commentId,
+      isLikeToggled ? 1 : 0,
+    ]);
+    const articleCommentList = await readRequests(
+      ReadEnum.COMMENT_READ,
+      articleData.articleId,
+    );
+    dispatch(insertComment({articleCommentList: articleCommentList}));
   };
 
   return (
@@ -61,7 +75,7 @@ const BottomArea = ({articleCommentList, articleData}) => {
                   size={15}
                   color="black"
                   style={{marginHorizontal: 3}}
-                  onPress={() => commentLikeClick(index)}
+                  onPress={() => commentLikeClick(item.commentId)}
                 />
                 <Text>{item.likeCnt}</Text>
                 <MaterialCommunityIcons
@@ -93,11 +107,10 @@ const BottomArea = ({articleCommentList, articleData}) => {
                 keyboardType="web-search"
                 onChangeText={text => setCommentText(text)}
                 value={commentText}
-                onSubmitEditing={() => insertCommentText(articleData.articleId)}
+                onSubmitEditing={() => insertCommentText()}
               />
             </View>
-            <TouchableOpacity
-              onPress={() => insertCommentText(articleData.articleId)}>
+            <TouchableOpacity onPress={() => insertCommentText()}>
               <View style={{marginHorizontal: 3}}>
                 <Ionicons name="arrow-up-circle" size={20} color="black" />
               </View>

@@ -34,6 +34,14 @@ export const urlArticleLike = (params) => {
   return url;
 };
 
+// Comment Like
+export const urlCommentLike = (params) => {
+  const url = `http://localhost:8080/v1/api/articles/${params[0]}/${params[1]}/${params[2]}`;
+  log.debug('Comment Like URL : ', url);
+  return url;
+};
+
+
 // Search Text
 export const urlSearchTextExist = (params) => {
   const url = `http://localhost:8080/v1/api/articles?page=${params[0]}&limit=${params[1]}&articleTitle=${params[2]}&orderType=${params[3]}`;
