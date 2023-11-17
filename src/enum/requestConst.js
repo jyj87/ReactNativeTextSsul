@@ -16,7 +16,6 @@ const SearchEnum = Object.freeze({
   TITLE_SEARCH: 'titleSearch',
   //ソートで検索
   SORT_SEARCH: 'sortSearch',
-
 });
 
 const WriteEnum = Object.freeze({
@@ -24,7 +23,6 @@ const WriteEnum = Object.freeze({
   CREATE_ARTICLE: 'createPost',
 
   CREATE_COMMENT: 'createComment',
-  
 });
 
 const ReadEnum = Object.freeze({
@@ -44,6 +42,10 @@ const ProfileEnum = Object.freeze({
   INIT_MY_POST: 'initMyPost',
   //作成したコメント取得
   INIT_MY_COMMENTS: 'initMyComment',
+
+  INIT_USER_INFO: 'initUserInfo',
+
+  INIT_PROFILE: 'initProfile',
 });
 
 const BoardEnum = Object.freeze({

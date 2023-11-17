@@ -12,7 +12,7 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import {useNavigation} from '@react-navigation/native';
 import {useSelector, useDispatch} from 'react-redux';
 import {setArticleData} from '../reducers/board_reducer';
-import {getRefreshData} from '../reducers/home_reducer';
+import {setRefreshData} from '../reducers/home_reducer';
 import {readRequests} from '../api/readRequests';
 import {ReadEnum,HomeEnum} from '../enum/requestConst';
 import { homeRequests } from '../api/homeRequests';
@@ -43,7 +43,7 @@ const Home = () => {
     if (articlesList.length !== 0) {
       setEndPageFlg(false);
       setHomePage(homePage + 1);
-      dispatch(getRefreshData(articlesList));
+      dispatch(setRefreshData(articlesList));
     } else {
       setEndPageFlg(true);
     }

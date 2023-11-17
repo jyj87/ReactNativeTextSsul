@@ -30,9 +30,11 @@ export const searchRequests = async (type, requestData) => {
           '1',
           'date',
         ]);
-        const response = await axios.get(url);
+        const response = await axios.get(url, null, {
+          headers: headers,
+        });
         const responseArticlesList = response.data.responseData.articleList;
-        const articlesList =  setSearchScreenArticleList(responseArticlesList)
+        const articlesList = setSearchScreenArticleList(responseArticlesList);
         log.debug('Search画面のINITデータ取得', articlesList);
         log.info('Search画面のINIT処理 END');
         return articlesList;
@@ -62,7 +64,9 @@ export const searchRequests = async (type, requestData) => {
           ]);
         }
 
-        const response = await axios.get(url);
+        const response = await axios.get(url, null, {
+          headers: headers,
+        });
         const responseArticlesList = response.data.responseData.articleList;
         const articlesList = setSearchScreenArticleList(responseArticlesList);
         log.debug('Search画面のADDデータ取得', articlesList);
@@ -129,7 +133,7 @@ export const searchRequests = async (type, requestData) => {
 };
 
 // 取得したデータをSearch画面用で編集
-const setSearchScreenArticleList =  responseArticlesList => {
+const setSearchScreenArticleList = responseArticlesList => {
   const articlesList = [];
   if (responseArticlesList.length !== 0) {
     for (var i = 0; i < 3; i++) {

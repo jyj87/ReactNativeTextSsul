@@ -4,7 +4,7 @@ import {GeneralEnum} from '../enum/generalConst';
 import {setUrl} from '../util/urlQueryString';
 import {log} from '../log/log_a';
 import {testRandomImagePath} from '../util/testUtil';
-import { getToken } from '../util/accessToken';
+import {getToken} from '../util/accessToken';
 
 /**
  * Rank API
@@ -13,12 +13,12 @@ import { getToken } from '../util/accessToken';
  * @param {any} requestData - 転送データ
  */
 export const rankRequests = async (type, requestData) => {
-    // headers設定
-    const headers = {
-      Authorization: `Bearer ${await getToken()}`,
-      'Content-Type': 'application/json',
-    };
-    
+  // headers設定
+  const headers = {
+    Authorization: `Bearer ${await getToken()}`,
+    'Content-Type': 'application/json',
+  };
+
   switch (type) {
     case RankEnum.INIT_DATA:
       log.info('Rank画面のINIT処理 START');
@@ -47,14 +47,25 @@ export const rankRequests = async (type, requestData) => {
           '3',
           'viewCnt',
         ]);
-        const mainArticle = await axios.get(main0url);
-        const articles1 = await axios.get(sub1url);
-        const articles2 = await axios.get(sub2url);
-        const articles3 = await axios.get(sub3url);
-        rankArticleList.mainArticle = mainArticle.data.responseData.articleList
-        rankArticleList.subArticleList1 = articles1.data.responseData.articleList
-        rankArticleList.subArticleList2 = articles2.data.responseData.articleList
-        rankArticleList.subArticleList3 = articles3.data.responseData.articleList
+        const mainArticle = await axios.get(main0url, null, {
+          headers: headers,
+        });
+        const articles1 = await axios.get(sub1url, null, {
+          headers: headers,
+        });
+        const articles2 = await axios.get(sub2url, null, {
+          headers: headers,
+        });
+        const articles3 = await axios.get(sub3url, null, {
+          headers: headers,
+        });
+        rankArticleList.mainArticle = mainArticle.data.responseData.articleList;
+        rankArticleList.subArticleList1 =
+          articles1.data.responseData.articleList;
+        rankArticleList.subArticleList2 =
+          articles2.data.responseData.articleList;
+        rankArticleList.subArticleList3 =
+          articles3.data.responseData.articleList;
         rankArticleList.mainArticle.forEach(element => {
           element.thumbnailImagePath = testRandomImagePath();
         });
@@ -67,10 +78,10 @@ export const rankRequests = async (type, requestData) => {
         rankArticleList.subArticleList3.forEach(element => {
           element.thumbnailImagePath = testRandomImagePath();
         });
-        
+
         log.debug('Rank取得', rankArticleList);
         log.info('Rank画面のINIT処理 END');
-        return rankArticleList
+        return rankArticleList;
       } catch (error) {
         throw error;
       }
@@ -85,4 +96,4 @@ const rankArticleList = {
   subArticleList1: [],
   subArticleList2: [],
   subArticleList3: [],
-}
+};

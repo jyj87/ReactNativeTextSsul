@@ -15,7 +15,7 @@ export const setToken = async userData => {
       log.debug('토큰 저장 실패: ', userData.accessToken);
     });
 
-    await AsyncStorage.setItem(UID, String(userData.uid))
+  await AsyncStorage.setItem(UID, String(userData.uid))
     .then(() => {
       log.debug('UID 저장 완료', userData.uid);
     })
@@ -23,7 +23,7 @@ export const setToken = async userData => {
       log.debug('UID 저장 실패: ', userData.uid);
     });
 
-    await AsyncStorage.setItem(NICK_NAME, userData.nickname)
+  await AsyncStorage.setItem(NICK_NAME, userData.nickname)
     .then(() => {
       log.debug('닉네임 저장 완료', userData.nickname);
     })
@@ -50,7 +50,7 @@ export const getToken = async () => {
 };
 
 // Tokenクリア
-export const clearToken = async token => {
+export const clearToken = async () => {
   await AsyncStorage.clear()
     .then(() => {
       log.debug('모든 데이터 삭제 완료');
@@ -58,4 +58,16 @@ export const clearToken = async token => {
     .catch(error => {
       log.debug('데이터 삭제 실패: ', error);
     });
+};
+
+export const userInfo = async () => {
+
+    const member = {uid:'',nickName:''};
+    const uid = await AsyncStorage.getItem(UID);
+    const nickName = await AsyncStorage.getItem(NICK_NAME);
+    member.uid = uid
+    member.nickName = nickName
+    log.debug('유저정보 취득 성공: ', member);
+    return member
+
 };

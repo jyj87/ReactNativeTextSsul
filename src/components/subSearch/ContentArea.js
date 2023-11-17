@@ -9,7 +9,7 @@ import {
 import {Text} from 'react-native-elements';
 import {FlatList} from 'react-native-gesture-handler';
 import {useDispatch, useSelector} from 'react-redux';
-import {getRefreshData} from '../../reducers/search_reducer';
+import {setRefreshData} from '../../reducers/search_reducer';
 import {setArticleData} from '../../reducers/board_reducer';
 import {useNavigation} from '@react-navigation/native';
 import {readRequests} from '../../api/readRequests';
@@ -36,7 +36,7 @@ const ContentArea = ({
     if (articlesList.length !== 0) {
       setEndPageFlg(false);
       setSearchPage(searchPage + 1);
-      dispatch(getRefreshData(articlesList));
+      dispatch(setRefreshData(articlesList));
     } else {
       setEndPageFlg(true);
     }

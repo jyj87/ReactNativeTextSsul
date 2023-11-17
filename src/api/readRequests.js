@@ -2,7 +2,7 @@ import axios from 'axios';
 import {ReadEnum} from '../enum/requestConst';
 import {GeneralEnum} from '../enum/generalConst';
 import {getToken} from '../util/accessToken';
-import {urlCommentSelect,urlArticleLike} from '../util/urlQueryString';
+import {urlCommentSelect, urlArticleLike} from '../util/urlQueryString';
 import {log} from '../log/log_a';
 
 /**
@@ -22,9 +22,10 @@ export const readRequests = async (type, requestData) => {
     case ReadEnum.ARTICLE_READ:
       log.info('Article単一取得処理 START');
       try {
-        const response = await axios.get(
-          GeneralEnum.BACK_END_GET_HOME_ARTICLE + requestData,
-        );
+        const url = GeneralEnum.BACK_END_GET_HOME_ARTICLE + requestData;
+        const response = await axios.get(url, null, {
+          headers: headers,
+        });
         log.debug('Article単一取得', response.data);
         log.info('Article単一取得処理 END');
         return response.data.responseData;
@@ -36,7 +37,9 @@ export const readRequests = async (type, requestData) => {
       log.info('Comment取得処理 START');
       try {
         const url = urlCommentSelect(requestData);
-        const response = await axios.get(url);
+        const response = await axios.get(url, null, {
+          headers: headers,
+        });
         log.debug('Comment取得', response.data);
         log.info('Comment取得処理 END');
         return response.data.responseData;

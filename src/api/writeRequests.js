@@ -24,6 +24,7 @@ export const writeRequests = async (type, requestData) => {
     case WriteEnum.CREATE_ARTICLE:
       log.info('Article作成処理 START');
       try {
+        console.log(await getToken())
         const data = new RequestArtWrite(requestData);
         log.debug('Article登録データ', data);
         const response = await axios.post(GeneralEnum.BACK_END_WRITE, data, {

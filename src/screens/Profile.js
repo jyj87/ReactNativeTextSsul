@@ -23,13 +23,17 @@ import ProfileArea from '../components/subProfile/ProfileArea';
 import PostList from '../components/subProfile/PostList';
 import CommentList from '../components/subProfile/CommentList';
 import Login from '../screens/Login';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const testData = userInfo;
 
 const Profile = () => {
-
+  const testMethod = async checkUid => {
+    const uid = await AsyncStorage.getItem('uid');
+    return checkUid === uid ? true : false;
+  };
   // LoginFlag取得(Token有無確認)
-  const flag = useSelector(state => state.login.loginFlag)
+  const flag = useSelector(state => state.login.loginFlag);
 
   // 스크롤바 x축
   const [scrollPosition, setScrollPosition] = useState(0);
@@ -103,11 +107,7 @@ const Profile = () => {
       </SafeAreaView>
     );
   } else {
-    return (
-
-        <Login />
-   
-    );
+    return <Login />;
   }
 };
 

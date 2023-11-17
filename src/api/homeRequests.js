@@ -29,7 +29,9 @@ export const homeRequests = async (type, requestData) => {
           '1',
           'date',
         ]);
-        const response = await axios.get(url);
+        const response = await axios.get(url,null,{
+          headers: headers,
+        });
         const articleList = [];
         response.data.responseData.articleList.forEach(element => {
           element.thumbnailImagePath = testRandomImagePath();
@@ -51,7 +53,9 @@ export const homeRequests = async (type, requestData) => {
           '1',
           'date',
         ]);
-        const response = await axios.get(url);
+        const response = await axios.get(url,null,{
+          headers: headers,
+        });
         const articleList = [];
         response.data.responseData.articleList.forEach(element => {
           element.thumbnailImagePath = testRandomImagePath();

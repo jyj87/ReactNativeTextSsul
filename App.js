@@ -17,15 +17,23 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useDispatch, useSelector} from 'react-redux';
-import {getInitArticleList} from './src/reducers/home_reducer';
+import {setInitArticleList} from './src/reducers/home_reducer';
 import {getInitSearchPostList} from './src/reducers/search_reducer';
 import {getInitRankPostList} from './src/reducers/rank_reducer';
+import {setInitUserInfo} from './src/reducers/profile_reducer';
 import {loginCheck} from './src/reducers/login_reducer';
 import {loginRequests} from './src/api/loginRequests';
-import {LoginEnum, HomeEnum, SearchEnum, RankEnum} from './src/enum/requestConst';
 import {homeRequests} from './src/api/homeRequests';
 import {searchRequests} from './src/api/searchRequests';
 import {rankRequests} from './src/api/rankRequests';
+import {profileRequests} from './src/api/profileRequests';
+import {
+  LoginEnum,
+  HomeEnum,
+  SearchEnum,
+  RankEnum,
+  ProfileEnum,
+} from './src/enum/requestConst';
 
 const App = () => {
   const Stack = createNativeStackNavigator();
@@ -40,21 +48,29 @@ const App = () => {
   //Home画面データ設定
   const initHomeArticleData = async () => {
     const articleList = await homeRequests(HomeEnum.INIT_DATA);
-    dispatch(getInitArticleList(articleList));
+    dispatch(setInitArticleList(articleList));
   };
   //Search画面データ設定
   const initSearchArticleData = async () => {
     const articlesList = await searchRequests(SearchEnum.INIT_DATA);
     dispatch(getInitSearchPostList(articlesList));
   };
-   //Rank画面データ設定
-   const initRankArticleData = async () => {
+  //Rank画面データ設定
+  const initRankArticleData = async () => {
     const articlesList = await rankRequests(RankEnum.INIT_DATA);
     dispatch(getInitRankPostList(articlesList));
+  };
+  //Profile画面データ設定
+  const intiProfileData = async () => {
+    const articlesList = await profileRequests(ProfileEnum.INIT_MY_POST);
+    const commentList = await profileRequests(ProfileEnum.INIT_MY_COMMENTS);
+    const member = await profileRequests(ProfileEnum.INIT_PROFILE);
+    dispatch(setInitUserInfo({articlesList, commentList, member}));
   };
   //초기 데이터 취득
   useEffect(() => {
     tokenCheck();
+    intiProfileData();
     initHomeArticleData();
     initSearchArticleData();
     initRankArticleData();
