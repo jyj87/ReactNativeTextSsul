@@ -5,21 +5,32 @@ import {log} from '../log/log_a';
  */
 const profileSlice = createSlice({
   name: 'profile',
-  initialState: {member: {uid:'',nickName:''}, articleList: {}, commentList: {}},
+  initialState: {
+    member: {},
+    articleList: [],
+    commentList: [],
+    userInfo: {},
+  },
   reducers: {
     setInitUserInfo: (state, action) => {
-
-
       log.info('profileSlice.setInitUserInfo START');
-      state.member = action.payload.member
-      log.debug('Init時UserInfo 設定データ', state.member);
-      log.info('profileSlice.setInitUserInfo END');
+      state.member =action.payload.userInfo.member
+      state.articleList = action.payload.userInfo.userArticleAndCommentList[0].articleAndCommentList;
+      state.commentList = action.payload.userInfo.userArticleAndCommentList[1].articleAndCommentList;
+      state.userInfo = action.payload.userInfo;
 
+      log.debug('Init時UserInfo 設定データ', state);
+      log.info('profileSlice.setInitUserInfo END');
     },
     setUserInfo: (state, action) => {
       log.info('profileSlice.setUserInfo START');
-      state.member = action.payload.member
-      log.debug('Login時UserInfo 設定データ', state.member);
+      state.member =action.payload.userInfo.member
+      state.articleList = action.payload.userInfo.userArticleAndCommentList[0].articleAndCommentList;
+      state.commentList = action.payload.userInfo.userArticleAndCommentList[1].articleAndCommentList;
+      state.userInfo = action.payload.userInfo;
+
+
+      log.debug('Login時UserInfo 設定データ', state);
       log.info('profileSlice.setUserInfo END');
     },
     setUserArticleList: (state, action) => {
@@ -32,5 +43,9 @@ const profileSlice = createSlice({
 });
 
 export default profileSlice.reducer;
-export const {setInitUserInfo,setUserInfo, setUserArticleList, setUserCommentList} =
-  profileSlice.actions;
+export const {
+  setInitUserInfo,
+  setUserInfo,
+  setUserArticleList,
+  setUserCommentList,
+} = profileSlice.actions;

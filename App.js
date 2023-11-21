@@ -38,6 +38,7 @@ import {
 const App = () => {
   const Stack = createNativeStackNavigator();
   const Tab = createBottomTabNavigator();
+  const initFlag = useSelector(state => state.home.initFlag);
   const dispatch = useDispatch();
 
   //ログインフラグ更新
@@ -62,10 +63,10 @@ const App = () => {
   };
   //Profile画面データ設定
   const intiProfileData = async () => {
-    const articlesList = await profileRequests(ProfileEnum.INIT_MY_POST);
-    const commentList = await profileRequests(ProfileEnum.INIT_MY_COMMENTS);
+    //localにあるUserinfo -> Store 格納処理も含めてする。
     const member = await profileRequests(ProfileEnum.INIT_PROFILE);
-    dispatch(setInitUserInfo({articlesList, commentList, member}));
+    const userInfo = await profileRequests(ProfileEnum.SELECT_USER_INFO,[member.uid]);
+    dispatch(setInitUserInfo({userInfo}));
   };
   //초기 데이터 취득
   useEffect(() => {
@@ -74,9 +75,7 @@ const App = () => {
     initHomeArticleData();
     initSearchArticleData();
     initRankArticleData();
-  }, []);
-
-  const loginFlag = useSelector(state => state.login.loginFlag);
+  }, [initFlag]);
 
   const BottomTabScreen = () => {
     return (

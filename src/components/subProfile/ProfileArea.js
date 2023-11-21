@@ -9,7 +9,7 @@ import {loginOut} from '../../reducers/login_reducer';
 import { useDispatch } from 'react-redux';
 import {clearToken} from '../../util/accessToken'
 
-const ProfileArea = ({userInfo}) => {
+const ProfileArea = ({member}) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
 
@@ -33,16 +33,16 @@ const ProfileArea = ({userInfo}) => {
       <View name="userNameView" style={[styles.textBaseView]}>
         <View style={{flexDirection: 'row'}}>
           <FontAwesome6 name="ranking-star" size={15} color="black" />
-          <Text style={{marginLeft: 3}}>{userInfo.userLv}</Text>
+          <Text style={{marginLeft: 3}}>{member.lv}</Text>
         </View>
 
         <View>
-          <Text style={{fontSize: 30}}>{userInfo.userName}</Text>
+          <Text style={{fontSize: 30}}>{member.nickName}</Text>
         </View>
       </View>
 
       <View name="userEmailView" style={styles.textBaseView}>
-        <Text style={{fontSize: 20}}>{userInfo.userEmail}</Text>
+        <Text style={{fontSize: 20}}>{member.email}</Text>
       </View>
 
       <View
@@ -50,7 +50,7 @@ const ProfileArea = ({userInfo}) => {
         style={[styles.textBaseView, {flexDirection: 'row', marginBottom: 20}]}>
         <View style={{alignItems: 'center'}}>
           <Text style={{fontWeight: 'bold', marginBottom: 5}}>
-            {userInfo.postCount}
+            {member.articleCount}
           </Text>
           <Text>게시물</Text>
         </View>
@@ -59,18 +59,18 @@ const ProfileArea = ({userInfo}) => {
 
         <View style={{alignItems: 'center'}}>
           <Text style={{fontWeight: 'bold', marginBottom: 5}}>
-            {userInfo.postCount}
+            {member.likeCount}
           </Text>
-          <Text>구독자</Text>
+          <Text>인기도</Text>
         </View>
 
         <View style={styles.horizontalLine} />
 
         <View style={{alignItems: 'center'}}>
           <Text style={{fontWeight: 'bold', marginBottom: 5}}>
-            {userInfo.postCount}
+            {member.point}
           </Text>
-          <Text>잉여력</Text>
+          <Text>포인트</Text>
         </View>
       </View>
 

@@ -23,7 +23,7 @@ const CommentList = ({item}) => {
 
   return (
     <ScrollView style={styles.postAndCommentView}>
-      {item.postAndComment.map((i, index) => (
+      {item.articleAndCommentList.map((i, index) => (
         <TouchableOpacity onPress={() => moveBoard(i.postIndex)} key={index}>
           <View style={{flexDirection: 'row', marginBottom: 5}}>
             <Image source={i.postCoverImage} style={styles.postListImage} />

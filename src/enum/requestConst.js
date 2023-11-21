@@ -20,7 +20,7 @@ const SearchEnum = Object.freeze({
 
 const WriteEnum = Object.freeze({
   //post登録
-  CREATE_ARTICLE: 'createPost',
+  CREATE_ARTICLE: 'createArticle',
 
   CREATE_COMMENT: 'createComment',
 });
@@ -39,11 +39,11 @@ const RankEnum = Object.freeze({
 
 const ProfileEnum = Object.freeze({
   //作成したpost取得
-  INIT_MY_POST: 'initMyPost',
+  INIT_MY_ARTICLE: 'initMyArticle',
   //作成したコメント取得
   INIT_MY_COMMENTS: 'initMyComment',
 
-  INIT_USER_INFO: 'initUserInfo',
+  SELECT_USER_INFO: 'selectUserInfo',
 
   INIT_PROFILE: 'initProfile',
 });
@@ -64,6 +64,12 @@ const LoginEnum = Object.freeze({
   LOGIN_CHECK: 'loginCheck',
 });
 
+const DeleteEnum = Object.freeze({
+  //article削除
+  DELETE_ARTICLE: 'deleteArticle',
+
+});
+
 export {
   HomeEnum,
   SearchEnum,
@@ -73,4 +79,5 @@ export {
   BoardEnum,
   LoginEnum,
   ReadEnum,
+  DeleteEnum,
 };

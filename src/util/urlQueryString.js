@@ -41,10 +41,24 @@ export const urlCommentLike = (params) => {
   return url;
 };
 
-
 // Search Text
 export const urlSearchTextExist = (params) => {
   const url = `http://localhost:8080/v1/api/articles?page=${params[0]}&limit=${params[1]}&articleTitle=${params[2]}&orderType=${params[3]}`;
+  log.debug('Search Text URL : ', url);
+  return url;
+};
+
+// User Articles Select
+export const urlUserArticlesSelect = (params) => {
+  const url = `http://localhost:8080/v1/api/articles?page=0&limit=9999&authorUid=${params[0]}`;
+  log.debug('Search Text URL : ', url);
+  return url;
+};
+
+
+// User Articles Select
+export const urlArticleDelete = (params) => {
+  const url = `http://localhost:8080/v1/api/articles/${params[0]}`;
   log.debug('Search Text URL : ', url);
   return url;
 };

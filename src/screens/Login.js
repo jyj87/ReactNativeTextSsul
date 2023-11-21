@@ -9,7 +9,7 @@ import React, {useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {TextInput} from 'react-native-gesture-handler';
 import {ThemeProvider, Text as RNEText} from 'react-native-elements';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {loginRequests} from '../api/loginRequests';
 import {profileRequests} from '../api/profileRequests';
 import {setUserInfo} from '../reducers/profile_reducer';
@@ -28,8 +28,10 @@ const Login = () => {
     await loginRequests(LoginEnum.LOGIN_PROCESS, [email, password]);
     const loginFlag = await loginRequests(LoginEnum.LOGIN_CHECK);
     const member = await profileRequests(ProfileEnum.INIT_PROFILE);
+    const userInfo = await profileRequests(ProfileEnum.SELECT_USER_INFO,[member.uid]);
+    dispatch(setUserInfo({userInfo}));
     dispatch(login(loginFlag));
-    dispatch(setUserInfo({member}));
+  
   };
 
   const theme = {

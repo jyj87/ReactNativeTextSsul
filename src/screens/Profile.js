@@ -6,34 +6,27 @@ import {
   Dimensions,
   TouchableOpacity,
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {useNavigation} from '@react-navigation/native';
-import {FlatList, ScrollView} from 'react-native-gesture-handler';
-import {userInfo} from '../data/tempProfileData';
+import {FlatList} from 'react-native-gesture-handler';
+import {testUserInfo} from '../data/tempProfileData';
 import {Image} from 'react-native-elements';
-import {useDispatch, useSelector} from 'react-redux';
-import {setSelectSearchPostData} from '../reducers/board_reducer';
-import Entypo from 'react-native-vector-icons/Entypo';
-import AntDesign from 'react-native-vector-icons/AntDesign';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
+import {useSelector} from 'react-redux';
 import ProfileArea from '../components/subProfile/ProfileArea';
 import PostList from '../components/subProfile/PostList';
 import CommentList from '../components/subProfile/CommentList';
 import Login from '../screens/Login';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const testData = userInfo;
+const testData = testUserInfo;
 
 const Profile = () => {
-  const testMethod = async checkUid => {
-    const uid = await AsyncStorage.getItem('uid');
-    return checkUid === uid ? true : false;
-  };
   // LoginFlag取得(Token有無確認)
   const flag = useSelector(state => state.login.loginFlag);
+  // UserInfo取得
+  const userInfo = useSelector(state => state.profile.userInfo);
+  var userArticleAndCommentList = [];
+  userArticleAndCommentList = userInfo.userArticleAndCommentList
+
 
   // 스크롤바 x축
   const [scrollPosition, setScrollPosition] = useState(0);
@@ -53,7 +46,7 @@ const Profile = () => {
     return (
       <SafeAreaView edges={['top']} style={{flex: 1}}>
         <StatusBar backgroundColor="white" barStyle="dark-content" />
-        <ProfileArea userInfo={testData.user} />
+        <ProfileArea member={userInfo.member} />
         <View
           name="userPostCommentsListArea"
           style={styles.userPostCommentsListArea}>
@@ -75,7 +68,6 @@ const Profile = () => {
                 {width: scrollbarWidth, left: scrollbarPosition},
               ]}
             />
-
             <FlatList
               // 옵션: 페이징 단위로 넘어감
               pagingEnabled={true}
@@ -89,7 +81,7 @@ const Profile = () => {
               decelerationRate="fast"
               // 옵션: 스크롤 이벤트 발생 빈도 설정
               scrollEventThrottle={16}
-              data={testData.userPostAndCommentList}
+              data={userInfo.userArticleAndCommentList}
               keyExtractor={item => item.typeIndex}
               renderItem={({item}) => {
                 // 조건문을 사용하여 type에 따라 다른 내용 렌더링

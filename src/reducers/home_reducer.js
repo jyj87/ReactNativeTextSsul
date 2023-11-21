@@ -6,7 +6,7 @@ import {log} from '../log/log_a';
  */
 const homeSlice = createSlice({
   name: 'home',
-  initialState: {homeArticleList: []},
+  initialState: {homeArticleList: [], initFlag: false},
   reducers: {
     setInitArticleList: (state, action) => {
       log.info('homeSlice.setInitArticleList START');
@@ -17,8 +17,11 @@ const homeSlice = createSlice({
     setRefreshData: (state, action) => {
       state.homeArticleList = [...state.homeArticleList, ...action.payload];
     },
+    reInit: (state, action) => {
+      state.initFlag = !state.initFlag;
+    },
   },
 });
 
 export default homeSlice.reducer;
-export const {setInitArticleList,setRefreshData} = homeSlice.actions;
+export const {setInitArticleList, setRefreshData, reInit} = homeSlice.actions;

@@ -1,17 +1,22 @@
 import {View, Text, Alert} from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {insertContents} from '../../reducers/board_reducer';
+import {reInit} from '../../reducers/home_reducer';
 import {boardRequests} from '../../api/boardRequests';
 import {readRequests} from '../../api/readRequests';
-import {BoardEnum, ReadEnum} from '../../enum/requestConst';
+import {deleteRequests} from '../../api/deleteRequests';
+import {BoardEnum, ReadEnum, DeleteEnum} from '../../enum/requestConst';
+import { useNavigation } from '@react-navigation/native';
 
 const MiddleArea = ({articleData}) => {
   const dispatch = useDispatch();
+  const navigation = useNavigation();
   const [isLikeToggled, setIsLikeToggled] = useState(false);
-  // 좋아요 클릭 Count +1
+  const member = useSelector(state => state.profile.member);
+
   const contentLikeClick = async () => {
     setIsLikeToggled(!isLikeToggled);
     await boardRequests(BoardEnum.ARTICLE_LIKE, [
@@ -25,8 +30,14 @@ const MiddleArea = ({articleData}) => {
     dispatch(insertContents({article}));
   };
 
+  const deleteArticle = async () => {
+    await deleteRequests(DeleteEnum.DELETE_ARTICLE, [articleData.articleId]);
+    //全体データ初期化
+    dispatch(reInit());
+
+  };
   // Article削除
-  const articleDelete = articleId => {
+  const deleteButtonProcess = () => {
     Alert.alert(
       '경고',
       '게시물을 삭제하시겠습니까?',
@@ -37,7 +48,11 @@ const MiddleArea = ({articleData}) => {
         },
         {
           text: '확인',
-          onPress: () => console.log('확인 버튼이 눌렸습니다.'),
+          onPress: () => {
+            console.log('확인 버튼이 눌렸습니다.');
+            deleteArticle();
+            navigation.navigate('Home')
+          },
         },
       ],
       {cancelable: false},
@@ -75,12 +90,14 @@ const MiddleArea = ({articleData}) => {
             color="black"
             style={{marginRight: 3}}
           />
-          <Ionicons
-            name="trash"
-            size={15}
-            color="black"
-            onPress={() => articleDelete(articleData.articleId)}
-          />
+          {String(member.uid) === String(articleData.authorUid) && (
+            <Ionicons
+              name="trash"
+              size={15}
+              color="black"
+              onPress={() => deleteButtonProcess()}
+            />
+          )}
         </View>
       </View>
     </View>
