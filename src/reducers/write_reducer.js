@@ -1,19 +1,18 @@
 import {createSlice} from '@reduxjs/toolkit';
 
 /**
- * insertPost: 작성한 게시글을 DB에 저장
+ * changeEditFlag: 修正画面編集Flag更新
  */
 const writeSlice = createSlice({
   name: 'write',
-  initialState: {registerPost: {}},
+  initialState: {editFlag: false},
   reducers: {
 
-    insertPost: (state, action) => {
-
-      //현재 사용처 없음
+    changeEditFlag: (state, action) => {
+      state.editFlag = action.payload
     },
   },
 });
 
 export default writeSlice.reducer;
-export const {insertPost} = writeSlice.actions;
+export const {changeEditFlag} = writeSlice.actions;

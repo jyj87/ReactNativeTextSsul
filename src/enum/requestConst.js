@@ -23,6 +23,8 @@ const WriteEnum = Object.freeze({
   CREATE_ARTICLE: 'createArticle',
 
   CREATE_COMMENT: 'createComment',
+
+  UPDATE_ARTICLE: 'updateArticle',
 });
 
 const ReadEnum = Object.freeze({

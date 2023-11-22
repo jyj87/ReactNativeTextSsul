@@ -2,14 +2,16 @@ import {View, Text, Alert} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import Feather from 'react-native-vector-icons/Feather';
 import {useDispatch, useSelector} from 'react-redux';
 import {insertContents} from '../../reducers/board_reducer';
+import {changeEditFlag} from '../../reducers/write_reducer';
 import {reInit} from '../../reducers/home_reducer';
 import {boardRequests} from '../../api/boardRequests';
 import {readRequests} from '../../api/readRequests';
 import {deleteRequests} from '../../api/deleteRequests';
 import {BoardEnum, ReadEnum, DeleteEnum} from '../../enum/requestConst';
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 
 const MiddleArea = ({articleData}) => {
   const dispatch = useDispatch();
@@ -34,7 +36,6 @@ const MiddleArea = ({articleData}) => {
     await deleteRequests(DeleteEnum.DELETE_ARTICLE, [articleData.articleId]);
     //全体データ初期化
     dispatch(reInit());
-
   };
   // Article削除
   const deleteButtonProcess = () => {
@@ -51,7 +52,7 @@ const MiddleArea = ({articleData}) => {
           onPress: () => {
             console.log('확인 버튼이 눌렸습니다.');
             deleteArticle();
-            navigation.navigate('Home')
+            navigation.navigate('Home');
           },
         },
       ],
@@ -59,10 +60,18 @@ const MiddleArea = ({articleData}) => {
     );
   };
 
+  // Article修正
+  const editButtonProcess = () => {
+    dispatch(changeEditFlag(true));
+    navigation.navigate('Write', {
+      requestView: 'Board',
+    });
+  };
+
   return (
     <View name="middleArea" style={{marginHorizontal: 20}}>
-      <View name="postContentArea">
-        <Text>{articleData.content}</Text>
+      <View name="articleContentArea">
+        <Text>{articleData.articleContent}</Text>
       </View>
       <View name="postLikeCountArea">
         <View
@@ -86,16 +95,26 @@ const MiddleArea = ({articleData}) => {
           }}>
           <MaterialCommunityIcons
             name="google-translate"
-            size={15}
+            size={18}
             color="black"
             style={{marginRight: 3}}
           />
           {String(member.uid) === String(articleData.authorUid) && (
             <Ionicons
               name="trash"
-              size={15}
+              size={18}
               color="black"
+              style={{marginRight: 4}}
               onPress={() => deleteButtonProcess()}
+            />
+          )}
+          {String(member.uid) === String(articleData.authorUid) && (
+            <Feather
+              name="edit"
+              size={18}
+              color="black"
+              style={{marginRight: 4}}
+              onPress={() => editButtonProcess()}
             />
           )}
         </View>

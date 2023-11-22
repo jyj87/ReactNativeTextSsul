@@ -51,14 +51,21 @@ export const urlSearchTextExist = (params) => {
 // User Articles Select
 export const urlUserArticlesSelect = (params) => {
   const url = `http://localhost:8080/v1/api/articles?page=0&limit=9999&authorUid=${params[0]}`;
-  log.debug('Search Text URL : ', url);
+  log.debug('User Articles Select URL : ', url);
   return url;
 };
 
-
-// User Articles Select
+// User Articles Delete
 export const urlArticleDelete = (params) => {
   const url = `http://localhost:8080/v1/api/articles/${params[0]}`;
-  log.debug('Search Text URL : ', url);
+  log.debug('Articles Delete URL : ', url);
   return url;
 };
+
+// Articles Update
+export const urlArticleUpdate = (params) => {
+  const url = `http://localhost:8080/v1/api/articles/${params}`;
+  log.debug('Articles Update URL : ', url);
+  return url;
+};
+

@@ -9,14 +9,20 @@ import InputTitleArea from '../components/subWrite/InputTitleArea';
 import InputTextBody from '../components/subWrite/InputTextBody';
 import InputImageSelect from '../components/subWrite/InputImageSelect';
 import LineWrite from '../components/subWrite/LineWrite';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
+import { useDispatch, useSelector } from 'react-redux';
+import { changeEditFlag } from '../reducers/write_reducer';
 
-const Write = () => {
+const Write = ({route, navigation}) => {
+  const dispatch = useDispatch();
   const [photoList, setPhotoList] = useState([]);
   const [selectedPhoto, setSelectedPhoto] = useState(null);
   const [title, setTitle] = useState('');
   const [context, setContext] = useState('');
   const [selectedBoardTypeValue, setSelectedBoardTypeValue] = useState('1');
   const [selectedHashTypeValue, setSelectedHashTypeValue] = useState('1');
+  const editFlag = useSelector(state => state.write.editFlag)
+  const articleData = useSelector(state => state.board.article);
 
   // 렌더링 시 한번만 실행
   useEffect(() => {
@@ -24,6 +30,24 @@ const Write = () => {
     getUserPhotoList();
   }, []);
 
+  useFocusEffect(
+    React.useCallback(() => {
+      // Write Screen 入る時実行
+      setTitle(editFlag ? articleData.articleTitle : '')
+      setContext(editFlag ? articleData.articleContent  : '')
+      setSelectedBoardTypeValue(editFlag ? String(articleData.articleTypeId) : '1')
+      setSelectedHashTypeValue(editFlag ? String(articleData.categoryId) : '1')
+
+      // Write Screen 出る時実行
+      return () => {
+        setTitle('')
+        setContext('')
+        setSelectedBoardTypeValue('1')
+        setSelectedHashTypeValue('1')
+        dispatch(changeEditFlag(false));
+      };
+    }, [editFlag])
+  );
   // 유저 사진첩 이미지 가져오기
   const getUserPhotoList = async () => {
     try {
@@ -48,6 +72,8 @@ const Write = () => {
         selectedBoardTypeValue={selectedBoardTypeValue}
         selectedHashTypeValue={selectedHashTypeValue}
         selectedPhoto={selectedPhoto}
+        editFlag={editFlag}
+        articleData={articleData}
       />
       <InputTitleArea title={title} setTitle={setTitle} />
       <View

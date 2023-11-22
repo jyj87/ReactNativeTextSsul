@@ -8,7 +8,7 @@ class RequestArtWrite {
   //게시글 종류 ID
   private articleTypeId: string | null;
   //본문 내용
-  private content: string | null;
+  private articleContent: string | null;
 
   constructor(setData: any | null) {
     if (setData !== null) {
@@ -16,13 +16,13 @@ class RequestArtWrite {
       this.authorUid = setData[1];
       this.categoryId = setData[2];
       this.articleTypeId = setData[3];
-      this.content = setData[4];
+      this.articleContent = setData[4];
     } else {
       this.articleTitle = null;
       this.authorUid = null;
       this.categoryId = null;
       this.articleTypeId = null;
-      this.content = null;
+      this.articleContent = null;
     }
   }
   

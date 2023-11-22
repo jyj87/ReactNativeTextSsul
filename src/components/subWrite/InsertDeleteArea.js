@@ -7,8 +7,10 @@ import {useDispatch} from 'react-redux';
 import {insertPost} from '../../reducers/write_reducer';
 import Octicons from 'react-native-vector-icons/Octicons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import Feather from 'react-native-vector-icons/Feather';
 import {writeRequests} from '../../api/writeRequests';
 import {WriteEnum} from '../../enum/requestConst';
+import {reInit} from '../../reducers/home_reducer';
 
 const InsertDeleteArea = ({
   title,
@@ -18,6 +20,8 @@ const InsertDeleteArea = ({
   selectedBoardTypeValue,
   selectedHashTypeValue,
   selectedPhoto,
+  editFlag,
+  articleData,
 }) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
@@ -29,15 +33,7 @@ const InsertDeleteArea = ({
     });
   };
 
-  // 게시글 등록
-  const setArticle = async () => {
-    await writeRequests(WriteEnum.CREATE_ARTICLE, [
-      title,
-      null,
-      selectedHashTypeValue,
-      selectedBoardTypeValue,
-      context,
-    ]);
+  const validationCheck = () => {
     setTitle('');
     setContext('');
     //validation Check 추가 필요
@@ -52,7 +48,35 @@ const InsertDeleteArea = ({
     //     ],
     //   }),
     // );
+  };
+  // 게시글 등록 & 업데이트
+  const setArticle = async () => {
+    //게시글 업데이트
+    if (editFlag) {
+      await writeRequests(WriteEnum.UPDATE_ARTICLE, [
+        title,
+        null,
+        selectedHashTypeValue,
+        selectedBoardTypeValue,
+        context,
+        articleData.articleId,
+      ]);
+      //게시글 등록
+    } else {
+      await writeRequests(WriteEnum.CREATE_ARTICLE, [
+        title,
+        null,
+        selectedHashTypeValue,
+        selectedBoardTypeValue,
+        context,
+      ]);
+    }
+
+    //まだ、実装してない
+    validationCheck();
     moveHome();
+    //全体データ初期化
+    dispatch(reInit());
   };
   return (
     <View
@@ -81,8 +105,17 @@ const InsertDeleteArea = ({
           paddingHorizontal: 5,
           borderRadius: 50,
         }}>
-        <FontAwesome name="send" size={13} color="black" />
-        <Text style={{marginHorizontal: 8}}>등록</Text>
+        {editFlag ? (
+          <>
+            <Feather name="edit" size={13} color="black" />
+            <Text style={{marginHorizontal: 8}}>수정</Text>
+          </>
+        ) : (
+          <>
+            <FontAwesome name="send" size={13} color="black" />
+            <Text style={{marginHorizontal: 8}}>등록</Text>
+          </>
+        )}
       </TouchableOpacity>
     </View>
   );

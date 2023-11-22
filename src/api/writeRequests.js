@@ -5,7 +5,7 @@ import RequestArtWrite from '../models/RequestArtWrite';
 import {getToken} from '../util/accessToken';
 import {log} from '../log/log_a';
 import RequestCommentWrite from '../models/RequestCommentWrite';
-import {urlCommentInsert,urlArticleLike} from '../util/urlQueryString';
+import {urlCommentInsert, urlArticleUpdate} from '../util/urlQueryString';
 
 /**
  * Write API
@@ -24,7 +24,6 @@ export const writeRequests = async (type, requestData) => {
     case WriteEnum.CREATE_ARTICLE:
       log.info('Article作成処理 START');
       try {
-        console.log(await getToken())
         const data = new RequestArtWrite(requestData);
         log.debug('Article登録データ', data);
         const response = await axios.post(GeneralEnum.BACK_END_WRITE, data, {
@@ -48,6 +47,21 @@ export const writeRequests = async (type, requestData) => {
         throw error;
       }
       log.info('Comment作成処理 END');
+      break;
+    case WriteEnum.UPDATE_ARTICLE:
+      log.info('Article修正処理 START');
+      try {
+        console.log(requestData)
+        const url = urlArticleUpdate(requestData[5]);
+        const data = new RequestArtWrite(requestData);
+        log.debug('Article修正データ', data);
+        const response = await axios.patch(url, data, {
+          headers: headers,
+        });
+      } catch (error) {
+        throw error;
+      }
+      log.info('Article修正処理 END');
       break;
     default:
       break;
