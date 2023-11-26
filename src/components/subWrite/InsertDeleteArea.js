@@ -11,6 +11,7 @@ import Feather from 'react-native-vector-icons/Feather';
 import {writeRequests} from '../../api/writeRequests';
 import {WriteEnum} from '../../enum/requestConst';
 import {reInit} from '../../reducers/home_reducer';
+import ImageResizer from 'react-native-image-resizer';
 
 const InsertDeleteArea = ({
   title,
@@ -33,24 +34,50 @@ const InsertDeleteArea = ({
     });
   };
 
+  //Image Size 変更
+  const compressImage = async uri => {
+    try {
+      const compressedImage = await ImageResizer.createResizedImage(
+        uri,
+        800,
+        600,
+        'JPEG',
+        80,
+      );
+      return compressedImage.uri;
+    } catch (error) {
+      console.error('Error compressing image:', error);
+    }
+  };
+
+  //Image　UpLoad
+  const setUpLoadImage = async imageUrl => {
+    const formData = new FormData();
+    const uri = await compressImage(imageUrl);
+    const currentTime = new Date();
+    const currentTimeString = currentTime.toLocaleString();
+    formData.append('image', {
+      uri: uri,
+      type: 'image/jpeg',
+      name: currentTimeString + '.jpg',
+    });
+    return await writeRequests(WriteEnum.UPLOAD_IMAGE, formData);
+  };
+
   const validationCheck = () => {
     setTitle('');
     setContext('');
     //validation Check 추가 필요
-    // dispatch(
-    //   insertPost({
-    //     insertData: [
-    //       title,
-    //       context,
-    //       selectedBoardTypeValue,
-    //       selectedHashTypeValue,
-    //       selectedPhoto,
-    //     ],
-    //   }),
-    // );
   };
   // 게시글 등록 & 업데이트
   const setArticle = async () => {
+    const imageIdList = [];
+    // 게시글 등록전에 이미지를 등록하고 이미지 아이디를 취득
+    if (selectedPhoto != null) {
+      const imageInfo = setUpLoadImage(selectedPhoto);
+      imageIdList.push(Number(imageInfo.imageId));
+    }
+
     //게시글 업데이트
     if (editFlag) {
       await writeRequests(WriteEnum.UPDATE_ARTICLE, [
@@ -60,6 +87,7 @@ const InsertDeleteArea = ({
         selectedBoardTypeValue,
         context,
         articleData.articleId,
+        imageIdList,
       ]);
       //게시글 등록
     } else {
@@ -69,9 +97,9 @@ const InsertDeleteArea = ({
         selectedHashTypeValue,
         selectedBoardTypeValue,
         context,
+        imageIdList,
       ]);
     }
-
     //まだ、実装してない
     validationCheck();
     moveHome();

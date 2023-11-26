@@ -25,6 +25,8 @@ const WriteEnum = Object.freeze({
   CREATE_COMMENT: 'createComment',
 
   UPDATE_ARTICLE: 'updateArticle',
+
+  UPLOAD_IMAGE: 'uploadImage'
 });
 
 const ReadEnum = Object.freeze({

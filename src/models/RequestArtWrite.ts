@@ -9,6 +9,8 @@ class RequestArtWrite {
   private articleTypeId: string | null;
   //본문 내용
   private articleContent: string | null;
+  //본문 이미지
+  private imageIdList: number[] | [];
 
   constructor(setData: any | null) {
     if (setData !== null) {
@@ -17,14 +19,15 @@ class RequestArtWrite {
       this.categoryId = setData[2];
       this.articleTypeId = setData[3];
       this.articleContent = setData[4];
+      this.imageIdList = [5];
     } else {
       this.articleTitle = null;
       this.authorUid = null;
       this.categoryId = null;
       this.articleTypeId = null;
       this.articleContent = null;
+      this.imageIdList = [];
     }
   }
-  
 }
 export default RequestArtWrite;

@@ -63,6 +63,20 @@ export const writeRequests = async (type, requestData) => {
       }
       log.info('Article修正処理 END');
       break;
+      case WriteEnum.UPLOAD_IMAGE:
+        log.info('ImageUpload処理 START');
+        try {
+          const url = 'http://localhost:8080/v1/api/images'
+          const response = await axios.post(url, requestData, {
+            'Content-Type': 'multipart/form-data',
+          });
+          log.debug('ImageUpload結果',response.data);
+          log.info('ImageUpload処理 END');
+          return response.data.responseData;
+        } catch (error) {
+          throw error;
+        }
+        break;
     default:
       break;
   }

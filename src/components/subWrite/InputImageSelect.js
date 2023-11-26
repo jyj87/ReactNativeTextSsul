@@ -26,6 +26,7 @@ const InputImageSelect = ({photoList, setPhotoList, setSelectedPhoto}) => {
       }
     });
   };
+
   return (
     <View name="inputImageSelect">
       <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
