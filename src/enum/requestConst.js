@@ -26,7 +26,9 @@ const WriteEnum = Object.freeze({
 
   UPDATE_ARTICLE: 'updateArticle',
 
-  UPLOAD_IMAGE: 'uploadImage'
+  UPLOAD_IMAGE: 'uploadImage',
+
+  SELECT_IMAGE: 'selectImage',
 });
 
 const ReadEnum = Object.freeze({
@@ -71,7 +73,6 @@ const LoginEnum = Object.freeze({
 const DeleteEnum = Object.freeze({
   //article削除
   DELETE_ARTICLE: 'deleteArticle',
-
 });
 
 export {

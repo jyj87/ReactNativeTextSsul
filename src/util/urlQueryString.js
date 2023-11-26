@@ -69,3 +69,17 @@ export const urlArticleUpdate = (params) => {
   return url;
 };
 
+// Image UpLoad
+export const urlImageUpLoad = (params) => {
+  const url = `http://localhost:8080/v1/api/images`;
+  log.debug('Image UpLoad URL : ', url);
+  return url;
+};
+
+// Image Select
+export const urlImageSelect = (params) => {
+  const url = `http://localhost:8080/v1/api/images/${params}`;
+  log.debug('Image Select URL : ', url);
+  return url;
+};
+

@@ -18,7 +18,7 @@
     "@react-navigation/native": "^6.1.7",
     "@react-navigation/native-stack": "^6.9.13",
     "@reduxjs/toolkit": "^1.9.5",
-    "axios": "^1.5.1",
+    "axios": "^1.6.2",
     "query-string": "^8.1.0",
     "react": "18.2.0",
     "react-native": "0.72.6",
@@ -33,7 +33,8 @@
     "react-native-screens": "^3.25.0",
     "react-native-scroll-indicator": "^0.1.0",
     "react-native-vector-icons": "^10.0.0",
-    "react-redux": "^8.1.2"
+    "react-redux": "^8.1.2",
+    "rn-fetch-blob": "^0.12.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

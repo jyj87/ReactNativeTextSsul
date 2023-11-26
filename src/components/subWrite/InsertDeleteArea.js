@@ -12,6 +12,7 @@ import {writeRequests} from '../../api/writeRequests';
 import {WriteEnum} from '../../enum/requestConst';
 import {reInit} from '../../reducers/home_reducer';
 import ImageResizer from 'react-native-image-resizer';
+import {saveImageToLocal} from '../../util/saveImageToLocal';
 
 const InsertDeleteArea = ({
   title,
