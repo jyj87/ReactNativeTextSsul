@@ -9,18 +9,16 @@ import {writeRequests} from '../../api/writeRequests';
 import {ReadEnum, WriteEnum, BoardEnum} from '../../enum/requestConst';
 import {readRequests} from '../../api/readRequests';
 import {boardRequests} from '../../api/boardRequests';
+import {validationCheck} from '../../util/validationCheck';
+import {GeneralEnum} from '../../enum/generalConst';
 
-const BottomArea = ({articleCommentList, articleData}) => {
+const BottomArea = ({articleCommentList, articleData,commentText,setCommentText}) => {
   const dispatch = useDispatch();
   const [isLikeToggled, setIsLikeToggled] = useState(false);
-  //댓글 입력창
-  const [commentText, setCommentText] = useState('');
 
   //댓글 등록
   const insertCommentText = async () => {
-    if (commentText.trim() === '') {
-      Alert.alert('경고', '데이터를 입력해주세요');
-    } else {
+    if (validationCheck(GeneralEnum.VALIDATION_CHECK_COMMENT, [commentText])) {
       await writeRequests(WriteEnum.CREATE_COMMENT, [
         articleData.articleId,
         commentText,

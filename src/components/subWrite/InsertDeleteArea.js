@@ -13,6 +13,8 @@ import {WriteEnum} from '../../enum/requestConst';
 import {reInit} from '../../reducers/home_reducer';
 import ImageResizer from 'react-native-image-resizer';
 import {saveImageToLocal} from '../../util/saveImageToLocal';
+import {validationCheck} from '../../util/validationCheck';
+import {GeneralEnum} from '../../enum/generalConst';
 
 const InsertDeleteArea = ({
   title,
@@ -65,47 +67,45 @@ const InsertDeleteArea = ({
     return await writeRequests(WriteEnum.UPLOAD_IMAGE, formData);
   };
 
-  const validationCheck = () => {
-    setTitle('');
-    setContext('');
-    //validation Check 추가 필요
-  };
   // 게시글 등록 & 업데이트
   const setArticle = async () => {
-    const imageIdList = [];
-    // 게시글 등록전에 이미지를 등록하고 이미지 아이디를 취득
-    if (selectedPhoto != null) {
-      const imageInfo = setUpLoadImage(selectedPhoto);
-      imageIdList.push(Number(imageInfo.imageId));
+    if(validationCheck(GeneralEnum.VALIDATION_CHECK_ARTICLE,[title,context])){
+      const imageIdList = [];
+      // 게시글 등록전에 이미지를 등록하고 이미지 아이디를 취득
+      if (selectedPhoto != null) {
+        const imageInfo = setUpLoadImage(selectedPhoto);
+        imageIdList.push(Number(imageInfo.imageId));
+      }
+  
+      //게시글 업데이트
+      if (editFlag) {
+        await writeRequests(WriteEnum.UPDATE_ARTICLE, [
+          title,
+          null,
+          selectedHashTypeValue,
+          selectedBoardTypeValue,
+          context,
+          articleData.articleId,
+          imageIdList,
+        ]);
+        //게시글 등록
+      } else {
+        await writeRequests(WriteEnum.CREATE_ARTICLE, [
+          title,
+          null,
+          selectedHashTypeValue,
+          selectedBoardTypeValue,
+          context,
+          imageIdList,
+        ]);
+      }
+      //まだ、実装してない
+      validationCheck();
+      moveHome();
+      //全体データ初期化
+      dispatch(reInit());
     }
-
-    //게시글 업데이트
-    if (editFlag) {
-      await writeRequests(WriteEnum.UPDATE_ARTICLE, [
-        title,
-        null,
-        selectedHashTypeValue,
-        selectedBoardTypeValue,
-        context,
-        articleData.articleId,
-        imageIdList,
-      ]);
-      //게시글 등록
-    } else {
-      await writeRequests(WriteEnum.CREATE_ARTICLE, [
-        title,
-        null,
-        selectedHashTypeValue,
-        selectedBoardTypeValue,
-        context,
-        imageIdList,
-      ]);
-    }
-    //まだ、実装してない
-    validationCheck();
-    moveHome();
-    //全体データ初期化
-    dispatch(reInit());
+    
   };
   return (
     <View
