@@ -79,7 +79,7 @@ const Write = ({route, navigation}) => {
       <View
         name="dropDownMenuArea"
         style={[
-          Platform.OS === 'ios' ? styles.iosDropDownMenu : androidDropDownMenu,
+          Platform.OS === 'ios' ? styles.iosDropDownMenu : styles.androidDropDownMenu,
         ]}>
         <View>
           <DropDownHashTypeMenu

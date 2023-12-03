@@ -11,11 +11,13 @@ import React, {useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useNavigation} from '@react-navigation/native';
 import {useSelector, useDispatch} from 'react-redux';
+import {getStatusBarHeight} from 'react-native-status-bar-height';
+import {useHeaderHeight} from '@react-navigation/elements';
 import {setArticleData} from '../reducers/board_reducer';
 import {setRefreshData} from '../reducers/home_reducer';
 import {readRequests} from '../api/readRequests';
-import {ReadEnum,HomeEnum} from '../enum/requestConst';
-import { homeRequests } from '../api/homeRequests';
+import {ReadEnum, HomeEnum} from '../enum/requestConst';
+import {homeRequests} from '../api/homeRequests';
 const Home = () => {
   const navigation = useNavigation();
   const [isLoading, setIsLoading] = useState(false);
@@ -84,6 +86,7 @@ const Home = () => {
   return (
     <SafeAreaView edges={['top']} style={styles.baseFlex}>
       <StatusBar backgroundColor="white" barStyle="dark-content" />
+
       <FlatList
         // 옵션: 세로 배치
         horizontal={false}
@@ -92,7 +95,9 @@ const Home = () => {
         // 옵션: 스크롤바를 숨김
         showsVerticalScrollIndicator={false}
         data={homeArticleList}
-        keyExtractor={item => item.articleId}
+        // TODO: 중복 데이터가 이슈 때문에 임시
+        keyExtractor={(item, index) => index.toString()}
+        // keyExtractor={item => item.articleId}
         ListFooterComponent={renderFooter}
         onEndReached={refreshData}
         onEndReachedThreshold={0.01}
@@ -121,13 +126,13 @@ const Home = () => {
 // 현재 디바이스의 화면 너비 가져오기
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
-const statusBarHeight = StatusBar.currentHeight;
-const bottomNavigatorHeight = 107;
+const statusBarHeight = getStatusBarHeight();
+const bottomNavigatorHeight = 60;
+
 const styles = StyleSheet.create({
   backgroundImage: {
-    flex: 1,
-    width: screenWidth,
     height: screenHeight - statusBarHeight - bottomNavigatorHeight,
+    width: screenWidth,
   },
   baseFlex: {
     flex: 1,

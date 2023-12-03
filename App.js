@@ -2,7 +2,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {NavigationContainer} from '@react-navigation/native';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import Home from './src/screens/Home';
 import Profile from './src/screens/Profile';
 import Rank from './src/screens/Rank';
@@ -65,7 +65,9 @@ const App = () => {
   const intiProfileData = async () => {
     //localにあるUserinfo -> Store 格納処理も含めてする。
     const member = await profileRequests(ProfileEnum.INIT_PROFILE);
-    const userInfo = await profileRequests(ProfileEnum.SELECT_USER_INFO,[member.uid]);
+    const userInfo = await profileRequests(ProfileEnum.SELECT_USER_INFO, [
+      member.uid,
+    ]);
     dispatch(setInitUserInfo({userInfo}));
   };
   //초기 데이터 취득

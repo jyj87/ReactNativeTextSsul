@@ -43,6 +43,7 @@ const SearchBarArea = ({
       <TextInput
         placeholder="검색어를 입력해주세요"
         keyboardType="web-search"
+        height={40}
         onChangeText={text => setSearchBarText(text)}
         value={searchBarText}
         onFocus={() => {

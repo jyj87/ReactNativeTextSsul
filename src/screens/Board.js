@@ -39,7 +39,7 @@ const Board = ({route, navigation}) => {
           <ScrollView
             showsVerticalScrollIndicator={false}
             style={[
-              Platform.OS === 'ios' ? styles.iosScrollView : androidScrollView,
+              Platform.OS === 'ios' ? styles.iosScrollView : styles.androidScrollView,
             ]}>
             <MiddleArea articleData={articleData} />
             <BottomArea

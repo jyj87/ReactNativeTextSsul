@@ -122,6 +122,7 @@ const styles = StyleSheet.create({
   },
   userPostCommentsListArea: {
     flex: 0.63,
+    marginTop: 20,
     alignItems: 'center',
     flexDirection: 'column',
   },
