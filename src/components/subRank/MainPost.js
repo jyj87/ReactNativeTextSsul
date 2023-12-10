@@ -8,9 +8,9 @@ import {
 } from 'react-native';
 import {Text} from 'react-native-elements';
 import {useDispatch} from 'react-redux';
-import {setArticleData, setSelectSearchPostData} from '../../reducers/board_reducer';
-import { readRequests } from '../../api/readRequests';
-import { ReadEnum } from '../../enum/requestConst';
+import {setArticleData, setSelectSearchPostData} from '@/reducers/board_reducer';
+import { readRequests } from '@/api/readRequests';
+import { ReadEnum } from '@/enum/requestConst';
 
 const MainPost = props => {
   const navigation = useNavigation();
