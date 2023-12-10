@@ -9,9 +9,9 @@ import {
 import React from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useSelector} from 'react-redux';
-import RankSubPostList from '@/components/subRank/RankSubPostList';
+import RankSubPostList from '@/components/subRank/RankSubPostList.js';
 import Feather from 'react-native-vector-icons/Feather';
-import MainPost from '@/components/subRank/MainPost';
+import MainPost from '@/components/subRank/MainPost.js';
 
 const Rank = () => {
   const rankArticleList = useSelector(state => state.rank.rankArticleList);
