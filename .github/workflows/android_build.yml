@@ -3,24 +3,28 @@ name: Android Build
 on: pull_request
 
 jobs:
-  android-build:
-    name: Android Build
+  build:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Check out Git repository
+      - name: Checkout Repository
         uses: actions/checkout@v2
 
-      - name: Install dependencies
-        run: yarn install --frozen-lockfile --network-timeout 300000
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
 
-      - name: Setup Watchman
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y watchman
+      - name: Install Dependencies
+        run: npm install
 
-      - name: Make Gradlew Executable
-        run: cd android && chmod +x ./gradlew
-        
-      - name: Build Android Release
-        run: |
-          cd android && ./gradlew clean && ./gradlew app:assembleRelease
+      - name: Bundle JavaScript
+        run: npx react-native bundle \
+          --platform android \
+          --dev false \
+          --entry-file index.js \
+          --bundle-output android/app/src/main/assets/index.android.bundle \
+          --assets-dest android/app/src/main/res/
+
+      - name: Build Android
+        run: npx react-native run-android --variant=release
