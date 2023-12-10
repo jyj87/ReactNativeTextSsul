@@ -13,9 +13,14 @@ jobs:
       - name: Install dependencies
         run: yarn install --frozen-lockfile --network-timeout 300000
 
+      - name: Setup Watchman
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y watchman
+
       - name: Make Gradlew Executable
         run: cd android && chmod +x ./gradlew
-
+        
       - name: Build Android Release
         run: |
           cd android && ./gradlew clean && ./gradlew app:assembleRelease
